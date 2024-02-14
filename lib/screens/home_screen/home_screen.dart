@@ -1,4 +1,5 @@
 import 'package:default_project/screens/home_screen/widgets/button_top.dart';
+import 'package:default_project/screens/home_screen/widgets/empty_show.dart';
 import 'package:default_project/screens/home_screen/widgets/item_note.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/app_images.dart';
@@ -17,21 +18,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Model> str = [
-    // Model(name: "Palonchi Palonchiyev", text: "asdfa"),
-    // Model(name: "Palonchi Palonchiyev", text: "asdfa"),
-    // Model(name: "Palonchi Palonchiyev", text: "asdfa"),
-    // Model(name: "Palonchi Palonchiyev", text: "asdfa"),
-    // Model(name: "Palonchi Palonchiyev", text: "asdfa"),
-    // Model(name: "Palonchi Palonchiyev", text: "asdfa"),
-    // Model(name: "Palonchi Palonchiyev", text: "asdfa"),
-    // Model(name: "Palonchi Palonchiyev", text: "asdfa"),
-    // Model(name: "Palonchi Palonchiyev", text: "asdfa"),
-    // Model(name: "Palonchi Palonchiyev", text: "asdfa"),
-    // Model(name: "Palonchi Palonchiyev", text: "asdfa"),
-  ];
+  List<Model> ls = dataBase;
 
   bool showSearche = false;
+  String changeTextFild = "";
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +44,19 @@ class _HomeScreenState extends State<HomeScreen> {
               showSearche ? 88.getH() : 55.getH(),
               if (showSearche)
                 TextField(
+                  onChanged: (v) {
+                    setState(
+                      () {
+                        ls = dataBase
+                            .where(
+                              (element) => element.name.toLowerCase().contains(
+                                    v.toLowerCase(),
+                                  ),
+                            )
+                            .toList();
+                      },
+                    );
+                  },
                   style: TextStyle(
                     color: AppColors.c_CCCCCC,
                     fontSize: 18.sp,
@@ -112,30 +115,31 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               15.getH(),
-              if (str.isNotEmpty)
+              if (ls.isNotEmpty)
                 Expanded(
                   child: SingleChildScrollView(
                     padding: EdgeInsets.symmetric(vertical: 10),
                     child: Column(
                       children: [
                         ...List.generate(
-                          str.length,
+                          ls.length,
                           (index) {
                             return ItemNoteButton(
-                              isActivRemove: str[index].isRemove,
+                              isActivRemove: dataBase[index].isRemove,
                               onTab: () {
-                                if (str[index].isRemove) {
+                                if (dataBase[index].isRemove) {
                                   setState(() {
-                                    str.remove(str[index]);
+                                    ls.remove(dataBase[index]);
                                   });
                                 }
                               },
                               onLongPress: () {
                                 setState(() {
-                                  str[index].isRemove = !str[index].isRemove;
+                                  ls[index].isRemove =
+                                      !ls[index].isRemove;
                                 });
                               },
-                              item: str[index],
+                              item: ls[index],
                             );
                           },
                         ),
@@ -143,29 +147,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-              if (str.isEmpty) 182.getH(),
-              if (str.isEmpty)
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Align(
-                      alignment: Alignment.center,
-                      child: Image.asset(
-                        AppImages.emptyImage,
-                        width: 350.we,
-                        height: 286.he,
-                      ),
-                    ),
-                    Text(
-                      "Create your first note !",
-                      style: TextStyle(
-                        color: AppColors.c_FFFFFF,
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                  ],
-                ),
+              if (ls.isEmpty) 182.getH(),
+              if (ls.isEmpty) ShowEmptyImage(isSearhe: showSearche,),
             ],
           ),
         ),
@@ -205,3 +188,17 @@ class Model {
     required this.text,
   });
 }
+
+final List<Model> dataBase = [
+  Model(name: "Sharifjon Palonchiyev", text: "asdfa"),
+  Model(name: "Palonchi Palonchiyev", text: "asdfa"),
+  // Model(name: "Palonchi Palonchiyev", text: "asdfa"),
+  // Model(name: "Palonchi Palonchiyev", text: "asdfa"),
+  // Model(name: "Palonchi Palonchiyev", text: "asdfa"),
+  // Model(name: "Palonchi Palonchiyev", text: "asdfa"),
+  // Model(name: "Palonchi Palonchiyev", text: "asdfa"),
+  // Model(name: "Palonchi Palonchiyev", text: "asdfa"),
+  // Model(name: "Palonchi Palonchiyev", text: "asdfa"),
+  // Model(name: "Palonchi Palonchiyev", text: "asdfa"),
+  // Model(name: "Alonchi Palonchiyev", text: "asdfa"),
+];

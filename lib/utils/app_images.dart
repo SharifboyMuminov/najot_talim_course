@@ -8,4 +8,5 @@ class AppImages {
 
   // png
   static const String emptyImage = "assets/images/empty_images.png";
+  static const String emptySearche = "assets/images/empty_searche.png";
 }
