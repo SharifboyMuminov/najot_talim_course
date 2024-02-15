@@ -7,15 +7,13 @@ void main(List<String> args) {
   runApp(MyApp());
 }
 
-
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(414, 896),
+      designSize: const Size(390, 844),
       builder: (context, child) {
         ScreenUtil.init(context);
         return MaterialApp(
