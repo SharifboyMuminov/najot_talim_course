@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'screens/add_screen.dart/add_screen.dart';
 import 'screens/home_screen/home_screen.dart';
 
 void main(List<String> args) {
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
           home: child,
         );
       },
-      child: HomeScreen(),
+      child: AddScreen(),
     );
   }
 }
