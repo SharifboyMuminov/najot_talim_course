@@ -15,6 +15,10 @@ class AddScreen extends StatefulWidget {
 }
 
 class _AddScreenState extends State<AddScreen> {
+  int lineTextFild = 1;
+  bool isRemove = false;
+  int lentheText = 0;
+
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
@@ -47,13 +51,30 @@ class _AddScreenState extends State<AddScreen> {
                 ],
               ),
               TextField(
+                onChanged: (v) {
+                  if (lentheText > v.length) {
+                    isRemove = true;
+                  } else {
+                    isRemove = false;
+                  }
+                  lentheText = v.length;
+                  if (v.length % 17 == 0 && !isRemove) {
+                    lineTextFild++;
+                  } else if (v.length % 17 == 0) {
+                    lineTextFild--;
+                  }
+                  if (v.isEmpty) {
+                    lineTextFild = 1;
+                  }
+                  setState(() {});
+                },
                 cursorColor: AppColors.c_CCCCCC,
                 style: TextStyle(
                   color: AppColors.c_FFFFFF,
                   fontSize: 35.sp,
                   fontWeight: FontWeight.w400,
                 ),
-                maxLines: 6,
+                maxLines: lineTextFild,
                 decoration: InputDecoration(
                   hintText: "Title",
                   hintStyle: TextStyle(
