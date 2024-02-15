@@ -10,7 +10,7 @@ class Model {
   });
 }
 
-final List<Model> dataBase = [
+List<Model> dataBase = [
   Model(name: "Sharifjon Palonchiyev", text: "asdfa"),
   Model(name: "Palonchi Palonchiyev", text: "asdfa"),
   Model(name: "Palonchi Palonchiyev", text: "asdfa"),

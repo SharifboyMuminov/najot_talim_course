@@ -48,13 +48,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   onChge: (String value) {
                     setState(
                       () {
-                        ls = dataBase
+                        ls = ls
                             .where(
                               (element) => element.name.toLowerCase().contains(
                                     value.toLowerCase(),
                                   ),
                             )
                             .toList();
+                        if (value.isEmpty) {
+                          ls = dataBase;
+                        }
                       },
                     );
                   },
