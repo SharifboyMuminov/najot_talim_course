@@ -1,0 +1,51 @@
+{
+    "data":[
+        {
+            "subject_name":"Matematika",
+            "level":"medium",
+            "questions":[
+                {
+                    "question_test": "5 + 1 = ?",
+                    "true_answer":"B 6",
+                    "variants": ["A 4","B 6","C 5","D Bilmayman"]
+                },
+                {
+                    "question_test": "5 * 1 = ?",
+                    "true_answer":"C 5",
+                    "variants": ["A 4","B 6","C 5","D Bilmayman"]
+                },
+                {
+                    "question_test": "5 * 5 = ?",
+                    "true_answer":"A 25",
+                    "variants": ["A 25","B 6","C 5","D Bilmayman"]
+                },
+                {
+                    "question_test": "5 * 10 = ?",
+                    "true_answer":"D Bilmayman",
+                    "variants": ["A 25","B 6","C 55","D Bilmayman"]
+                }
+            ]
+        },
+        {
+           "subject_name": "Qonday",
+           "level": "hard",
+           "questions":[
+            {
+                "question_test": "Assalomu aleykum",
+                "true_answer":"Voaleykum assalom",
+                "variants":["A Salom","Assalomu aleykum","C Valekum assalom","D Eh Qonday"]
+            },
+            {
+                "question_test": "Men: Ismiz nma. U: Ismimni nma qilasiz?",
+                "true_answer":"C Zaftrikka yeyman",
+                "variants":["A Kere bo'p qoladi :)","B Pishirib yeyman","C Zaftrikka yeyman","D Sog' bo'lasiz ^_^"]
+            },
+            {
+                "question_test": "Telefonim Iphon 15Pro",
+                "true_answer":"D Xammaga ayt iPhon oganingni",
+                "variants":["A Nma qilishim kerak endi.","B Do's bo'lib qolaylik :)","C San bir iPhon oma ekan","D Xammaga ayt iPhon oganingni"]
+            }
+           ] 
+        }
+    ]
+}

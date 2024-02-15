@@ -1,0 +1,20 @@
+import 'dart:convert';
+
+class QuestionModul {
+  final String question_test;
+  final String true_answer;
+  final List<dynamic> variants;
+
+  QuestionModul(
+      {required this.question_test,
+      required this.true_answer,
+      required this.variants});
+
+  factory QuestionModul.fromJson(Map<String, dynamic> json) {
+    return QuestionModul(
+      question_test: json["question_test"] as String? ?? "",
+      true_answer: json["true_answer"] as String? ?? "",
+      variants: json["variants"],
+    );
+  }
+}

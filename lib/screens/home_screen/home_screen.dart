@@ -1,18 +1,18 @@
-import 'dart:nativewrappers/_internal/vm/lib/core_patch.dart';
-
+import 'package:default_project/moduls/subjec_modul.dart';
 import 'package:default_project/screens/widgets/global_appbar.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/app_images.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../utils/size.dart';
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, required this.data});
+  final SubjectModul data;
 
   @override
   Widget build(BuildContext context) {
@@ -40,86 +40,162 @@ class HomeScreen extends StatelessWidget {
             ),
             SizedBox(height: 22.he),
             Expanded(
-              child: Stack(
-                children: [
-                  Container(
-                    width: width,
-                    decoration: BoxDecoration(
-                      color: AppColors.c_162023,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(40.r),
-                        topRight: Radius.circular(40.r),
+              child: Container(
+                width: width,
+                height: double.infinity,
+                decoration: BoxDecoration(
+                  color: AppColors.c_162023,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(40.r),
+                    topRight: Radius.circular(40.r),
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                        padding: EdgeInsets.only(
+                            left: 32.we, right: 32.we, top: 32.he),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Put your understanding of this concept to test by answering a few MCQs.",
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: AppColors.c_F2F2F2,
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.symmetric(vertical: 15.he),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16.r),
+                                border: Border.all(
+                                    color: AppColors.c_F2954D, width: 1.5),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(16.r),
+                                    child: Image.asset(
+                                      AppImages.iamge1,
+                                      width: 326.we,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 16.we),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(height: 10.he),
+                                        _getRichText(
+                                            text1: "Subject:  ",
+                                            text2: data.name),
+                                        SizedBox(height: 7.he),
+                                        _getRichText(
+                                            text1: "Chapter: ",
+                                            text2: data.questions.length
+                                                .toString()),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(height: 9.he),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 25.he),
+                            _getRichText(
+                                text1: "Total Questions:  ",
+                                text2: data.questions.length.toString()),
+                            SizedBox(height: 12.he),
+                            _getRichText(
+                                text1: "Total Time: ",
+                                text2: (data.questions.length * 3).toString()),
+                          ],
+                        ),
                       ),
                     ),
-                    child: SingleChildScrollView(
-                      padding: EdgeInsets.only(
-                          left: 32.we, right: 32.we, top: 32.he),
-                      child: Column(
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 36.we, vertical: 20.he),
+                      decoration: BoxDecoration(
+                        color: AppColors.c_273032,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(40.r),
+                            topRight: Radius.circular(40.r)),
+                      ),
+                      child: Row(
                         children: [
-                          Text(
-                            "Put your understanding of this concept to test by answering a few MCQs.",
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: AppColors.c_F2F2F2,
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w400,
+                          Expanded(
+                            flex: 2,
+                            child: TextButton(
+                              style: TextButton.styleFrom(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 12.we, vertical: 12.he),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.r),
+                                ),
+                                side: BorderSide(
+                                    color: AppColors.c_F2F2F2, width: 1),
+                              ),
+                              onPressed: () {},
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(AppImages.budilnik),
+                                  Text(
+                                    "15:00",
+                                    style: TextStyle(
+                                      color: AppColors.c_F2F2F2,
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                          Container(
-                            margin: EdgeInsets.symmetric(vertical: 15.he),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  // alignment: Alignment.bottomRight,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 18.we, vertical: 35.he),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.c_F2954D,
-                                    borderRadius: BorderRadius.circular(16.r),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      SizedBox(
-                                        width: 146.we,
-                                        child: Text(
-                                          "Pair of Linear Equation in Two Variables ",
-                                          style: TextStyle(
-                                            color: AppColors.c_F2F2F2,
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Image.asset(
-                                          AppImages.iamge1,
-                                          width: 240,
-                                          fit: BoxFit.fill,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                          SizedBox(width: 32.we),
+                          Expanded(
+                            flex: 4,
+                            child: TextButton(
+                              style: TextButton.styleFrom(
+                                padding: EdgeInsets.symmetric(vertical: 12.he),
+                                backgroundColor: AppColors.c_F2954D,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16.r),
                                 ),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 16.we),
-                                  child: Column(
-                                    children: [
-                                      _getRichText(
-                                          text1: "Subject: ", text2: "Maths"),
-                                    ],
-                                  ),
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => QuizStart(
+                                              data: data,
+                                            )));
+                              },
+                              child: Text(
+                                "Start Quiz",
+                                style: TextStyle(
+                                  color: AppColors.c_F2F2F2,
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w600,
                                 ),
-                              ],
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],
@@ -145,6 +221,57 @@ class HomeScreen extends StatelessWidget {
               fontSize: 14.sp,
               fontWeight: FontWeight.w700,
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class QuizStart extends StatefulWidget {
+  const QuizStart({super.key, required this.data});
+  final SubjectModul data;
+
+  @override
+  State<QuizStart> createState() => _QuizStartState();
+}
+
+class _QuizStartState extends State<QuizStart> {
+  late SubjectModul data;
+
+  @override
+  void initState() {
+    data = widget.data;
+    super.initState();
+  }
+
+  int activIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(data.questions[activIndex].question_test),
+          SizedBox(height: 50.he),
+          ...List.generate(
+            data.questions[activIndex].variants.length,
+            (index) => Text(
+              data.questions[activIndex].variants[index],
+            ),
+          ),
+          SizedBox(height: 40.he),
+          SizedBox(width: double.infinity),
+          TextButton(
+            onPressed: () {
+              if (data.questions.length-1 > activIndex) {
+                activIndex++;
+              }
+              setState(() {});
+            },
+            child: Text("Next"),
           ),
         ],
       ),
