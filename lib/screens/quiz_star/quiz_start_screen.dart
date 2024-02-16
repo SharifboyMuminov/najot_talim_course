@@ -5,6 +5,7 @@ import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'widgets/bottom_view.dart';
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 class QuizStartScreen extends StatefulWidget {
@@ -17,11 +18,16 @@ class QuizStartScreen extends StatefulWidget {
 
 class _QuizStartScreenState extends State<QuizStartScreen> {
   late SubjectModul subjectModul;
+  late int trueAnswerCount;
+  Map<int, int> dic = {};
 
   @override
   void initState() {
     subjectModul = widget.subjectModul;
-
+    trueAnswerCount = 0;
+    for (int i = 0; i < subjectModul.questions.length; i++) {
+      dic[i] = -1;
+    }
     super.initState();
   }
 
@@ -64,16 +70,7 @@ class _QuizStartScreenState extends State<QuizStartScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 32.he),
-                Text(
-                  "Pair of Linear Equation in Two Variables ",
-                  style: TextStyle(
-                    color: AppColors.c_F2F2F2,
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                SizedBox(height: 20.he),
+                SizedBox(height: 30.he),
                 Row(
                   children: [
                     Text(
@@ -86,7 +83,7 @@ class _QuizStartScreenState extends State<QuizStartScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 40.he),
+                SizedBox(height: 30.he),
               ],
             ),
           ),
@@ -103,115 +100,83 @@ class _QuizStartScreenState extends State<QuizStartScreen> {
               child: Column(
                 children: [
                   Expanded(
-                    child: SingleChildScrollView(
+                    child: ListView(
                       padding: EdgeInsets.symmetric(
                           horizontal: 32.we, vertical: 20.he),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          RichText(
-                            text: TextSpan(
-                              text: "Q.${quizIndex + 1}/",
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _getRichText(),
+                            SizedBox(width: double.infinity, height: 12.he),
+                            Text(
+                              "${subjectModul.questions[quizIndex].question_test}",
                               style: TextStyle(
                                 color: AppColors.c_F2F2F2,
-                                fontSize: 20.sp,
+                                fontSize: 17.sp,
                                 fontWeight: FontWeight.w600,
                               ),
-                              children: [
-                                TextSpan(
-                                  text: " ${subjectModul.questions.length}",
-                                  style: TextStyle(
-                                    color: AppColors.c_F2F2F2,
-                                    fontSize: 14.sp,
-                                  ),
-                                ),
-                              ],
                             ),
-                          ),
-                          SizedBox(width: double.infinity, height: 12.he),
-                          Text(
-                            "${subjectModul.questions[quizIndex].question_test}",
-                            style: TextStyle(
-                              color: AppColors.c_F2F2F2,
-                              fontSize: 17.sp,
-                              fontWeight: FontWeight.w600,
+                            SizedBox(height: 24.he),
+                            ...List.generate(
+                              subjectModul.questions[quizIndex].variants.length,
+                              (index) {
+                                return VariantsItem(
+                                  title: subjectModul
+                                      .questions[quizIndex].variants[index],
+                                  isActiv: activIndex == index,
+                                  onTab: () {
+                                    activIndex = index;
+                                    setState(() {});
+                                  },
+                                );
+                              },
                             ),
-                          ),
-                          SizedBox(height: 24.he),
-                          ...List.generate(
-                            subjectModul.questions[quizIndex].variants.length,
-                            (index) {
-                              return VariantsItem(
-                                title: subjectModul
-                                    .questions[quizIndex].variants[index],
-                                isActiv: activIndex == index,
-                                onTab: () {
-                                  activIndex = index;
-                                  setState(() {});
-                                },
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 32.we),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 21.we, vertical: 12.he),
-                            backgroundColor: AppColors.c_273032,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16.r),
-                            ),
-                          ),
-                          onPressed: () {},
-                          child: Text(
-                            "Previous",
-                            style: TextStyle(
-                              color: AppColors.C_BDBDBD,
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 21.we, vertical: 12.he),
-                            backgroundColor: AppColors.c_F2954D,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16.r)),
-                          ),
-                          onPressed: () {
-                            if (quizIndex < subjectModul.questions.length - 1 &&
-                                activIndex != -1) {
-                              quizIndex++;
-                              activIndex = -1;
-                            }
-
-                            setState(() {});
-                          },
-                          child: Text(
-                            "Next",
-                            style: TextStyle(
-                              color: AppColors.c_F2F2F2,
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
+                          ],
                         ),
                       ],
                     ),
                   ),
+                  ButtomView(
+                    onTabNext: () {
+                      dic[quizIndex] = activIndex;
+                      quizIndex++;
+                      activIndex = dic[quizIndex]!;
+                      setState(() {});
+                    },
+                    onTabPrevious: () {
+                      quizIndex--;
+                      activIndex = dic[quizIndex]!;
+                      setState(() {});
+                    },
+                    showPrevious: quizIndex != 0,
+                    showNext: quizIndex < subjectModul.questions.length - 1,
+                  ),
                   SizedBox(height: 20.he),
                 ],
               ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  RichText _getRichText() {
+    return RichText(
+      text: TextSpan(
+        text: "Q.${quizIndex + 1}",
+        style: TextStyle(
+          color: AppColors.c_F2F2F2,
+          fontSize: 20.sp,
+          fontWeight: FontWeight.w600,
+        ),
+        children: [
+          TextSpan(
+            text: "/ ${subjectModul.questions.length}",
+            style: TextStyle(
+              color: AppColors.c_F2F2F2,
+              fontSize: 14.sp,
             ),
           ),
         ],
