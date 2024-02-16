@@ -151,7 +151,7 @@ class HomeScreen extends StatelessWidget {
                                 children: [
                                   SvgPicture.asset(AppImages.budilnik),
                                   Text(
-                                    "15:00",
+                                    " ${data.questions.length * 3}:00",
                                     style: TextStyle(
                                       color: AppColors.c_F2F2F2,
                                       fontSize: 16.sp,
@@ -266,7 +266,7 @@ class _QuizStartState extends State<QuizStart> {
           SizedBox(width: double.infinity),
           TextButton(
             onPressed: () {
-              if (data.questions.length-1 > activIndex) {
+              if (data.questions.length - 1 > activIndex) {
                 activIndex++;
               }
               setState(() {});
