@@ -59,6 +59,7 @@ class _QuizStartScreenState extends State<QuizStartScreen> {
                           const BorderSide(color: AppColors.c_F2954D, width: 1),
                     ),
                     onPressed: () {
+                      dic[quizIndex] = activIndex;
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
