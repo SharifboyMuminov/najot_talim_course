@@ -18,13 +18,11 @@ class QuizStartScreen extends StatefulWidget {
 
 class _QuizStartScreenState extends State<QuizStartScreen> {
   late SubjectModul subjectModul;
-  late int trueAnswerCount;
   Map<int, int> dic = {};
 
   @override
   void initState() {
     subjectModul = widget.subjectModul;
-    trueAnswerCount = 0;
     for (int i = 0; i < subjectModul.questions.length; i++) {
       dic[i] = -1;
     }
