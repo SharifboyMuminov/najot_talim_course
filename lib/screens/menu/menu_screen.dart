@@ -47,7 +47,7 @@ class _MenuScreenState extends State<MenuScreen> {
                       backgroundColor: AppColors.c_F2954D,
                     ),
                     onPressed: () {
-                      Navigator.pushReplacement(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) {

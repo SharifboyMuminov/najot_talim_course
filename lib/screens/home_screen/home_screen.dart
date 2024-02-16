@@ -1,4 +1,5 @@
 import 'package:default_project/moduls/subjec_modul.dart';
+import 'package:default_project/screens/quiz_star/quiz_start_screen.dart';
 import 'package:default_project/screens/widgets/global_appbar.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/app_images.dart';
@@ -35,7 +36,9 @@ class HomeScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 32.we),
               child: GlobalAppBar(
                 title: "Start Quiz",
-                onTabArrow: () {},
+                onTabArrow: () {
+                  Navigator.pop(context);
+                },
               ),
             ),
             SizedBox(height: 22.he),
@@ -151,7 +154,7 @@ class HomeScreen extends StatelessWidget {
                                 children: [
                                   SvgPicture.asset(AppImages.budilnik),
                                   Text(
-                                    " ${data.questions.length * 3}:00",
+                                    "${data.questions.length * 3}:00",
                                     style: TextStyle(
                                       color: AppColors.c_F2F2F2,
                                       fontSize: 16.sp,
@@ -162,7 +165,7 @@ class HomeScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          SizedBox(width: 32.we),
+                          SizedBox(width: 10.we),
                           Expanded(
                             flex: 4,
                             child: TextButton(
@@ -177,8 +180,8 @@ class HomeScreen extends StatelessWidget {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => QuizStart(
-                                              data: data,
+                                        builder: (context) => QuizStartScreen(
+                                              subjectModul: data,
                                             )));
                               },
                               child: Text(
@@ -221,57 +224,6 @@ class HomeScreen extends StatelessWidget {
               fontSize: 14.sp,
               fontWeight: FontWeight.w700,
             ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class QuizStart extends StatefulWidget {
-  const QuizStart({super.key, required this.data});
-  final SubjectModul data;
-
-  @override
-  State<QuizStart> createState() => _QuizStartState();
-}
-
-class _QuizStartState extends State<QuizStart> {
-  late SubjectModul data;
-
-  @override
-  void initState() {
-    data = widget.data;
-    super.initState();
-  }
-
-  int activIndex = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(data.questions[activIndex].question_test),
-          SizedBox(height: 50.he),
-          ...List.generate(
-            data.questions[activIndex].variants.length,
-            (index) => Text(
-              data.questions[activIndex].variants[index],
-            ),
-          ),
-          SizedBox(height: 40.he),
-          SizedBox(width: double.infinity),
-          TextButton(
-            onPressed: () {
-              if (data.questions.length - 1 > activIndex) {
-                activIndex++;
-              }
-              setState(() {});
-            },
-            child: Text("Next"),
           ),
         ],
       ),

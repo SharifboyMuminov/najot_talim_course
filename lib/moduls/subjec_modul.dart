@@ -1,3 +1,5 @@
+import 'package:default_project/moduls/test.dart';
+
 import 'level_enum.dart';
 import 'question_modul.dart';
 
@@ -23,7 +25,7 @@ class SubjectModul {
   // }
   factory SubjectModul.fromJson(Map<String, dynamic> json) {
     return SubjectModul(
-      level: Level.easy,
+      level: getLevel(json["level"] as String? ?? "easy"),
       name: json["subject_name"] as String? ?? "",
       questions: (json["questions"] as List?)
               ?.map((e) => QuestionModul.fromJson(e))
