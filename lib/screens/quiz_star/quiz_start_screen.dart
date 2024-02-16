@@ -1,12 +1,12 @@
 import 'package:default_project/moduls/subjec_modul.dart';
 import 'package:default_project/screens/quiz_star/widgets/variants_item.dart';
+import 'package:default_project/screens/rezalt/rezalt_screen.dart';
 import 'package:default_project/screens/widgets/global_appbar.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'widgets/bottom_view.dart';
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 class QuizStartScreen extends StatefulWidget {
   const QuizStartScreen({super.key, required this.subjectModul});
@@ -55,9 +55,20 @@ class _QuizStartScreenState extends State<QuizStartScreen> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16.r),
                       ),
-                      side: BorderSide(color: AppColors.c_F2954D, width: 1),
+                      side:
+                          const BorderSide(color: AppColors.c_F2954D, width: 1),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return RezaltScreen(
+                                dic: dic, subjectModul: subjectModul);
+                          },
+                        ),
+                      );
+                    },
                     child: Text(
                       "Submit",
                       style: TextStyle(
@@ -143,6 +154,9 @@ class _QuizStartScreenState extends State<QuizStartScreen> {
                       setState(() {});
                     },
                     onTabPrevious: () {
+                      if (quizIndex == subjectModul.questions.length - 1) {
+                        dic[quizIndex] = activIndex;
+                      }
                       quizIndex--;
                       activIndex = dic[quizIndex]!;
                       setState(() {});
