@@ -1,5 +1,4 @@
 import 'package:default_project/moduls/data_repo.dart';
-import 'package:default_project/screens/home_screen/home_screen.dart';
 import 'package:default_project/screens/menu/menu_screen.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
