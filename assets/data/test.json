@@ -32,8 +32,8 @@
            "questions":[
             {
                 "question_test": "Assalomu aleykum",
-                "true_answer":"B Voaleykum assalom",
-                "variants":["A Salom","B Assalomu aleykum","C Valekum assalom","D Eh Qonday"]
+                "true_answer":"C Voaleykum assalom",
+                "variants":["A Salom","B Assalomu aleykum","C Voaleykum assalom","D Eh Qonday"]
             },
             {
                 "question_test": "Men: Ismiz nma. U: Ismimni nma qilasiz?",

@@ -1,4 +1,4 @@
-import 'package:default_project/screens/rezalt/widget/show_rezal.dart';
+import 'package:default_project/screens/widgets/show_rezal.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';

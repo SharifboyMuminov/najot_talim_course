@@ -8,17 +8,19 @@ class RezaltView extends StatelessWidget {
       required this.child,
       required this.pading,
       required this.bacground,
-      this.isShowBorder = true});
+      this.isShowBorder = true,this.margin});
 
   final Widget child;
   final Color bacground;
   final EdgeInsets pading;
   final bool isShowBorder;
+  final EdgeInsets? margin;
 
   @override
   Widget build(BuildContext context) {
     return Container(
         width: double.infinity,
+        margin: margin,
         padding: pading,
         decoration: BoxDecoration(
           color: bacground,

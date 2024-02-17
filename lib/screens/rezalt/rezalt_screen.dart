@@ -1,14 +1,13 @@
 import 'package:default_project/moduls/subjec_modul.dart';
-import 'package:default_project/screens/rezalt/widget/show_rezalt_true.dart';
+import 'package:default_project/screens/check_answer/check_answer_screen.dart';
 import 'package:default_project/screens/widgets/global_appbar.dart';
+import 'package:default_project/screens/widgets/show_rezal.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'widget/show_rezal.dart';
+import 'widget/show_rezalt_true_count.dart';
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 class RezaltScreen extends StatefulWidget {
@@ -25,18 +24,23 @@ class _RezaltScreenState extends State<RezaltScreen> {
   late Map<int, int> dic;
   late SubjectModul subjectModul;
   late int trueCount;
+  late List<bool> trues;
   bool isStop = false;
 
   @override
   void initState() {
     dic = widget.dic;
+    trues = [];
     subjectModul = widget.subjectModul;
     trueCount = 0;
     for (int i = 0; i < dic.length; i++) {
       if (dic[i] != -1 &&
           subjectModul.questions[i].variants[dic[i]!] ==
               subjectModul.questions[i].true_answer) {
+        trues.add(true);
         trueCount++;
+      } else {
+        trues.add(false);
       }
     }
 
@@ -147,9 +151,48 @@ class _RezaltScreenState extends State<RezaltScreen> {
                     SizedBox(height: 19.he),
                     ShowEndRezalt(
                       countTrue: trueCount,
-                      countQuets: subjectModul.questions.length,
+                      countQuets: subjectModul.questions.length - trueCount,
                       isStop: isStop,
-                    )
+                    ),
+                    SizedBox(height: 30.he),
+                    SizedBox(
+                      width: double.infinity,
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.symmetric(vertical: 15.he),
+                          backgroundColor: AppColors.c_F2954D.withOpacity(0.5),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.r),
+                          ),
+                          side: BorderSide(
+                              color: AppColors.c_F2954D, width: 1.we),
+                        ),
+                        onPressed: () {
+                          if (isStop) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return CheckAnswerScreen(
+                                    subjectModul: subjectModul,
+                                    dicInt: dic,
+                                    trues: trues,
+                                  );
+                                },
+                              ),
+                            );
+                          }
+                        },
+                        child: Text(
+                          "Check Answers",
+                          style: TextStyle(
+                            color: AppColors.c_F2F2F2,
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
