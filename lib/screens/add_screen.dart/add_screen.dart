@@ -5,6 +5,9 @@ import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import 'widget/alert_item.dart';
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 class AddScreen extends StatefulWidget {
@@ -62,7 +65,58 @@ class _AddScreenState extends State<AddScreen> {
                   21.getW(),
                   ButtonTop(
                     icon: AppImages.save,
-                    onTab: () {},
+                    onTab: () {
+                      // showDialog(
+                      //   context: context,
+                      //   builder: (context) {
+                      //     return AlertDialog(
+                      //       iconPadding: EdgeInsets.symmetric(vertical: 20.he),
+                      //       backgroundColor: AppColors.c_252525,
+                      //       title: Text(
+                      //         "Save changes ?",
+                      //         style: TextStyle(
+                      //           color: AppColors.c_CFCFCF,
+                      //         ),
+                      //       ),
+                      //       icon: SvgPicture.asset(
+                      //         AppImages.undovBlackSvg,
+                      //       ),
+                      //       shape: RoundedRectangleBorder(
+                      //         borderRadius: BorderRadius.circular(20.r),
+                      //       ),
+                      //       actions: [
+                      //         Padding(
+                      //           padding:
+                      //               EdgeInsets.symmetric(horizontal: 15.we),
+                      //           child: Row(
+                      //             mainAxisAlignment:
+                      //                 MainAxisAlignment.spaceBetween,
+                      //             children: [
+                      //               DialogButton(
+                      //                   title: "Discard",
+                      //                   onTab: () {},
+                      //                   backgroundColor: AppColors.c_FF0000),
+                      //               DialogButton(
+                      //                 title: 'Save',
+                      //                 onTab: () {},
+                      //                 backgroundColor: AppColors.c_30BE71,
+                      //               ),
+                      //             ],
+                      //           ),
+                      //         ),
+                      //       ],
+                      //       actionsPadding: EdgeInsets.symmetric(
+                      //         vertical: 30.he,
+                      //       ),
+                      //     );
+                      //   },
+                      // );
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Hello"),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),

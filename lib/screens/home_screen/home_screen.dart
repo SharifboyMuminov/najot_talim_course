@@ -1,3 +1,6 @@
+import 'package:default_project/moduls/burning.dart';
+import 'package:default_project/moduls/data_repo.dart';
+import 'package:default_project/moduls/persons.dart';
 import 'package:default_project/screens/global_widget.dart/top_button.dart';
 import 'package:default_project/screens/home_screen/widgets/empty_show.dart';
 import 'package:default_project/screens/home_screen/widgets/item_note.dart';
@@ -19,10 +22,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Model> ls = dataBase;
+  late List<Person> ls1;
+  late List<Person> ls2;
 
   bool showSearche = false;
   String changeTextFild = "";
+
+  @override
+  void initState() {
+    ls1 = DataRepository.instanse.allSubject[0].people;
+    ls2 = DataRepository.instanse.allSubject[0].people;
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,15 +60,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   onChge: (String value) {
                     setState(
                       () {
-                        ls = ls
+                        ls1 = ls1
                             .where(
-                              (element) => element.name.toLowerCase().contains(
+                              (element) => element.fullname.toLowerCase().contains(
                                     value.toLowerCase(),
                                   ),
                             )
                             .toList();
                         if (value.isEmpty) {
-                          ls = dataBase;
+                          ls1 = ls2;
                         }
                       },
                     );
@@ -91,22 +103,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               15.getH(),
-              if (ls.isNotEmpty)
+              if (ls1.isNotEmpty)
                 Expanded(
                   child: SingleChildScrollView(
                     padding: EdgeInsets.symmetric(vertical: 10.we),
                     child: Column(
                       children: [
                         ...List.generate(
-                          ls.length,
+                          ls1.length,
                           (index) {
                             return ItemNoteButton(
-                              isActivRemove: ls[index].isRemove,
+                              isActivRemove: ls1[index].isRemove,
                               onTab: () {
-                                if (ls[index].isRemove) {
+                                if (ls1[index].isRemove) {
                                   setState(
                                     () {
-                                      ls.remove(ls[index]);
+                                      ls1.remove(ls1[index]);
                                     },
                                   );
                                 }
@@ -114,11 +126,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               onLongPress: () {
                                 setState(
                                   () {
-                                    ls[index].isRemove = !ls[index].isRemove;
+                                    ls1[index].isRemove = !ls1[index].isRemove;
                                   },
                                 );
                               },
-                              item: ls[index],
+                              item: ls1[index],
                             );
                           },
                         ),
@@ -126,8 +138,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-              if (ls.isEmpty) 182.getH(),
-              if (ls.isEmpty)
+              if (ls1.isEmpty) 182.getH(),
+              if (ls1.isEmpty)
                 ShowEmptyImage(
                   isSearhe: showSearche,
                 ),

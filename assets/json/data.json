@@ -1,0 +1,24 @@
+{
+    "data":[
+        {
+            "burning_name":"qarzlarim",
+            "people":[
+                {"name":"Sharifjon Muminov","text":"asdfasdfasdfa","is_remove":false},
+                {"name":"Kimdir Palonchiyv","text":"asdfasdfasdfa","is_remove":false},
+                {"name":"Komiljon Qahorjonov","text":"asdfasdfasdfa","is_remove":false},
+                {"name":"Otabek ???","text":"asdfasdfasdfa","is_remove":false},
+                {"name":"Chingih","text":"asdfasdfasdfa","is_remove":false}
+            ]
+        },
+        {
+            "burning_name":"qarzdorlar",
+            "people":[
+                {"name":"Sharifjon Muminov","text":"asdfasdfasdfa","is_remove":false},
+                {"name":"Kimdir Palonchiyv","text":"asdfasdfasdfa","is_remove":false},
+                {"name":"Komiljon Qahorjonov","text":"asdfasdfasdfa","is_remove":false},
+                {"name":"Otabek ???","text":"asdfasdfasdfa","is_remove":false},
+                {"name":"Chingih","text":"asdfasdfasdfa","is_remove":false}
+            ]
+        }
+    ]
+}

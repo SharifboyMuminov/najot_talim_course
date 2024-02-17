@@ -1,3 +1,4 @@
+import 'package:default_project/moduls/persons.dart';
 import 'package:default_project/screens/repo.dart';
 import 'package:default_project/utils/app_images.dart';
 import 'package:default_project/utils/size.dart';
@@ -14,7 +15,7 @@ class ItemNoteButton extends StatelessWidget {
     required this.item,
   });
 
-  final Model item;
+  final Person item;
   final bool isActivRemove;
   final VoidCallback onTab;
   final VoidCallback onLongPress;
@@ -40,7 +41,7 @@ class ItemNoteButton extends StatelessWidget {
         child: isActivRemove
             ? SvgPicture.asset(AppImages.remove)
             : Text(
-                item.name,
+                item.fullname,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 25.sp,
