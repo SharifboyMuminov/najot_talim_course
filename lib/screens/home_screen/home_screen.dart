@@ -66,11 +66,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                             )
                             .toList();
+
                         if (value.isEmpty) {
                           ls1 = ls2;
                         }
-                        // print(ls1);
-                        // print(ls2);
                       },
                     );
                   },
@@ -122,6 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     () {
                                       // print(ls1[index].fullname);
                                       // print(ls2[index].fullname);
+                                      ls2.remove(ls1[index]);
                                       ls1.remove(ls1[index]);
                                     },
                                   );
