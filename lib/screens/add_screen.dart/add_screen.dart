@@ -4,12 +4,13 @@ import 'package:default_project/utils/app_images.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 class AddScreen extends StatefulWidget {
-  const AddScreen({super.key});
+  const AddScreen({
+    super.key,
+  });
 
   @override
   State<AddScreen> createState() => _AddScreenState();
@@ -24,6 +25,9 @@ class _AddScreenState extends State<AddScreen> {
 
   int lentheText1 = 0;
   int lentheText2 = 0;
+
+  final TextEditingController controllerTitle = TextEditingController();
+  final TextEditingController controllerSubTitle = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -51,18 +55,26 @@ class _AddScreenState extends State<AddScreen> {
                     onTab: () {},
                   ),
                   const Spacer(),
-                  ButtonTop(icon: AppImages.look, onTab: () {}),
+                  ButtonTop(
+                    icon: AppImages.look,
+                    onTab: () {},
+                  ),
                   21.getW(),
-                  ButtonTop(icon: AppImages.save, onTab: () {}),
+                  ButtonTop(
+                    icon: AppImages.save,
+                    onTab: () {},
+                  ),
                 ],
               ),
             ),
             Expanded(
               child: SingleChildScrollView(
-                padding: EdgeInsets.symmetric(horizontal: 15.we),
+                padding:
+                    EdgeInsets.symmetric(horizontal: 15.we, vertical: 20.he),
                 child: Column(
                   children: [
                     TextField(
+                      controller: controllerTitle,
                       onChanged: (v) {
                         if (lentheText1 > v.length) {
                           isRemove1 = true;
@@ -73,8 +85,11 @@ class _AddScreenState extends State<AddScreen> {
 
                         if (v.length % 17 == 0 && !isRemove1) {
                           lineTextFild1++;
-                        } else if (v.length % 17 == 0) {
-                          lineTextFild1--;
+                        } else if (v.length % 17 == 0 ||
+                            lentheText1 % 16 == 0 && isRemove1) {
+                          if (lineTextFild1 > 1) {
+                            lineTextFild1--;
+                          }
                         }
                         if (v.isEmpty) {
                           lineTextFild1 = 1;
@@ -92,7 +107,7 @@ class _AddScreenState extends State<AddScreen> {
                           hintText: "Title",
                           hintStyle: TextStyle(
                             color: AppColors.c_9A9A9A,
-                            fontSize: 48.sp,
+                            fontSize: 45.sp,
                             fontWeight: FontWeight.w400,
                           ),
                           focusedBorder: OutlineInputBorder(
@@ -105,6 +120,7 @@ class _AddScreenState extends State<AddScreen> {
                                   BorderSide(color: AppColors.c_252525))),
                     ),
                     TextField(
+                      controller: controllerSubTitle,
                       onChanged: (v) {
                         if (lentheText2 > v.length) {
                           isRemove2 = true;
@@ -113,10 +129,13 @@ class _AddScreenState extends State<AddScreen> {
                         }
                         lentheText2 = v.length;
 
-                        if (v.length % 17 == 0 && !isRemove2) {
+                        if (v.length % 25 == 0 && !isRemove2) {
                           lineTextFild2++;
-                        } else if (v.length % 17 == 0) {
-                          lineTextFild2--;
+                        } else if (v.length % 25 == 0 ||
+                            lentheText1 % 24 == 0 && isRemove1) {
+                          if (lineTextFild2 > 1) {
+                            lineTextFild2--;
+                          }
                         }
                         if (v.isEmpty) {
                           lineTextFild2 = 1;
