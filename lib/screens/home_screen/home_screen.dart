@@ -7,6 +7,7 @@ import 'package:default_project/screens/home_screen/widgets/text_fild.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/app_images.dart';
 import 'package:default_project/utils/size.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -48,40 +49,13 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       child: Scaffold(
         backgroundColor: AppColors.c_252525,
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.we),
-          child: Column(
-            children: [
-              showSearche ? 88.getH() : 55.getH(),
-              if (showSearche)
-                SearcheTextFild(
-                  onChge: (String value) {
-                    setState(
-                      () {
-                        ls1 = ls1
-                            .where(
-                              (element) =>
-                                  element.fullname.toLowerCase().contains(
-                                        value.toLowerCase(),
-                                      ),
-                            )
-                            .toList();
-
-                        if (value.isEmpty) {
-                          ls1 = ls2;
-                        }
-                      },
-                    );
-                  },
-                  onTabXmark: () {
-                    setState(() {
-                      showSearche = false;
-                      ls1 = ls2;
-                    });
-                  },
-                ),
-              if (!showSearche)
-                Row(
+        body: Column(
+          children: [
+            !showSearche ? 50.getH() : SizedBox(),
+            if (!showSearche)
+              Padding(
+                padding:  EdgeInsets.symmetric(horizontal: 24.we),
+                child: Row(
                   children: [
                     Text(
                       "Notes",
@@ -103,52 +77,82 @@ class _HomeScreenState extends State<HomeScreen> {
                     ButtonTop(icon: AppImages.undovSvg, onTab: () {}),
                   ],
                 ),
-              15.getH(),
-              if (ls1.isNotEmpty)
-                Expanded(
-                  child: SingleChildScrollView(
-                    padding: EdgeInsets.symmetric(vertical: 10.we),
-                    child: Column(
-                      children: [
-                        ...List.generate(
-                          ls1.length,
-                          (index) {
-                            return ItemNoteButton(
-                              isActivRemove: ls1[index].isRemove,
-                              onTab: () {
-                                if (ls1[index].isRemove) {
-                                  setState(
-                                    () {
-                                      // print(ls1[index].fullname);
-                                      // print(ls2[index].fullname);
-                                      ls2.remove(ls1[index]);
-                                      ls1.remove(ls1[index]);
-                                    },
-                                  );
-                                }
-                              },
-                              onLongPress: () {
+              ),
+            Expanded(
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                padding: EdgeInsets.symmetric(horizontal: 24.we),
+                child: Column(
+                  children: [
+                    showSearche ? 88.getH() : SizedBox(),
+                    if (showSearche)
+                      SearcheTextFild(
+                        onChge: (String value) {
+                          setState(
+                            () {
+                              ls1 = ls1
+                                  .where(
+                                    (element) =>
+                                        element.fullname.toLowerCase().contains(
+                                              value.toLowerCase(),
+                                            ),
+                                  )
+                                  .toList();
+
+                              if (value.isEmpty) {
+                                ls1 = ls2;
+                              }
+                            },
+                          );
+                        },
+                        onTabXmark: () {
+                          setState(() {
+                            showSearche = false;
+                            ls1 = ls2;
+                          });
+                        },
+                      ),
+
+                    15.getH(),
+                    if (ls1.isNotEmpty)
+                      ...List.generate(
+                        ls1.length,
+                        (index) {
+                          return ItemNoteButton(
+                            isActivRemove: ls1[index].isRemove,
+                            onTab: () {
+                              if (ls1[index].isRemove) {
                                 setState(
                                   () {
-                                    ls1[index].isRemove = !ls1[index].isRemove;
+                                    // print(ls1[index].fullname);
+                                    // print(ls2[index].fullname);
+                                    ls2.remove(ls1[index]);
+                                    ls1.remove(ls1[index]);
                                   },
                                 );
-                              },
-                              item: ls1[index],
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
+                              }
+                            },
+                            onLongPress: () {
+                              setState(
+                                () {
+                                  ls1[index].isRemove = !ls1[index].isRemove;
+                                },
+                              );
+                            },
+                            item: ls1[index],
+                          );
+                        },
+                      ),
+                    if (ls1.isEmpty) 182.getH(),
+                    if (ls1.isEmpty)
+                      ShowEmptyImage(
+                        isSearhe: showSearche,
+                      ),
+                  ],
                 ),
-              if (ls1.isEmpty) 182.getH(),
-              if (ls1.isEmpty)
-                ShowEmptyImage(
-                  isSearhe: showSearche,
-                ),
-            ],
-          ),
+              ),
+            ),
+          ],
         ),
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
         floatingActionButton: Container(
