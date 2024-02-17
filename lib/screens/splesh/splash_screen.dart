@@ -2,6 +2,7 @@ import 'package:default_project/moduls/data_repo.dart';
 import 'package:default_project/screens/home_screen/home_screen.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
 
 class SplashCreen extends StatefulWidget {
@@ -33,11 +34,19 @@ class _SplashCreenState extends State<SplashCreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.c_252525,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [Lottie.asset("assets/lottie/splash_animetion.json")],
+    return AnnotatedRegion(
+      value: const SystemUiOverlayStyle(
+        systemNavigationBarColor: AppColors.c_252525,
+        statusBarBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.light,
+        statusBarColor: AppColors.c_252525,
+      ),
+      child: Scaffold(
+        backgroundColor: AppColors.c_252525,
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [Lottie.asset("assets/lottie/splash_animetion.json")],
+        ),
       ),
     );
   }
