@@ -19,6 +19,5 @@ class DataRepository {
             ?.map((e) => Burning.fromJson(e))
             .toList() ??
         [];
-    print(allSubject);
   }
 }

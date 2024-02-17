@@ -1,11 +1,9 @@
-import 'package:default_project/moduls/burning.dart';
 import 'package:default_project/moduls/data_repo.dart';
 import 'package:default_project/moduls/persons.dart';
 import 'package:default_project/screens/global_widget.dart/top_button.dart';
 import 'package:default_project/screens/home_screen/widgets/empty_show.dart';
 import 'package:default_project/screens/home_screen/widgets/item_note.dart';
 import 'package:default_project/screens/home_screen/widgets/text_fild.dart';
-import 'package:default_project/screens/repo.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/app_images.dart';
 import 'package:default_project/utils/size.dart';
@@ -30,8 +28,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    ls1 = DataRepository.instanse.allSubject[0].people;
-    ls2 = DataRepository.instanse.allSubject[0].people;
+    ls1 = [...DataRepository.instanse.allSubject[0].people];
+    ls2 = [...DataRepository.instanse.allSubject[0].people];
 
     super.initState();
   }
@@ -62,20 +60,24 @@ class _HomeScreenState extends State<HomeScreen> {
                       () {
                         ls1 = ls1
                             .where(
-                              (element) => element.fullname.toLowerCase().contains(
-                                    value.toLowerCase(),
-                                  ),
+                              (element) =>
+                                  element.fullname.toLowerCase().contains(
+                                        value.toLowerCase(),
+                                      ),
                             )
                             .toList();
                         if (value.isEmpty) {
                           ls1 = ls2;
                         }
+                        // print(ls1);
+                        // print(ls2);
                       },
                     );
                   },
                   onTabXmark: () {
                     setState(() {
                       showSearche = false;
+                      ls1 = ls2;
                     });
                   },
                 ),
@@ -118,6 +120,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 if (ls1[index].isRemove) {
                                   setState(
                                     () {
+                                      // print(ls1[index].fullname);
+                                      // print(ls2[index].fullname);
                                       ls1.remove(ls1[index]);
                                     },
                                   );
