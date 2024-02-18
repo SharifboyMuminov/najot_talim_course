@@ -7,7 +7,6 @@ import 'package:default_project/screens/home_screen/widgets/text_fild.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/app_images.dart';
 import 'package:default_project/utils/size.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -51,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: AppColors.c_252525,
         body: Column(
           children: [
-            !showSearche ? 50.getH() : SizedBox(),
+            !showSearche ? 50.getH() : const SizedBox(),
             if (!showSearche)
               Padding(
                 padding:  EdgeInsets.symmetric(horizontal: 24.we),
@@ -84,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 24.we),
                 child: Column(
                   children: [
-                    showSearche ? 88.getH() : SizedBox(),
+                    showSearche ? 88.getH() : const SizedBox(),
                     if (showSearche)
                       SearcheTextFild(
                         onChge: (String value) {

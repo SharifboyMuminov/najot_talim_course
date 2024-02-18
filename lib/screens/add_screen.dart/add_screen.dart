@@ -5,10 +5,7 @@ import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-import 'widget/alert_item.dart';
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 class AddScreen extends StatefulWidget {
   const AddScreen({
@@ -112,7 +109,7 @@ class _AddScreenState extends State<AddScreen> {
                       //   },
                       // );
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
+                        const SnackBar(
                           content: Text("Hello"),
                         ),
                       );
@@ -164,11 +161,11 @@ class _AddScreenState extends State<AddScreen> {
                             fontSize: 45.sp,
                             fontWeight: FontWeight.w400,
                           ),
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: const OutlineInputBorder(
                               borderRadius: BorderRadius.zero,
                               borderSide:
                                   BorderSide(color: AppColors.c_252525)),
-                          enabledBorder: OutlineInputBorder(
+                          enabledBorder: const OutlineInputBorder(
                               borderRadius: BorderRadius.zero,
                               borderSide:
                                   BorderSide(color: AppColors.c_252525))),
@@ -210,11 +207,11 @@ class _AddScreenState extends State<AddScreen> {
                             fontSize: 23.sp,
                             fontWeight: FontWeight.w400,
                           ),
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: const OutlineInputBorder(
                               borderRadius: BorderRadius.zero,
                               borderSide:
                                   BorderSide(color: AppColors.c_252525)),
-                          enabledBorder: OutlineInputBorder(
+                          enabledBorder: const OutlineInputBorder(
                               borderRadius: BorderRadius.zero,
                               borderSide:
                                   BorderSide(color: AppColors.c_252525))),
