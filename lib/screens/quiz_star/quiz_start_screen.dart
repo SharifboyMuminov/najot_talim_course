@@ -23,6 +23,7 @@ class _QuizStartScreenState extends State<QuizStartScreen> {
   @override
   void initState() {
     subjectModul = widget.subjectModul;
+    _timerLogic();
     for (int i = 0; i < subjectModul.questions.length; i++) {
       dic[i] = -1;
     }
@@ -31,6 +32,7 @@ class _QuizStartScreenState extends State<QuizStartScreen> {
 
   int quizIndex = 0;
   int activIndex = -1;
+  int count = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -82,16 +84,32 @@ class _QuizStartScreenState extends State<QuizStartScreen> {
                 ),
                 SizedBox(height: 30.he),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       "${subjectModul.name}/ Real Numbres",
                       style: TextStyle(
                         color: AppColors.c_F2F2F2.withOpacity(0.6),
-                        fontSize: 16.sp,
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
+                    Text(
+                      _getMinutText(count),
+                      style: TextStyle(
+                        color: AppColors.c_F2F2F2,
+                        fontSize: 15.sp,
+                      ),
+                    ),
                   ],
+                ),
+                SizedBox(height: 10.he),
+                LinearProgressIndicator(
+                  minHeight: 8.he,
+                  backgroundColor: AppColors.c_2F3739,
+                  borderRadius: BorderRadius.circular(8),
+                  color: AppColors.c_F2954D,
+                  value: count / (subjectModul.questions.length * 10),
                 ),
                 SizedBox(height: 30.he),
               ],
@@ -193,6 +211,33 @@ class _QuizStartScreenState extends State<QuizStartScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  String _getMinutText(int second) {
+    String minutStr = (second ~/ 60).toString();
+    String secondStr = (second % 60).toString();
+
+    minutStr = minutStr.length <= 1 ? "0$minutStr" : minutStr;
+    secondStr = secondStr.length <= 1 ? "0$secondStr" : secondStr;
+
+    return "$minutStr : $secondStr";
+  }
+
+  Future<void> _timerLogic() async {
+    for (int i = subjectModul.questions.length * 60; i > 0; i--) {
+      setState(() {
+        count = i;
+      });
+      await Future.delayed(const Duration(seconds: 1));
+    }
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return RezaltScreen(dic: dic, subjectModul: subjectModul);
+        },
       ),
     );
   }
