@@ -38,6 +38,7 @@ dependencies:
   flutter_screenutil: ^5.9.0
   flutter_svg: ^2.0.9
   lottie: ^3.0.0
+  percent_indicator: ^4.2.3
 
 dev_dependencies:
   flutter_test:
