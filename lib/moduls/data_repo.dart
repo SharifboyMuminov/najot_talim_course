@@ -15,7 +15,7 @@ class DataRepository {
     var data = await rootBundle.loadString("assets/data/test.json");
     var decodeData = await jsonDecode(data);
     
-    allSubject = await (decodeData["data"] as List?)
+    allSubject = (decodeData["data"] as List?)
             ?.map((e) => SubjectModul.fromJson(e))
             .toList() ??
         [];
