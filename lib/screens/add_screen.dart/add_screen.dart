@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:default_project/moduls/persons.dart';
 import 'package:default_project/screens/global_widget.dart/top_button.dart';
 import 'package:default_project/utils/app_colors.dart';
@@ -29,14 +27,13 @@ class _AddScreenState extends State<AddScreen> {
 
   int lineTextFild1 = 1;
   int lineTextFild2 = 1;
+  int lentheText1 = 0;
+  int lentheText2 = 0;
 
   bool isRemove1 = false;
   bool isRemove2 = false;
   bool isSvae = true;
   bool isPop = false;
-
-  int lentheText1 = 0;
-  int lentheText2 = 0;
 
   final TextEditingController controllerTitle = TextEditingController();
   final TextEditingController controllerSubTitle = TextEditingController();
@@ -71,7 +68,30 @@ class _AddScreenState extends State<AddScreen> {
                   ButtonTop(
                     icon: AppImages.arrowBack,
                     onTab: () {
-                      Navigator.pop(context);
+                      if (controllerTitle.text.isEmpty) {
+                        Navigator.pop(context);
+                        return;
+                      }
+
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertView(
+                            onTabSave: () {
+                              ls1.add(
+                                Person(
+                                    fullname: controllerTitle.text,
+                                    text: controllerSubTitle.text,
+                                    isRemove: false),
+                              );
+                            },
+                            onTabDiscard: () {
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                            },
+                          );
+                        },
+                      );
                     },
                   ),
                   const Spacer(),
@@ -88,8 +108,8 @@ class _AddScreenState extends State<AddScreen> {
                         builder: (context) {
                           return AlertView(
                             onTabSave: () {
-                              if (controllerSubTitle.text.isNotEmpty &&
-                                  controllerTitle.text.isNotEmpty) {
+                              if (controllerTitle.text.isNotEmpty &&
+                                  controllerSubTitle.text.isNotEmpty) {
                                 ls1.add(
                                   Person(
                                       fullname: controllerTitle.text,
@@ -118,6 +138,9 @@ class _AddScreenState extends State<AddScreen> {
                                 );
                                 Navigator.pop(context);
                               }
+                            },
+                            onTabDiscard: () {
+                              Navigator.pop(context);
                             },
                           );
                         },

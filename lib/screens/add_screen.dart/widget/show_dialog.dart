@@ -7,8 +7,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class AlertView extends StatelessWidget {
-  const AlertView({super.key, required this.onTabSave});
+  const AlertView(
+      {super.key, required this.onTabSave, required this.onTabDiscard});
   final VoidCallback onTabSave;
+  final VoidCallback onTabDiscard;
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +37,7 @@ class AlertView extends StatelessWidget {
             children: [
               DialogButton(
                   title: "Discard",
-                  onTab: () {
-                    Navigator.pop(context);
-                  },
+                  onTab: onTabDiscard,
                   backgroundColor: AppColors.c_FF0000),
               DialogButton(
                 title: 'Save',
