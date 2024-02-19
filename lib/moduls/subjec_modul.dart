@@ -1,4 +1,6 @@
 import 'package:default_project/moduls/test.dart';
+import 'package:default_project/utils/function.dart';
+import 'package:flutter/material.dart';
 
 import 'level_enum.dart';
 import 'question_modul.dart';
@@ -6,9 +8,11 @@ import 'question_modul.dart';
 class SubjectModul {
   final String name;
   final Level level;
+  final Color color;
   final List<QuestionModul> questions;
 
   SubjectModul({
+    required this.color,
     required this.level,
     required this.name,
     required this.questions,
@@ -25,6 +29,7 @@ class SubjectModul {
   // }
   factory SubjectModul.fromJson(Map<String, dynamic> json) {
     return SubjectModul(
+      color: (json["color"] as String? ?? "F2954D").toColor(),
       level: getLevel(json["level"] as String? ?? "easy"),
       name: json["subject_name"] as String? ?? "",
       questions: (json["questions"] as List?)

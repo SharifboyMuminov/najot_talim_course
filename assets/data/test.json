@@ -3,6 +3,7 @@
         {
             "subject_name":"Matematika",
             "level":"medium",
+            "color": "0E81B4",
             "questions":[
                 {
                     "question_test": "5 + 1 = ?",
@@ -29,6 +30,7 @@
         {
            "subject_name": "Qonday",
            "level": "hard",
+           "color": "27AE60",
            "questions":[
             {
                 "question_test": "Assalomu aleykum",
@@ -46,6 +48,35 @@
                 "variants":["A Nma qilishim kerak endi.","B Do's bo'lib qolaylik :)","C San bir iPhon oma ekan","D Xammaga ayt iPhon oganingni"]
             }
            ] 
+        },
+        {
+            "subject_name": "Fizika",
+            "level":"easy",
+            "color":"F2954D",
+            "questions":[
+                {
+                    "question_text": "Birinchi termometr kim tomonidan yasalgan?",
+                    "true_answer": "B Galiley",
+                    "variants":["A Gey-Lyussak","B Galiley","C Beruniy","D Braun"]
+                },
+                {
+                    "question_text": "Mexanika so'zining manosi nima",
+                    "true_answer": "B Yunoncha, mashina haqidagi ta'limot",
+                    "variants":["A Tabiat degan ma'noni anglatadi, Grekcha","B Yunoncha, mashina haqidagi ta'limot","C Uzliksiz bir o'lchamli degani.","D barcha javoblar to'g'ri"]
+                    
+                },
+                {
+                    "question_text": "Mexanik harakat nima?",
+                    "true_answer": "A Jismlar fazodagi o'rnining vaqt o'tishi bilan boshqa jismlarga nisbatan o'zgarishiga",
+                    "variants":["A Jismlar fazodagi o'rnining vaqt o'tishi bilan boshqa jismlarga nisbatan o'zgarishiga","B Oddiy harakat","C Yo'l qiymati bilan ifodalanadigan harakatga", "Jismlar bosib o'tgan yo'lga"]
+                    
+                },
+                {
+                    "question_text": "Yo'l nima?",
+                    "true_answer": "A Jismlarni harakat trayektoriyasi bo'ylab bosib o'tgan masofasi.",
+                    "variants":["A Jismlarni harakat trayektoriyasi bo'ylab bosib o'tgan masofasi.","B Jismning harakat davomida bosib o'tgan masofasi.","C Jismlarning ma'lum vaqt oralig'ida bosib o'tgan masofa.","D Jismlar bosib o'tgan yo'lga"]
+                }
+            ]
         }
     ]
 }

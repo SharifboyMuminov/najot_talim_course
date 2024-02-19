@@ -53,7 +53,7 @@ class _MenuScreenState extends State<MenuScreen> {
                       style: TextButton.styleFrom(
                         padding: EdgeInsets.symmetric(
                             vertical: 20.he, horizontal: 20.we),
-                        backgroundColor: AppColors.c_F2954D,
+                        backgroundColor: data[index].color,
                       ),
                       onPressed: () {
                         Navigator.push(

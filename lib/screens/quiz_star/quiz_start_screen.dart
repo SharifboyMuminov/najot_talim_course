@@ -226,11 +226,14 @@ class _QuizStartScreenState extends State<QuizStartScreen> {
   }
 
   Future<void> _timerLogic() async {
-    for (int i = subjectModul.questions.length * 60; i > 0; i--) {
+    for (int i = subjectModul.questions.length * 10; i > 0; i--) {
       setState(() {
         count = i;
       });
       await Future.delayed(const Duration(seconds: 1));
+    }
+    if (activIndex != -1) {
+      dic[quizIndex] = activIndex;
     }
     Navigator.pushReplacement(
       context,
