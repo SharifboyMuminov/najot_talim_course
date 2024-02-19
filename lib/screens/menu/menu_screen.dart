@@ -51,7 +51,8 @@ class _MenuScreenState extends State<MenuScreen> {
                     width: double.infinity,
                     child: TextButton(
                       style: TextButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 20.he),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 20.he, horizontal: 20.we),
                         backgroundColor: AppColors.c_F2954D,
                       ),
                       onPressed: () {
@@ -66,12 +67,24 @@ class _MenuScreenState extends State<MenuScreen> {
                           ),
                         );
                       },
-                      child: Text(
-                        data[index].name,
-                        style: TextStyle(
-                          fontSize: 25.sp,
-                          color: AppColors.c_F2F2F2,
-                        ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            data[index].name,
+                            style: TextStyle(
+                              fontSize: 25.sp,
+                              color: AppColors.c_F2F2F2,
+                            ),
+                          ),
+                          Text(
+                            data[index].level.name,
+                            style: TextStyle(
+                              fontSize: 16.sp,
+                              color: AppColors.c_F2F2F2,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   );
