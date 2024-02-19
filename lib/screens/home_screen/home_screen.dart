@@ -1,5 +1,6 @@
 import 'package:default_project/moduls/data_repo.dart';
 import 'package:default_project/moduls/persons.dart';
+import 'package:default_project/screens/add_screen.dart/add_screen.dart';
 import 'package:default_project/screens/global_widget.dart/top_button.dart';
 import 'package:default_project/screens/home_screen/widgets/empty_show.dart';
 import 'package:default_project/screens/home_screen/widgets/item_note.dart';
@@ -53,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
             !showSearche ? 50.getH() : const SizedBox(),
             if (!showSearche)
               Padding(
-                padding:  EdgeInsets.symmetric(horizontal: 24.we),
+                padding: EdgeInsets.symmetric(horizontal: 24.we),
                 child: Row(
                   children: [
                     Text(
@@ -111,7 +112,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           });
                         },
                       ),
-
                     15.getH(),
                     if (ls1.isNotEmpty)
                       ...List.generate(
@@ -123,8 +123,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               if (ls1[index].isRemove) {
                                 setState(
                                   () {
-                                    // print(ls1[index].fullname);
-                                    // print(ls2[index].fullname);
                                     ls2.remove(ls1[index]);
                                     ls1.remove(ls1[index]);
                                   },
@@ -169,7 +167,21 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           child: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return AddScreen(
+                      ls1: ls1,
+                      onSchange: () {
+                        setState(() {});
+                      },
+                    );
+                  },
+                ),
+              );
+            },
             icon: SvgPicture.asset(AppImages.plus),
           ),
         ),

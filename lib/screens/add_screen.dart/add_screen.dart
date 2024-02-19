@@ -1,3 +1,6 @@
+import 'dart:ffi';
+
+import 'package:default_project/moduls/persons.dart';
 import 'package:default_project/screens/global_widget.dart/top_button.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/app_images.dart';
@@ -6,28 +9,43 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'widget/show_dialog.dart';
 
 class AddScreen extends StatefulWidget {
   const AddScreen({
     super.key,
+    required this.ls1,
+    required this.onSchange,
   });
+  final List<Person> ls1;
+  final Function onSchange;
 
   @override
   State<AddScreen> createState() => _AddScreenState();
 }
 
 class _AddScreenState extends State<AddScreen> {
+  late List<Person> ls1;
+
   int lineTextFild1 = 1;
   int lineTextFild2 = 1;
 
   bool isRemove1 = false;
   bool isRemove2 = false;
+  bool isSvae = true;
+  bool isPop = false;
 
   int lentheText1 = 0;
   int lentheText2 = 0;
 
   final TextEditingController controllerTitle = TextEditingController();
   final TextEditingController controllerSubTitle = TextEditingController();
+
+  @override
+  void initState() {
+    ls1 = widget.ls1;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +70,9 @@ class _AddScreenState extends State<AddScreen> {
                 children: [
                   ButtonTop(
                     icon: AppImages.arrowBack,
-                    onTab: () {},
+                    onTab: () {
+                      Navigator.pop(context);
+                    },
                   ),
                   const Spacer(),
                   ButtonTop(
@@ -63,55 +83,44 @@ class _AddScreenState extends State<AddScreen> {
                   ButtonTop(
                     icon: AppImages.save,
                     onTab: () {
-                      // showDialog(
-                      //   context: context,
-                      //   builder: (context) {
-                      //     return AlertDialog(
-                      //       iconPadding: EdgeInsets.symmetric(vertical: 20.he),
-                      //       backgroundColor: AppColors.c_252525,
-                      //       title: Text(
-                      //         "Save changes ?",
-                      //         style: TextStyle(
-                      //           color: AppColors.c_CFCFCF,
-                      //         ),
-                      //       ),
-                      //       icon: SvgPicture.asset(
-                      //         AppImages.undovBlackSvg,
-                      //       ),
-                      //       shape: RoundedRectangleBorder(
-                      //         borderRadius: BorderRadius.circular(20.r),
-                      //       ),
-                      //       actions: [
-                      //         Padding(
-                      //           padding:
-                      //               EdgeInsets.symmetric(horizontal: 15.we),
-                      //           child: Row(
-                      //             mainAxisAlignment:
-                      //                 MainAxisAlignment.spaceBetween,
-                      //             children: [
-                      //               DialogButton(
-                      //                   title: "Discard",
-                      //                   onTab: () {},
-                      //                   backgroundColor: AppColors.c_FF0000),
-                      //               DialogButton(
-                      //                 title: 'Save',
-                      //                 onTab: () {},
-                      //                 backgroundColor: AppColors.c_30BE71,
-                      //               ),
-                      //             ],
-                      //           ),
-                      //         ),
-                      //       ],
-                      //       actionsPadding: EdgeInsets.symmetric(
-                      //         vertical: 30.he,
-                      //       ),
-                      //     );
-                      //   },
-                      // );
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Hello"),
-                        ),
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertView(
+                            onTabSave: () {
+                              if (controllerSubTitle.text.isNotEmpty &&
+                                  controllerTitle.text.isNotEmpty) {
+                                ls1.add(
+                                  Person(
+                                      fullname: controllerTitle.text,
+                                      text: controllerSubTitle.text,
+                                      isRemove: false),
+                                );
+                                isSvae = false;
+                                isPop = true;
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text("Save ^_^"),
+                                  ),
+                                );
+                                widget.onSchange.call();
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+
+                                setState(() {});
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    duration: Duration(seconds: 2),
+                                    content: Text("Error empty text :("),
+                                    backgroundColor: Colors.red,
+                                  ),
+                                );
+                                Navigator.pop(context);
+                              }
+                            },
+                          );
+                        },
                       );
                     },
                   ),

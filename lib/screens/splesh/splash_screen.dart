@@ -17,7 +17,7 @@ class _SplashCreenState extends State<SplashCreen> {
   void initState() {
     DataRepository.instanse.connectJson();
     Future.delayed(
-      const Duration(seconds: 3),
+      const Duration(milliseconds: 2500),
       () {
         Navigator.pushReplacement(
           context,
