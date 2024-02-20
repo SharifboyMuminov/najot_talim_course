@@ -70,7 +70,6 @@ class _AddScreenState extends State<AddScreen> {
                     onTab: () {
                       if (controllerTitle.text.isEmpty) {
                         Navigator.pop(context);
-                        return;
                       }
 
                       showDialog(
@@ -84,6 +83,9 @@ class _AddScreenState extends State<AddScreen> {
                                     text: controllerSubTitle.text,
                                     isRemove: false),
                               );
+                              widget.onSchange.call();
+                              Navigator.pop(context);
+                              Navigator.pop(context);
                             },
                             onTabDiscard: () {
                               Navigator.pop(context);
