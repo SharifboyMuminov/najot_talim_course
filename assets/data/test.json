@@ -28,34 +28,12 @@
             ]
         },
         {
-           "subject_name": "Qonday",
-           "level": "hard",
-           "color": "27AE60",
-           "questions":[
-            {
-                "question_test": "Assalomu aleykum",
-                "true_answer":"C Voaleykum assalom",
-                "variants":["A Salom","B Assalomu aleykum","C Voaleykum assalom","D Eh Qonday"]
-            },
-            {
-                "question_test": "Men: Ismiz nma. U: Ismimni nma qilasiz?",
-                "true_answer":"C Zaftrikka yeyman",
-                "variants":["A Kere bo'p qoladi :)","B Pishirib yeyman","C Zaftrikka yeyman","D Sog' bo'lasiz ^_^"]
-            },
-            {
-                "question_test": "Telefonim Iphon 15Pro",
-                "true_answer":"D Xammaga ayt iPhon oganingni",
-                "variants":["A Nma qilishim kerak endi.","B Do's bo'lib qolaylik :)","C San bir iPhon oma ekan","D Xammaga ayt iPhon oganingni"]
-            }
-           ] 
-        },
-        {
             "subject_name": "Fizika",
-            "level":"easy",
-            "color":"F2954D",
+            "level": "easy",
+            "color": "F2954D",
             "questions":[
                 {
-                    "question_text": "Birinchi termometr kim tomonidan yasalgan?",
+                    "question_test": "Birinchi termometr kim tomonidan yasalgan?",
                     "true_answer": "B Galiley",
                     "variants":["A Gey-Lyussak","B Galiley","C Beruniy","D Braun"]
                 },

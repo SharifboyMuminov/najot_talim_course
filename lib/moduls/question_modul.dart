@@ -10,9 +10,9 @@ class QuestionModul {
 
   factory QuestionModul.fromJson(Map<String, dynamic> json) {
     return QuestionModul(
-      question_test: json["question_test"] as String? ?? "",
-      true_answer: json["true_answer"] as String? ?? "",
-      variants: json["variants"],
+      question_test: json["question_test"] as String? ?? "Null",
+      true_answer: json["true_answer"] as String? ?? "Null",
+      variants: json["variants"] as List? ?? [],
     );
   }
 }
