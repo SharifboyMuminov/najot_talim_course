@@ -1,13 +1,12 @@
 import 'dart:convert';
 
 import 'package:default_project/moduls/car_modul.dart';
-import 'package:default_project/screens/info/info_screen.dart';
+import 'package:default_project/screens/info_two/info_screen.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,7 +16,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   Future<List<CarModul>?> _getCarModul() async {
     http.Response response;
 
@@ -70,10 +68,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           onPressed: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return InfoScreen(id: index + 1);
-                            }));
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return InfoScreen(id: index + 1);
+                                },
+                              ),
+                            );
                           },
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             );
           } else {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator.adaptive(),
             );
           }

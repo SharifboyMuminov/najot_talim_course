@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 class InfoScreen extends StatefulWidget {
   const InfoScreen({super.key, required this.id});
@@ -42,7 +41,7 @@ class _InfoScreenState extends State<InfoScreen> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
           ),
         ),
@@ -144,7 +143,7 @@ class _InfoScreenState extends State<InfoScreen> {
           } else if (car.hasError) {
             return Center(child: Text(car.error.toString()));
           } else {
-            return Center(child: CircularProgressIndicator.adaptive());
+            return const Center(child: CircularProgressIndicator.adaptive());
           }
         },
       ),
