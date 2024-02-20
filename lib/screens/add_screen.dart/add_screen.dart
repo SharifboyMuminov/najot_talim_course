@@ -25,13 +25,6 @@ class AddScreen extends StatefulWidget {
 class _AddScreenState extends State<AddScreen> {
   late List<Person> ls1;
 
-  int lineTextFild1 = 1;
-  int lineTextFild2 = 1;
-  int lentheText1 = 0;
-  int lentheText2 = 0;
-
-  bool isRemove1 = false;
-  bool isRemove2 = false;
   bool isSvae = true;
   bool isPop = false;
 
@@ -155,39 +148,21 @@ class _AddScreenState extends State<AddScreen> {
             Expanded(
               child: SingleChildScrollView(
                 padding:
-                    EdgeInsets.symmetric(horizontal: 15.we, vertical: 20.he),
+                    EdgeInsets.symmetric(horizontal: 15.we, vertical: 30.he),
                 child: Column(
                   children: [
                     TextField(
+                      // ignorePointers: false,
                       controller: controllerTitle,
-                      onChanged: (v) {
-                        if (lentheText1 > v.length) {
-                          isRemove1 = true;
-                        } else {
-                          isRemove1 = false;
-                        }
-                        lentheText1 = v.length;
-
-                        if (v.length % 17 == 0 && !isRemove1) {
-                          lineTextFild1++;
-                        } else if (v.length % 17 == 0 ||
-                            lentheText1 % 16 == 0 && isRemove1) {
-                          if (lineTextFild1 > 1) {
-                            lineTextFild1--;
-                          }
-                        }
-                        if (v.isEmpty) {
-                          lineTextFild1 = 1;
-                        }
-                        setState(() {});
-                      },
+                      maxLength: null,
+                      maxLines: null,
+                      onChanged: (v) {},
                       cursorColor: AppColors.c_CCCCCC,
                       style: TextStyle(
                         color: AppColors.c_FFFFFF,
                         fontSize: 35.sp,
                         fontWeight: FontWeight.w600,
                       ),
-                      maxLines: lineTextFild1,
                       decoration: InputDecoration(
                           hintText: "Title",
                           hintStyle: TextStyle(
@@ -206,34 +181,15 @@ class _AddScreenState extends State<AddScreen> {
                     ),
                     TextField(
                       controller: controllerSubTitle,
-                      onChanged: (v) {
-                        if (lentheText2 > v.length) {
-                          isRemove2 = true;
-                        } else {
-                          isRemove2 = false;
-                        }
-                        lentheText2 = v.length;
-
-                        if (v.length % 25 == 0 && !isRemove2) {
-                          lineTextFild2++;
-                        } else if (v.length % 25 == 0 ||
-                            lentheText1 % 24 == 0 && isRemove1) {
-                          if (lineTextFild2 > 1) {
-                            lineTextFild2--;
-                          }
-                        }
-                        if (v.isEmpty) {
-                          lineTextFild2 = 1;
-                        }
-                        setState(() {});
-                      },
+                      maxLength: null,
+                      maxLines: null,
+                      onChanged: (v) {},
                       cursorColor: AppColors.c_CCCCCC,
                       style: TextStyle(
                         color: AppColors.c_FFFFFF,
                         fontSize: 23.sp,
                         fontWeight: FontWeight.w400,
                       ),
-                      maxLines: lineTextFild2,
                       decoration: InputDecoration(
                           hintText: "Type something...",
                           hintStyle: TextStyle(
