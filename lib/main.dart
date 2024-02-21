@@ -1,3 +1,4 @@
+import 'package:default_project/screens/amaliyot/show_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
           home: child,
         );
       },
-      child: const ControlPanel(),
+      child: const ShowScreen(),
     );
   }
 }

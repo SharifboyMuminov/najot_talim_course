@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:default_project/moduls/car_modul.dart';
+import 'package:default_project/data/moduls/car_modul.dart';
 import 'package:default_project/screens/info_one/info_screen.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';

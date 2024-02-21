@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:default_project/moduls/car_info.dart';
+import 'package:default_project/data/moduls/car_info.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
