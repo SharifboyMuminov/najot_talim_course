@@ -52,6 +52,7 @@ class _HomeScreenOneState extends State<HomeScreenOne> {
       body: carModuls == null
           ? const Center(child: CircularProgressIndicator.adaptive())
           : SingleChildScrollView(
+            padding: EdgeInsets.symmetric(vertical: 30.he),
               child: Column(
                 children: [
                   ...List.generate(
