@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:default_project/screens/data/moduls/all_products_modul.dart';
 import 'package:default_project/screens/data/moduls/categoriy_info_modul.dart';
 
 import '../moduls/catigori_modul.dart';
@@ -7,6 +8,29 @@ import '../moduls/network_response.dart';
 import 'package:http/http.dart' as http;
 
 class ApiPreovider {
+  static Future<NetworRespons> fitchAllProduct() async {
+    http.Response response;
+    NetworRespons networRespons = NetworRespons();
+
+    try {
+      response = await http
+          .get(Uri.parse("https://imtixon.free.mockoapp.net/products"));
+
+      if (response.statusCode == 200) {
+        networRespons.data = (jsonDecode(response.body)["data"] as List?)
+                ?.map((e) => AllProductModul.fromJson(e))
+                .toList() ??
+            [];
+      } else {
+        networRespons.errorText = "Else gakirdi";
+      }
+    } catch (error) {
+      networRespons.errorText = "Error";
+    }
+
+    return networRespons;
+  }
+
   static Future<NetworRespons> fitchCategory(int id) async {
     http.Response response;
     NetworRespons networRespons = NetworRespons();

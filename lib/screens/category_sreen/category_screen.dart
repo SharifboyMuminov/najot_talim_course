@@ -48,11 +48,34 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return HomeScreen(id: catigoriyes[index].id);
+                              return HomeScreen(
+                                id: catigoriyes[index].id,
+                                category: catigoriyes[index].name,
+                                isChangeView: false,
+                              );
                             },
                           ),
                         );
                       },
+                    );
+                  },
+                ),
+                CategoryButton(
+                  title: 'All',
+                  urlImage:
+                      'https://miro.medium.com/v2/resize:fit:894/1*FqOabuovZert0JNYpUvp3A.png',
+                  onTab: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return HomeScreen(
+                            id: 0,
+                            category: "All",
+                            isChangeView: true,
+                          );
+                        },
+                      ),
                     );
                   },
                 ),

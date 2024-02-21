@@ -6,4 +6,6 @@ class CategoryRepository {
 
   Future<NetworRespons> getInfoCategory(int id) =>
       ApiPreovider.fitchCategory(id);
+
+  Future<NetworRespons> getAllProduct() => ApiPreovider.fitchAllProduct();
 }

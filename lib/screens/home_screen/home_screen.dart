@@ -1,12 +1,21 @@
+import 'package:default_project/screens/data/moduls/all_products_modul.dart';
 import 'package:default_project/screens/data/moduls/categoriy_info_modul.dart';
+import 'package:default_project/screens/home_screen/widget/grid_view_item.dart';
+import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
 
 import '../data/moduls/network_response.dart';
 import '../data/repositories/catigory_repository.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.id});
+  const HomeScreen(
+      {super.key,
+      required this.id,
+      required this.category,
+      required this.isChangeView});
   final int id;
+  final String category;
+  final bool isChangeView;
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -17,33 +26,86 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder(
-        future: categoryRepository.getInfoCategory(widget.id),
-        builder: (BuildContext context, AsyncSnapshot<NetworRespons> snapshop) {
-          if (snapshop.hasError) {
-            return const Center(
-              child: Text("Error"),
-            );
-          }
-          if (snapshop.hasData) {
-            List<CategoryInfoModul> informatios =
-                snapshop.data!.data as List<CategoryInfoModul>;
-            return ListView(
-              children: [
-                ...List.generate(
-                  informatios.length,
-                  (index) {
-                    return Image.network(informatios[index].imageUrl);
-                  },
-                ),
-              ],
-            );
-          }
-          return const Center(
-            child: CircularProgressIndicator.adaptive(),
-          );
-        },
+      appBar: AppBar(
+        elevation: 1,
+        centerTitle: true,
+        title: Text(widget.category),
       ),
+      body: widget.isChangeView
+          ? FutureBuilder(
+              future: categoryRepository.getAllProduct(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<NetworRespons> snapshot) {
+                if (snapshot.hasError) {
+                  return const Center(
+                    child: Text("Error"),
+                  );
+                }
+                if (snapshot.hasData) {
+                  List<AllProductModul> products =
+                      snapshot.data!.data as List<AllProductModul>;
+                  return GridView.count(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 10.we, vertical: 30.he),
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 15.we,
+                    mainAxisSpacing: 20.he,
+                    children: [
+                      ...List.generate(
+                        products.length,
+                        (index) {
+                          return GridViewItemButton(
+                            title: products[index].name,
+                            urlImage: products[index].imageUrl,
+                            onTab: () {},
+                          );
+                        },
+                      ),
+                    ],
+                  );
+                }
+                return const Center(
+                  child: CircularProgressIndicator.adaptive(),
+                );
+              },
+            )
+          : FutureBuilder(
+              future: categoryRepository.getInfoCategory(widget.id),
+              builder: (BuildContext context,
+                  AsyncSnapshot<NetworRespons> snapshop) {
+                if (snapshop.hasError) {
+                  return const Center(
+                    child: Text("Error"),
+                  );
+                }
+                if (snapshop.hasData) {
+                  List<CategoryInfoModul> informatios =
+                      snapshop.data!.data as List<CategoryInfoModul>;
+                  return GridView.count(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 10.we, vertical: 30.he),
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 15.we,
+                    mainAxisSpacing: 20.he,
+                    children: [
+                      ...List.generate(
+                        informatios.length,
+                        (index) {
+                          return GridViewItemButton(
+                            title: informatios[index].name,
+                            urlImage: informatios[index].imageUrl,
+                            onTab: () {},
+                          );
+                        },
+                      ),
+                    ],
+                  );
+                }
+                return const Center(
+                  child: CircularProgressIndicator.adaptive(),
+                );
+              },
+            ),
     );
   }
 }
