@@ -20,7 +20,6 @@ class StorageRepository {
     required int value,
   }) async {
     if (_preference != null) {
-      debugPrint("SAVING INT:$value");
       _preference!.setInt(key, value);
     }
   }
@@ -37,7 +36,6 @@ class StorageRepository {
     required String value,
   }) async {
     if (_preference != null) {
-      debugPrint("SAVING STRING:$value");
       _preference!.setString(key, value);
     }
   }
@@ -54,7 +52,6 @@ class StorageRepository {
     required bool value,
   }) async {
     if (_preference != null) {
-      debugPrint("SAVING BOOL:$value");
       _preference!.setBool(key, value);
     }
   }
@@ -71,7 +68,6 @@ class StorageRepository {
     required double value,
   }) async {
     if (_preference != null) {
-      debugPrint("SAVING DOUBLE:$value");
       _preference!.setDouble(key, value);
     }
   }
@@ -98,5 +94,12 @@ class StorageRepository {
       return _preference!.getStringList(key) ?? [];
     }
     return [];
+  }
+
+  static Future<void> setMap(Map<dynamic, dynamic> json) async {
+    if (_preference != null) {
+      String text = json.toString();
+      _preference!.setString("data", text);
+    }
   }
 }
