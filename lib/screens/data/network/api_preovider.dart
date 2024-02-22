@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:default_project/screens/data/moduls/all_products_modul.dart';
 import 'package:default_project/screens/data/moduls/categoriy_info_modul.dart';
 
 import '../moduls/catigori_modul.dart';
@@ -18,7 +17,7 @@ class ApiPreovider {
 
       if (response.statusCode == 200) {
         networRespons.data = (jsonDecode(response.body)["data"] as List?)
-                ?.map((e) => AllProductModul.fromJson(e))
+                ?.map((e) => CategoryInfoModul.fromJson(e))
                 .toList() ??
             [];
       } else {

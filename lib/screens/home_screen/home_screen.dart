@@ -1,4 +1,3 @@
-import 'package:default_project/screens/data/moduls/all_products_modul.dart';
 import 'package:default_project/screens/data/moduls/categoriy_info_modul.dart';
 import 'package:default_project/screens/home_screen/widget/grid_view_item.dart';
 import 'package:default_project/utils/size.dart';
@@ -6,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../data/moduls/network_response.dart';
 import '../data/repositories/catigory_repository.dart';
+import '../info_screen/info_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen(
@@ -42,8 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 }
                 if (snapshot.hasData) {
-                  List<AllProductModul> products =
-                      snapshot.data!.data as List<AllProductModul>;
+                  List<CategoryInfoModul> products =
+                      snapshot.data!.data as List<CategoryInfoModul>;
                   return GridView.count(
                     padding: EdgeInsets.symmetric(
                         horizontal: 10.we, vertical: 30.he),
@@ -57,7 +57,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           return GridViewItemButton(
                             title: products[index].name,
                             urlImage: products[index].imageUrl,
-                            onTab: () {},
+                            onTab: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return InfoScreen(
+                                      infoModul: products[index],
+                                    );
+                                  },
+                                ),
+                              );
+                            },
                           );
                         },
                       ),
@@ -94,7 +105,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           return GridViewItemButton(
                             title: informatios[index].name,
                             urlImage: informatios[index].imageUrl,
-                            onTab: () {},
+                            onTab: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return InfoScreen(
+                                      infoModul: informatios[index],
+                                    );
+                                  },
+                                ),
+                              );
+                            },
                           );
                         },
                       ),

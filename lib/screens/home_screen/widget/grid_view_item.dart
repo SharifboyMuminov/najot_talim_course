@@ -32,7 +32,7 @@ class GridViewItemButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(15.r),
           ),
         ),
-        onPressed: () {},
+        onPressed: onTab,
         child: Column(
           children: [
             Expanded(
