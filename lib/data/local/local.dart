@@ -74,3 +74,42 @@ List<RecentTransactions> myCardRecentTransactions = [
       money: '0',
       title: "Remove Card"),
 ];
+
+List<RecentTransactions> yesterdayInofModuls = [
+  RecentTransactions(
+    icon: AppImages.arro,
+    bacgoundColor: const Color(0xFFEAF5DC),
+    money: "",
+    title: "Fund Transferred",
+    colorFilter: const ColorFilter.mode(
+      Color(0xFF45661B),
+      BlendMode.srcIn,
+    ),
+  ),
+  RecentTransactions(
+    icon: AppImages.note,
+    bacgoundColor: const Color(0xFFECECEC),
+    money: "",
+    title: "Mobile Bill",
+    colorFilter: const ColorFilter.mode(
+      Color(0xFF5F5F5F),
+      BlendMode.srcIn,
+    ),
+  ),
+  RecentTransactions(
+    icon: "assets/icons/money.svg",
+    bacgoundColor: const Color(0xFFD3EAFF),
+    money: "",
+    title: "Salary",
+  ),
+  RecentTransactions(
+    icon: AppImages.note,
+    bacgoundColor: const Color(0xFFE7DFFF),
+    money: "",
+    title: "Card Payment",
+    colorFilter: const ColorFilter.mode(
+      Color(0xFF4829A8),
+      BlendMode.srcIn,
+    ),
+  ),
+];

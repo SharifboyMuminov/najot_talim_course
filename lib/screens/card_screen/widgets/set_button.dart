@@ -21,6 +21,10 @@ class SetButton extends StatelessWidget {
     return Column(
       children: [
         TextButton(
+          style: TextButton.styleFrom(
+            shape:
+                const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+          ),
           onPressed: onTab,
           child: Row(
             children: [

@@ -17,4 +17,8 @@ class AppImages {
   static const String shopping = "assets/icons/shopping.svg";
   static const String minus = "assets/icons/minus.svg";
   static const String xx = "assets/icons/xx.svg";
+  static const String arrowTop = "assets/icons/arr_top.svg";
+  static const String arrowBottom = "assets/icons/arr_bott.svg";
+
+
 }

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'screens/card_screen/card_screen.dart';
 import 'screens/home_screen/home_screen.dart';
+import 'screens/transactions_screen/transactions_screen.dart';
 
 void main(List<String> args) {
   runApp(MyApp());
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
           home: child,
         );
       },
-      child: CaardScreen(),
+      child: TransactionsScreen(),
     );
   }
 }
