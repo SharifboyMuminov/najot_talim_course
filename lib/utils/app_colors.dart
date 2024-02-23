@@ -19,6 +19,10 @@ class AppColors {
   static const Color c_FFFFFF = Color(0xFFFFFFFF);
   static const Color c_6C6C6C = Color(0xFF6C6C6C);
   static const Color c_6A6A6A = Color(0xFF6A6A6A);
+  static const Color c_626262 = Color(0xFF626262);
+  static const Color c_8D8D8D = Color(0xFF8D8D8D);
+
+
 
 
   static LinearGradient linearGradient = const LinearGradient(colors: [

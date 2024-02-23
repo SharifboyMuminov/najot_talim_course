@@ -33,7 +33,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             44.getH(),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 26.we),
+              padding: EdgeInsets.only(top: 26.we),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

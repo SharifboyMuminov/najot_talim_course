@@ -20,4 +20,8 @@ class AppImages {
   static const String arrowTop = "assets/icons/arr_top.svg";
   static const String arrowBottom = "assets/icons/arr_bott.svg";
   static const String arrowBack = "assets/icons/arrow_back.svg";
+  static const String home = "assets/icons/home.svg";
+  static const String card = "assets/icons/card.svg";
+  static const String profil = "assets/icons/profile.svg";
+
 }
