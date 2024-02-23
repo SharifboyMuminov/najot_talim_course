@@ -9,7 +9,6 @@ import '../../data/local/local.dart';
 import '../../utils/size.dart';
 import '../widgets/menu_button.dart';
 import '../widgets/recent_button.dart';
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 class TransactionsScreen extends StatefulWidget {
   const TransactionsScreen({super.key});
@@ -93,7 +92,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                           isNotActiv: activIndex == 0,
                         ),
                         MenuButton(
-                          colorIcon: Color(0xFF439E41),
+                          colorIcon: const Color(0xFF439E41),
                           icon: AppImages.arrowBottom,
                           onTab: () {
                             setState(() {
@@ -104,7 +103,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                           isNotActiv: activIndex == 1,
                         ),
                         MenuButton(
-                          colorIcon: Color(0xFFC5626E),
+                          colorIcon: const Color(0xFFC5626E),
                           icon: AppImages.arrowTop,
                           onTab: () {
                             setState(() {

@@ -3,6 +3,7 @@ import 'package:default_project/utils/app_images.dart';
 import 'package:flutter/material.dart';
 
 import '../moduls/card_modul.dart';
+import '../moduls/contact_model.dart';
 import '../moduls/recent_transactions.dart';
 
 List<String> homeTexts = [
@@ -111,5 +112,28 @@ List<RecentTransactions> yesterdayInofModuls = [
       Color(0xFF4829A8),
       BlendMode.srcIn,
     ),
+  ),
+];
+
+List<ContacModul> contacts = [
+  ContacModul(
+    imge: AppImages.image2,
+    name: "Aliya",
+  ),
+  ContacModul(
+    imge: AppImages.image3,
+    name: "Calira",
+  ),
+  ContacModul(
+    imge: AppImages.image4,
+    name: "Bob",
+  ),
+  ContacModul(
+    imge: AppImages.image5,
+    name: "Samy",
+  ),
+  ContacModul(
+    imge: AppImages.image6,
+    name: "Sara",
   ),
 ];

@@ -19,6 +19,5 @@ class AppImages {
   static const String xx = "assets/icons/xx.svg";
   static const String arrowTop = "assets/icons/arr_top.svg";
   static const String arrowBottom = "assets/icons/arr_bott.svg";
-
-
+  static const String arrowBack = "assets/icons/arrow_back.svg";
 }
