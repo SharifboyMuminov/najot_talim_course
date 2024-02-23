@@ -6,7 +6,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 void main(List<String> args) {
   WidgetsFlutterBinding.ensureInitialized();
 
+
   StorageRepository.instance;
+  
   runApp(const MyApp());
 }
 

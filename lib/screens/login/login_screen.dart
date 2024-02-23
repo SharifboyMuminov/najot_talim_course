@@ -32,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           children: [
             67.getH(),
-            TextGlobal(title: "Login"),
+            const TextGlobal(title: "Login"),
             200.getH(),
             GlobalTextFild(
                 edgeInsets:
@@ -68,6 +68,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                     ),
                   );
+                } else {
+                  setState(() {
+                    isError = true;
+                  });
                 }
               },
             ),
