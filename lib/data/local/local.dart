@@ -26,8 +26,10 @@ List<CardModul> cardModuls = [
     money: "\$2,200",
     numberCard: "**3245",
     typeCard: "Visa Card",
+    isShowNumer: false,
   ),
   CardModul(
+    isShowNumer: false,
     date: "04/23",
     icon: AppImages.masterCard,
     money: "\$650",
@@ -52,4 +54,23 @@ List<RecentTransactions> recents = [
     ),
     bacgoundColor: AppColors.c_FFE8CE,
   ),
+];
+
+List<String> myCardsButtonText = ["Settings", "Transactions"];
+List<RecentTransactions> myCardRecentTransactions = [
+  RecentTransactions(
+      icon: AppImages.note,
+      bacgoundColor: AppColors.c_6A6A6A,
+      money: '0',
+      title: "View Statement"),
+  RecentTransactions(
+      icon: AppImages.xx,
+      bacgoundColor: AppColors.c_6A6A6A,
+      money: '0',
+      title: "Change Pin"),
+  RecentTransactions(
+      icon: AppImages.minus,
+      bacgoundColor: AppColors.c_6A6A6A,
+      money: '0',
+      title: "Remove Card"),
 ];

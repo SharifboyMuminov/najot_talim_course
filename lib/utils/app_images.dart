@@ -15,5 +15,6 @@ class AppImages {
   static const String vizaCard = "assets/icons/viza.svg";
   static const String masterCard = "assets/icons/master_card.svg";
   static const String shopping = "assets/icons/shopping.svg";
-
+  static const String minus = "assets/icons/minus.svg";
+  static const String xx = "assets/icons/xx.svg";
 }

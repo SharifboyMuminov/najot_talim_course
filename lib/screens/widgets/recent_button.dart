@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../data/moduls/recent_transactions.dart';
-import '../../../utils/app_colors.dart';
+import '../../data/moduls/recent_transactions.dart';
+import '../../utils/app_colors.dart';
 
 class RecentTransactionsButton extends StatelessWidget {
   const RecentTransactionsButton(

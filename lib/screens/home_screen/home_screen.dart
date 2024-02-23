@@ -10,7 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'widgets/my_cards.dart';
 import 'widgets/my_cards_button.dart';
-import 'widgets/recent_button.dart';
+import '../widgets/recent_button.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -129,24 +129,19 @@ class HomeScreen extends StatelessWidget {
                       ),
                       22.getH(),
                       MyConterin(
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            color: AppColors.c_292929,
-                          ),
-                          child: Column(
-                            children: [
-                              ...List.generate(
-                                cardModuls.length,
-                                (index) {
-                                  return MyCardsButton(
-                                    onTab: () {},
-                                    cardModul: cardModuls[index],
-                                    isNotEnd: index + 1 != cardModuls.length,
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
+                        child: Column(
+                          children: [
+                            ...List.generate(
+                              cardModuls.length,
+                              (index) {
+                                return MyCardsButton(
+                                  onTab: () {},
+                                  cardModul: cardModuls[index],
+                                  isNotEnd: index + 1 != cardModuls.length,
+                                );
+                              },
+                            ),
+                          ],
                         ),
                       ),
                       24.getH(),
@@ -155,24 +150,19 @@ class HomeScreen extends StatelessWidget {
                         text: 'Recent Transactions',
                       ),
                       MyConterin(
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            color: AppColors.c_292929,
-                          ),
-                          child: Column(
-                            children: [
-                              ...List.generate(
-                                recents.length,
-                                (index) {
-                                  return RecentTransactionsButton(
-                                    recentTransactions: recents[index],
-                                    onTab: () {},
-                                    isNotEnd: index + 1 != recents.length,
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
+                        child: Column(
+                          children: [
+                            ...List.generate(
+                              recents.length,
+                              (index) {
+                                return RecentTransactionsButton(
+                                  recentTransactions: recents[index],
+                                  onTab: () {},
+                                  isNotEnd: index + 1 != recents.length,
+                                );
+                              },
+                            ),
+                          ],
                         ),
                       ),
                     ],
