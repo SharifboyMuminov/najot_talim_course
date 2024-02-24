@@ -90,7 +90,7 @@ class _TabBoxThreeState extends State<TabBoxThree> {
           }
         },
         currentIndex: _activeIndex,
-        type: BottomNavigationBarType.fixed,
+        type: BottomNavigationBarType.shifting,
         selectedFontSize: 14,
         unselectedFontSize: 14,
         backgroundColor: AppColors.c_000000,
@@ -107,7 +107,6 @@ class _TabBoxThreeState extends State<TabBoxThree> {
               // height: 27.he,
             ),
             label: "Home",
-            
           ),
           BottomNavigationBarItem(
             activeIcon: SvgPicture.asset(

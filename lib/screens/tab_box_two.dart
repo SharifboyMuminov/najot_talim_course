@@ -57,7 +57,8 @@ class _TabBoxTwoState extends State<TabBoxTwo> {
             backgroundColor: AppColors.c_000000,
             icon: SvgPicture.asset(
               AppImages.home,
-              colorFilter:  const ColorFilter.mode(AppColors.c_8D8D8D, BlendMode.srcIn),
+              colorFilter:
+                  const ColorFilter.mode(AppColors.c_8D8D8D, BlendMode.srcIn),
               // width: 27.we,
               // height: 27.he,
             ),
@@ -72,7 +73,8 @@ class _TabBoxTwoState extends State<TabBoxTwo> {
             ),
             icon: SvgPicture.asset(
               AppImages.card,
-              colorFilter:  const ColorFilter.mode(AppColors.c_8D8D8D, BlendMode.srcIn),
+              colorFilter:
+                  const ColorFilter.mode(AppColors.c_8D8D8D, BlendMode.srcIn),
               // width: 33.we,
               // height: 25.he,
             ),
@@ -85,7 +87,8 @@ class _TabBoxTwoState extends State<TabBoxTwo> {
             ),
             icon: SvgPicture.asset(
               AppImages.note,
-              colorFilter:  const ColorFilter.mode(AppColors.c_8D8D8D, BlendMode.srcIn),
+              colorFilter:
+                  const ColorFilter.mode(AppColors.c_8D8D8D, BlendMode.srcIn),
               // width: 25.we,
               // height: 31.he,
             ),
@@ -98,7 +101,8 @@ class _TabBoxTwoState extends State<TabBoxTwo> {
             ),
             icon: SvgPicture.asset(
               AppImages.profil,
-              colorFilter:  const ColorFilter.mode(AppColors.c_8D8D8D, BlendMode.srcIn),
+              colorFilter:
+                  const ColorFilter.mode(AppColors.c_8D8D8D, BlendMode.srcIn),
               // width: 25.we,
               // height: 31.he,
             ),

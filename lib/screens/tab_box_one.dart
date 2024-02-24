@@ -35,72 +35,76 @@ class _TabBoxOneState extends State<TabBoxOne> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _screens[_activScreen],
-      bottomNavigationBar: BottomNavigationBar(
-        showUnselectedLabels: true,
-        currentIndex: _activScreen,
-        selectedFontSize: 14,
-        unselectedFontSize: 14,
-        onTap: (newActiveIndex) {
-          _activScreen = newActiveIndex;
-          setState(() {});
-        },
-        items: [
-          BottomNavigationBarItem(
-            activeIcon:
-                SvgPicture.asset(AppImages.home, colorFilter: colorFilter),
-            backgroundColor: AppColors.c_000000,
-            icon: SvgPicture.asset(
-              AppImages.home,
-              colorFilter:
-                  const ColorFilter.mode(AppColors.c_8D8D8D, BlendMode.srcIn),
-              // width: 27.we,
-              // height: 27.he,
+      bottomNavigationBar: Container(
+        color: AppColors.c_000000,
+        child: BottomNavigationBar(
+          showUnselectedLabels: true,
+          currentIndex: _activScreen,
+          selectedFontSize: 14,
+          unselectedFontSize: 14,
+          type: BottomNavigationBarType.fixed,
+          onTap: (newActiveIndex) {
+            _activScreen = newActiveIndex;
+            setState(() {});
+          },
+          items: [
+            BottomNavigationBarItem(
+              activeIcon:
+                  SvgPicture.asset(AppImages.home, colorFilter: colorFilter),
+              backgroundColor: AppColors.c_000000,
+              icon: SvgPicture.asset(
+                AppImages.home,
+                colorFilter:
+                    const ColorFilter.mode(AppColors.c_8D8D8D, BlendMode.srcIn),
+                // width: 27.we,
+                // height: 27.he,
+              ),
+              label: "Home",
             ),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            activeIcon: SvgPicture.asset(
-              AppImages.card,
-              colorFilter: colorFilter, // width: 33.we,
-              // height: 25.he,
+            BottomNavigationBarItem(
+              activeIcon: SvgPicture.asset(
+                AppImages.card,
+                colorFilter: colorFilter, // width: 33.we,
+                // height: 25.he,
+              ),
+              icon: SvgPicture.asset(
+                AppImages.card,
+                colorFilter:
+                    const ColorFilter.mode(AppColors.c_8D8D8D, BlendMode.srcIn),
+                // width: 33.we,
+                // height: 25.he,
+              ),
+              label: "Cards",
             ),
-            icon: SvgPicture.asset(
-              AppImages.card,
-              colorFilter:
-                  const ColorFilter.mode(AppColors.c_8D8D8D, BlendMode.srcIn),
-              // width: 33.we,
-              // height: 25.he,
+            BottomNavigationBarItem(
+              activeIcon:
+                  SvgPicture.asset(AppImages.note, colorFilter: colorFilter),
+              icon: SvgPicture.asset(
+                AppImages.note,
+                colorFilter:
+                    const ColorFilter.mode(AppColors.c_8D8D8D, BlendMode.srcIn),
+                // width: 25.we,
+                // height: 31.he,
+              ),
+              label: "Transactions",
             ),
-            label: "Cards",
-          ),
-          BottomNavigationBarItem(
-            activeIcon:
-                SvgPicture.asset(AppImages.note, colorFilter: colorFilter),
-            icon: SvgPicture.asset(
-              AppImages.note,
-              colorFilter:
-                  const ColorFilter.mode(AppColors.c_8D8D8D, BlendMode.srcIn),
-              // width: 25.we,
-              // height: 31.he,
+            BottomNavigationBarItem(
+              activeIcon: SvgPicture.asset(
+                AppImages.profil,
+                colorFilter:
+                    const ColorFilter.mode(AppColors.c_FFFFFF, BlendMode.srcIn),
+              ),
+              icon: SvgPicture.asset(
+                AppImages.profil,
+                colorFilter:
+                    const ColorFilter.mode(AppColors.c_8D8D8D, BlendMode.srcIn),
+                // width: 25.we,
+                // height: 31.he,
+              ),
+              label: "Profile",
             ),
-            label: "Transactions",
-          ),
-          BottomNavigationBarItem(
-            activeIcon: SvgPicture.asset(
-              AppImages.profil,
-              colorFilter:
-                  const ColorFilter.mode(AppColors.c_FFFFFF, BlendMode.srcIn),
-            ),
-            icon: SvgPicture.asset(
-              AppImages.profil,
-              colorFilter:
-                  const ColorFilter.mode(AppColors.c_8D8D8D, BlendMode.srcIn),
-              // width: 25.we,
-              // height: 31.he,
-            ),
-            label: "Profile",
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
