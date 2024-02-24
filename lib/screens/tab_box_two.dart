@@ -1,27 +1,27 @@
-import 'package:default_project/screens/card_screen/card_screen.dart';
-import 'package:default_project/screens/home_screen/home_screen.dart';
-import 'package:default_project/screens/profil_screen/profil_screen.dart';
-import 'package:default_project/screens/transactions_screen/transactions_screen.dart';
-import 'package:default_project/utils/app_colors.dart';
-import 'package:default_project/utils/app_images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-class TabBoxOne extends StatefulWidget {
-  const TabBoxOne({super.key});
+import '../utils/app_colors.dart';
+import '../utils/app_images.dart';
+import 'card_screen/card_screen.dart';
+import 'home_screen/home_screen.dart';
+import 'profil_screen/profil_screen.dart';
+import 'transactions_screen/transactions_screen.dart';
+
+class TabBoxTwo extends StatefulWidget {
+  const TabBoxTwo({super.key});
 
   @override
-  State<TabBoxOne> createState() => _TabBoxOneState();
+  State<TabBoxTwo> createState() => _TabBoxTwoState();
 }
 
-class _TabBoxOneState extends State<TabBoxOne> {
+class _TabBoxTwoState extends State<TabBoxTwo> {
   List<Widget> _screens = [];
   int _activScreen = 0;
 
   @override
   void initState() {
-    _screens = [
+    _screens = const [
       HomeScreen(),
       CaardScreen(),
       TransactionsScreen(),
@@ -33,8 +33,12 @@ class _TabBoxOneState extends State<TabBoxOne> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _screens[_activScreen],
+      body: IndexedStack(
+        index: _activScreen,
+        children: _screens,
+      ),
       bottomNavigationBar: BottomNavigationBar(
+        showUnselectedLabels: true,
         currentIndex: _activScreen,
         selectedFontSize: 14,
         unselectedFontSize: 14,

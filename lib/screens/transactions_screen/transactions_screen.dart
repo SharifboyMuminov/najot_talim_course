@@ -32,21 +32,25 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
         statusBarColor: AppColors.c_414A61,
       ),
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: AppColors.c_000000,
+          centerTitle: true,
+          title: Text(
+            "Transactions",
+            style: TextStyle(
+                color: AppColors.c_F9F9F9,
+                fontSize: 24.sp,
+                fontWeight: FontWeight.w500),
+          ),
+        ),
         backgroundColor: AppColors.c_000000,
         body: Column(
           children: [
-            46.getH(),
-            Text(
-              "Transactions",
-              style: TextStyle(
-                  color: AppColors.c_F9F9F9,
-                  fontSize: 24.sp,
-                  fontWeight: FontWeight.w500),
-            ),
             20.getH(),
             Expanded(
               child: SingleChildScrollView(
-                padding: EdgeInsets.symmetric(horizontal: 25.we, vertical: 25.he),
+                padding:
+                    EdgeInsets.symmetric(horizontal: 25.we, vertical: 25.he),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -160,7 +164,8 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                               return RecentTransactionsButton(
                                 recentTransactions: yesterdayInofModuls[index],
                                 onTab: () {},
-                                isNotEnd: index + 1 != yesterdayInofModuls.length,
+                                isNotEnd:
+                                    index + 1 != yesterdayInofModuls.length,
                               );
                             },
                           ),

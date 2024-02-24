@@ -2,7 +2,7 @@ import 'package:default_project/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-import '../tab_box_one.dart';
+import '../control_screen.dart';
 
 class SplashCreen extends StatefulWidget {
   const SplashCreen({super.key});
@@ -19,7 +19,7 @@ class _SplashCreenState extends State<SplashCreen> {
         context,
         MaterialPageRoute(
           builder: (context) {
-            return const TabBoxOne();
+            return const ControlScreen();
           },
         ),
       );

@@ -35,14 +35,6 @@ class _ProfilScreenState extends State<ProfilScreen> {
               fontSize: 24.sp,
               fontWeight: FontWeight.w500),
         ),
-        leading: IconButton(
-          onPressed: () {},
-          icon: SvgPicture.asset(
-            AppImages.arrowBack,
-            width: 14.we,
-            height: 22.he,
-          ),
-        ),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.only(bottom: 30.he),

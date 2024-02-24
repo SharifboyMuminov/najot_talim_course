@@ -27,17 +27,20 @@ class _CaardScreenState extends State<CaardScreen> {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.c_000000,
+        centerTitle: true,
+        title: Text(
+          "My Cards",
+          style: TextStyle(
+              color: AppColors.c_F9F9F9,
+              fontSize: 24.sp,
+              fontWeight: FontWeight.w500),
+        ),
+      ),
       backgroundColor: AppColors.c_000000,
       body: Column(
         children: [
-          46.getH(),
-          Text(
-            "My Cards",
-            style: TextStyle(
-                color: AppColors.c_F9F9F9,
-                fontSize: 24.sp,
-                fontWeight: FontWeight.w500),
-          ),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
