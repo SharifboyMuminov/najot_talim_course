@@ -4,6 +4,7 @@ import 'package:default_project/utils/app_images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../data/local/local.dart';
 import '../../utils/size.dart';
@@ -11,7 +12,8 @@ import '../widgets/menu_button.dart';
 import '../widgets/recent_button.dart';
 
 class TransactionsScreen extends StatefulWidget {
-  const TransactionsScreen({super.key});
+  const TransactionsScreen({super.key, this.onSet});
+  final VoidCallback? onSet;
 
   @override
   State<TransactionsScreen> createState() => _TransactionsScreenState();
@@ -33,6 +35,17 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
       ),
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              if (widget.onSet != null) {
+                widget.onSet!.call();
+              }
+              Navigator.pop(context);
+            },
+            icon: SvgPicture.asset(
+              AppImages.arrowBack,
+            ),
+          ),
           backgroundColor: AppColors.c_000000,
           centerTitle: true,
           title: Text(

@@ -1,4 +1,5 @@
 import 'package:default_project/screens/tab_box_one.dart';
+import 'package:default_project/screens/tab_box_three.dart';
 import 'package:default_project/screens/tab_box_two.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -68,7 +69,16 @@ class ControlScreen extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.r)),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return const TabBoxThree();
+                    },
+                  ),
+                );
+              },
               child: const Text("Tab box three"),
             ),
           ),

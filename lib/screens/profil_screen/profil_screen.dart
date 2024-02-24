@@ -12,7 +12,9 @@ import '../../utils/size.dart';
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 class ProfilScreen extends StatefulWidget {
-  const ProfilScreen({super.key});
+  const ProfilScreen({super.key, this.onSet});
+
+  final VoidCallback? onSet;
 
   @override
   State<ProfilScreen> createState() => _ProfilScreenState();
@@ -26,6 +28,17 @@ class _ProfilScreenState extends State<ProfilScreen> {
     return Scaffold(
       backgroundColor: AppColors.c_000000,
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            if (widget.onSet != null) {
+              widget.onSet!.call();
+            }
+            Navigator.pop(context);
+          },
+          icon: SvgPicture.asset(
+            AppImages.arrowBack,
+          ),
+        ),
         backgroundColor: AppColors.c_000000,
         centerTitle: true,
         title: Text(

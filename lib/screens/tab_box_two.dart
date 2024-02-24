@@ -18,6 +18,8 @@ class TabBoxTwo extends StatefulWidget {
 class _TabBoxTwoState extends State<TabBoxTwo> {
   List<Widget> _screens = [];
   int _activScreen = 0;
+  ColorFilter colorFilter =
+      const ColorFilter.mode(AppColors.c_FFFFFF, BlendMode.srcIn);
 
   @override
   void initState() {
@@ -50,14 +52,12 @@ class _TabBoxTwoState extends State<TabBoxTwo> {
           BottomNavigationBarItem(
             activeIcon: SvgPicture.asset(
               AppImages.home,
-              colorFilter:
-                  ColorFilter.mode(AppColors.c_FFFFFF, BlendMode.srcIn),
+              colorFilter: colorFilter,
             ),
             backgroundColor: AppColors.c_000000,
             icon: SvgPicture.asset(
               AppImages.home,
-              colorFilter:
-                  ColorFilter.mode(AppColors.c_8D8D8D, BlendMode.srcIn),
+              colorFilter:  const ColorFilter.mode(AppColors.c_8D8D8D, BlendMode.srcIn),
               // width: 27.we,
               // height: 27.he,
             ),
@@ -66,15 +66,13 @@ class _TabBoxTwoState extends State<TabBoxTwo> {
           BottomNavigationBarItem(
             activeIcon: SvgPicture.asset(
               AppImages.card,
-              colorFilter:
-                  ColorFilter.mode(AppColors.c_FFFFFF, BlendMode.srcIn),
+              colorFilter: colorFilter,
               // width: 33.we,
               // height: 25.he,
             ),
             icon: SvgPicture.asset(
               AppImages.card,
-              colorFilter:
-                  ColorFilter.mode(AppColors.c_8D8D8D, BlendMode.srcIn),
+              colorFilter:  const ColorFilter.mode(AppColors.c_8D8D8D, BlendMode.srcIn),
               // width: 33.we,
               // height: 25.he,
             ),
@@ -83,13 +81,11 @@ class _TabBoxTwoState extends State<TabBoxTwo> {
           BottomNavigationBarItem(
             activeIcon: SvgPicture.asset(
               AppImages.note,
-              colorFilter:
-                  ColorFilter.mode(AppColors.c_FFFFFF, BlendMode.srcIn),
+              colorFilter: colorFilter,
             ),
             icon: SvgPicture.asset(
               AppImages.note,
-              colorFilter:
-                  ColorFilter.mode(AppColors.c_8D8D8D, BlendMode.srcIn),
+              colorFilter:  const ColorFilter.mode(AppColors.c_8D8D8D, BlendMode.srcIn),
               // width: 25.we,
               // height: 31.he,
             ),
@@ -98,13 +94,11 @@ class _TabBoxTwoState extends State<TabBoxTwo> {
           BottomNavigationBarItem(
             activeIcon: SvgPicture.asset(
               AppImages.profil,
-              colorFilter:
-                  ColorFilter.mode(AppColors.c_FFFFFF, BlendMode.srcIn),
+              colorFilter: colorFilter,
             ),
             icon: SvgPicture.asset(
               AppImages.profil,
-              colorFilter:
-                  ColorFilter.mode(AppColors.c_8D8D8D, BlendMode.srcIn),
+              colorFilter:  const ColorFilter.mode(AppColors.c_8D8D8D, BlendMode.srcIn),
               // width: 25.we,
               // height: 31.he,
             ),

@@ -1,49 +1,99 @@
 import 'package:default_project/screens/card_screen/card_screen.dart';
 import 'package:default_project/screens/home_screen/home_screen.dart';
 import 'package:default_project/screens/profil_screen/profil_screen.dart';
-import 'package:default_project/screens/transactions_screen/transactions_screen.dart';
-import 'package:default_project/utils/app_colors.dart';
-import 'package:default_project/utils/app_images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class TabBoxOne extends StatefulWidget {
-  const TabBoxOne({super.key});
+import '../utils/app_colors.dart';
+import '../utils/app_images.dart';
+import 'transactions_screen/transactions_screen.dart';
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
+class TabBoxThree extends StatefulWidget {
+  const TabBoxThree({super.key});
 
   @override
-  State<TabBoxOne> createState() => _TabBoxOneState();
+  State<TabBoxThree> createState() => _TabBoxThreeState();
 }
 
-class _TabBoxOneState extends State<TabBoxOne> {
-  List<Widget> _screens = [];
-  int _activScreen = 0;
+class _TabBoxThreeState extends State<TabBoxThree> {
+  int _activeIndex = 0;
   ColorFilter colorFilter =
       const ColorFilter.mode(AppColors.c_FFFFFF, BlendMode.srcIn);
 
   @override
-  void initState() {
-    _screens = const [
-      HomeScreen(),
-      CaardScreen(),
-      TransactionsScreen(),
-      ProfilScreen(),
-    ];
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _screens[_activScreen],
+      body: HomeScreen(),
       bottomNavigationBar: BottomNavigationBar(
-        showUnselectedLabels: true,
-        currentIndex: _activScreen,
+        selectedLabelStyle: TextStyle(
+          color: AppColors.c_FFFFFF,
+        ),
+        onTap: (newActiveIndex) {
+          _activeIndex = newActiveIndex;
+          setState(() {});
+          switch (newActiveIndex) {
+            case 1:
+              {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return CaardScreen(
+                        onSet: () {
+                          setState(() {
+                            _activeIndex = 0;
+                          });
+                        },
+                      );
+                    },
+                  ),
+                );
+                break;
+              }
+            case 2:
+              {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return TransactionsScreen(
+                        onSet: () {
+                          setState(() {
+                            _activeIndex = 0;
+                          });
+                        },
+                      );
+                    },
+                  ),
+                );
+                break;
+              }
+            case 3:
+              {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return ProfilScreen(
+                        onSet: () {
+                          setState(() {
+                            _activeIndex = 0;
+                          });
+                        },
+                      );
+                    },
+                  ),
+                );
+                break;
+              }
+          }
+        },
+        currentIndex: _activeIndex,
+        type: BottomNavigationBarType.fixed,
         selectedFontSize: 14,
         unselectedFontSize: 14,
-        onTap: (newActiveIndex) {
-          _activScreen = newActiveIndex;
-          setState(() {});
-        },
+        backgroundColor: AppColors.c_000000,
         items: [
           BottomNavigationBarItem(
             activeIcon:
@@ -57,6 +107,7 @@ class _TabBoxOneState extends State<TabBoxOne> {
               // height: 27.he,
             ),
             label: "Home",
+            
           ),
           BottomNavigationBarItem(
             activeIcon: SvgPicture.asset(

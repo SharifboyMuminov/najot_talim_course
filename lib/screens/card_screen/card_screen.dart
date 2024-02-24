@@ -2,8 +2,10 @@ import 'package:default_project/data/local/local.dart';
 import 'package:default_project/screens/card_screen/widgets/set_button.dart';
 import 'package:default_project/screens/widgets/my_contenir.dart';
 import 'package:default_project/utils/app_colors.dart';
+import 'package:default_project/utils/app_images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../utils/size.dart';
 import 'widgets/card_view.dart';
@@ -12,7 +14,8 @@ import '../widgets/menu_button.dart';
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 class CaardScreen extends StatefulWidget {
-  const CaardScreen({super.key});
+  const CaardScreen({super.key, this.onSet});
+  final VoidCallback? onSet;
 
   @override
   State<CaardScreen> createState() => _CaardScreenState();
@@ -28,6 +31,17 @@ class _CaardScreenState extends State<CaardScreen> {
     height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            if (widget.onSet != null) {
+              widget.onSet!.call();
+            }
+            Navigator.pop(context);
+          },
+          icon: SvgPicture.asset(
+            AppImages.arrowBack,
+          ),
+        ),
         backgroundColor: AppColors.c_000000,
         centerTitle: true,
         title: Text(
