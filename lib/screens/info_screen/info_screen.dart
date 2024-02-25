@@ -30,13 +30,25 @@ class _InfoScreenState extends State<InfoScreen> {
     week = dateTime.weekday + 1;
 
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back_ios_new,
+            color: AppColors.c_313341,
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 20.we),
+        padding: EdgeInsets.symmetric(horizontal: 20.we, vertical: 20.he),
         child: Column(
           children: [
-            SizedBox(height: 90),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 15.we, vertical: 20.he),
+              padding: EdgeInsets.symmetric(horizontal: 15.we, vertical: 30.he),
               decoration: BoxDecoration(
                 color: AppColors.c_FFFFFF,
                 borderRadius: BorderRadius.circular(15.r),

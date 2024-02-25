@@ -235,6 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
+                    SizedBox(height: 30),
                     FutureBuilder(
                       future: weatherRepository.getHourlyAndDealiy(
                           cityModul!.coordModul.lat.toString(),
@@ -256,12 +257,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                   oneCallDataModels!.hourlyModels.length,
                                   (index) {
                                     return Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         Image.network(oneCallDataModels!
                                             .hourlyModels[index]
                                             .inWeather[0]
                                             .icon
                                             .getWeatherIconUrl()),
+                                        Text(
+                                          "${oneCallDataModels!.hourlyModels[index].temp.round()}c",
+                                          style: TextStyle(
+                                            color: AppColors.c_313341,
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
                                         Text(
                                           oneCallDataModels!
                                               .hourlyModels[index].dt
@@ -292,7 +303,6 @@ class _HomeScreenState extends State<HomeScreen> {
               return Center(child: CircularProgressIndicator.adaptive());
             },
           ),
-          SizedBox(height: 50),
         ],
       ),
     );
