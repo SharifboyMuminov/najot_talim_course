@@ -1,5 +1,5 @@
 class WeatherModul {
-  final int id;
+  final num id;
   final String maiN;
   final String description;
   final String icon;
@@ -15,7 +15,7 @@ class WeatherModul {
     return WeatherModul(
       description: json["description"] as String? ?? "",
       icon: json["icon"] as String? ?? "",
-      id: json["id"] as int? ?? 0,
+      id: json["id"] as num? ?? 0,
       maiN: json["main"] as String? ?? "",
     );
   }

@@ -4,6 +4,7 @@ import 'package:default_project/data/models/city/city_modul.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/network_response.dart';
+import '../models/one_call/one_call_models/one_call_data_models.dart';
 
 class ApiProvider {
   static Future<NetworkResponse> getSimpleWeatherInfo(String city) async {
@@ -28,6 +29,40 @@ class ApiProvider {
       }
     } catch (error) {
       networkResponse.errorText = "Catch Error";
+    }
+
+    return networkResponse;
+  }
+
+  static Future<NetworkResponse> getComplexWeatherInfo() async {
+    NetworkResponse networkResponse = NetworkResponse();
+    Map<String, String> queryParams = {
+      "lat": "41.2646",
+      "lon": "69.2163",
+      "units": "metric",
+      "exclude": "minutely,current",
+      "appid": "4a8eaf9ed512f638cdd7a82434895402",
+    };
+
+    Uri uri = Uri.https(
+      "api.openweathermap.org",
+      "/data/2.5/onecall",
+      queryParams,
+    );
+
+    try {
+      http.Response response = await http.get(uri);
+
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        networkResponse.data = OneCallDataModels.fromJson(data);
+      } else {
+        networkResponse.errorText = "Internetda hatolik :(";
+      }
+    } catch (error) {
+      print("Error");
+
+      networkResponse.errorText = "$error";
     }
 
     return networkResponse;
