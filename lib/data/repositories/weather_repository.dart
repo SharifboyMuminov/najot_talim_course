@@ -5,6 +5,6 @@ class WeatherRepository {
   Future<NetworkResponse> getSimpleWeatherInfo(String city) =>
       ApiProvider.getSimpleWeatherInfo(city);
 
-  Future<NetworkResponse> getHourlyAndDealiy() =>
-      ApiProvider.getComplexWeatherInfo();
+  Future<NetworkResponse> getHourlyAndDealiy(String lat, String lon) =>
+      ApiProvider.getComplexWeatherInfo(lat,lon);
 }

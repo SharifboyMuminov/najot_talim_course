@@ -1,13 +1,10 @@
+import 'package:default_project/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'screens/home_screen/home_screen.dart';
-
 void main(List<String> args) {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
-
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -24,7 +21,7 @@ class MyApp extends StatelessWidget {
           home: child,
         );
       },
-      child: HomeScreen(),
+      child: const SplashScreen(),
     );
   }
 }

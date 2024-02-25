@@ -34,11 +34,12 @@ class ApiProvider {
     return networkResponse;
   }
 
-  static Future<NetworkResponse> getComplexWeatherInfo() async {
+  static Future<NetworkResponse> getComplexWeatherInfo(
+      String lat, String lon) async {
     NetworkResponse networkResponse = NetworkResponse();
     Map<String, String> queryParams = {
-      "lat": "41.2646",
-      "lon": "69.2163",
+      "lat": lat,
+      "lon": lon,
       "units": "metric",
       "exclude": "minutely,current",
       "appid": "4a8eaf9ed512f638cdd7a82434895402",
