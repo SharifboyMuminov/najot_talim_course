@@ -1,13 +1,12 @@
+import 'package:default_project/screens/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'screens/home_screen/home_screen.dart';
+import 'screens/index/home/home_screen.dart';
 
 void main(List<String> args) {
   runApp(MyApp());
 }
-
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -21,10 +20,10 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(useMaterial3: false),
-          home: child,
+          initialRoute: RoutName.splashScreen,
+          onGenerateRoute: AppRoutes.generateRoute,
         );
       },
-      child: HomeScreen(),
     );
   }
 }
