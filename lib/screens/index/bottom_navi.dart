@@ -1,3 +1,5 @@
+import 'package:default_project/data/local/local_objescs.dart';
+import 'package:default_project/data/models/task/task_modul.dart';
 import 'package:default_project/screens/index/add/add_screen.dart';
 import 'package:default_project/screens/index/home/home_screen.dart';
 import 'package:default_project/screens/index/home/widget/bttom_item.dart';
@@ -27,6 +29,8 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
   bool isShowBottomDialog = false;
   TextEditingController controllerAdd = TextEditingController();
   TextEditingController controllerDecreption = TextEditingController();
+
+  TaskModul taskModul = TaskModul.initialValue();
 
   @override
   void initState() {
@@ -184,7 +188,12 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
                           ),
                           IconButton(
                             onPressed: () {
-                              gitCategoriyDialog(context: context);
+                              gitCategoriyDialog(
+                                  context: context,
+                                  onChange: (int value) {
+                                    taskModul = taskModul.copyWith(
+                                        categoriModul: categiries[value]);
+                                  }, categoriModul: taskModul.categoriModul);
                             },
                             icon: SvgPicture.asset(
                               AppImages.categoriy,
@@ -192,7 +201,12 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
                           ),
                           IconButton(
                             onPressed: () {
-                              getPriorityDialog(context: context);
+                              getPriorityDialog(
+                                  context: context,
+                                  onChange: (int value) {
+                                    taskModul =
+                                        taskModul.copyWith(priority: value);
+                                  }, i: taskModul.priority);
                             },
                             icon: SvgPicture.asset(
                               AppImages.priorty,
@@ -200,7 +214,18 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
                           ),
                           Spacer(),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              if (controllerAdd.text.isNotEmpty &&
+                                  controllerDecreption.text.isNotEmpty) {
+                                taskModul = taskModul.copyWith(
+                                    title: controllerAdd.text,
+                                    description: controllerDecreption.text);
+                                if (taskModul.canAddTaskToDatabase()) {
+                                  isShowBottomDialog = false;
+                                  setState(() {});
+                                }
+                              }
+                            },
                             icon: SvgPicture.asset(
                               AppImages.save,
                             ),

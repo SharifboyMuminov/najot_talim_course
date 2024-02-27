@@ -1,13 +1,17 @@
 import 'package:default_project/data/local/local_objescs.dart';
+import 'package:default_project/data/models/categori/categori_modeul.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-gitCategoriyDialog({required BuildContext context}) {
-  int activIndex = 0;
+gitCategoriyDialog(
+    {required BuildContext context,
+    required ValueChanged<int> onChange,
+    required CategoriModul categoriModul}) {
+  int activIndex = categiries.indexOf(categoriModul);
+  print(activIndex);
 
   showDialog(
     context: context,
@@ -64,7 +68,7 @@ gitCategoriyDialog({required BuildContext context}) {
                                   backgroundColor: categiries[index]
                                       .color
                                       .withOpacity(
-                                          activIndex == index ? 1 : 0.8),
+                                          activIndex == index ? 1 : 0.6),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(7.r)),
                                 ),
@@ -100,7 +104,10 @@ gitCategoriyDialog({required BuildContext context}) {
                             borderRadius: BorderRadius.circular(8.r),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          onChange.call(activIndex);
+                          Navigator.pop(context);
+                        },
                         child: Text(
                           "Add Category",
                           style: TextStyle(

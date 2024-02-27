@@ -1,13 +1,17 @@
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../utils/app_colors.dart';
 import '../../../utils/app_images.dart';
 
-getPriorityDialog({required BuildContext context}) {
-  int activPriopt = 1;
+getPriorityDialog(
+    {required BuildContext context,
+    required ValueChanged<int> onChange,
+    required int i}) {
+  int activPriopt = i;
   showDialog(
     context: context,
     builder: (context) {
@@ -20,8 +24,8 @@ getPriorityDialog({required BuildContext context}) {
                 borderRadius: BorderRadius.circular(7.r),
               ),
               color: AppColors.c_363636,
-              child: SingleChildScrollView(
-                padding: EdgeInsets.symmetric(vertical: 10.he),
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 7.he),
                 child: Column(
                   children: [
                     Padding(
@@ -47,53 +51,58 @@ getPriorityDialog({required BuildContext context}) {
                       color: AppColors.c_979797,
                     ),
                     10.getH(),
-                    Wrap(
-                      children: [
-                        ...List.generate(
-                          10,
-                          (index) => Container(
-                            margin: EdgeInsets.symmetric(
-                                horizontal: 9.we, vertical: 10.he),
-                            decoration: BoxDecoration(
-                              color: (activPriopt == index + 1)
-                                  ? AppColors.c_8687E7
-                                  : AppColors.c_272727,
-                              borderRadius: BorderRadius.circular(4.r),
-                            ),
-                            child: TextButton(
-                              style: TextButton.styleFrom(
-                                shape: RoundedRectangleBorder(
+                    Expanded(
+                      child: SingleChildScrollView(
+                        padding: EdgeInsets.symmetric(vertical: 7.he),
+                        child: Wrap(
+                          children: [
+                            ...List.generate(
+                              10,
+                              (index) => Container(
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: 9.we, vertical: 10.he),
+                                decoration: BoxDecoration(
+                                  color: (activPriopt == index + 1)
+                                      ? AppColors.c_8687E7
+                                      : AppColors.c_272727,
                                   borderRadius: BorderRadius.circular(4.r),
                                 ),
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  activPriopt = index + 1;
-                                });
-                              },
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  SvgPicture.asset(
-                                    AppImages.priorty,
-                                    width: 24.we,
-                                    height: 24.we,
-                                  ),
-                                  Text(
-                                    (index + 1).toString(),
-                                    style: TextStyle(
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w400,
-                                      color:
-                                          AppColors.c_FFFFFF.withOpacity(0.87),
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4.r),
                                     ),
-                                  )
-                                ],
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      activPriopt = index + 1;
+                                    });
+                                  },
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      SvgPicture.asset(
+                                        AppImages.priorty,
+                                        width: 24.we,
+                                        height: 24.we,
+                                      ),
+                                      Text(
+                                        (index + 1).toString(),
+                                        style: TextStyle(
+                                          fontSize: 16.sp,
+                                          fontWeight: FontWeight.w400,
+                                          color: AppColors.c_FFFFFF
+                                              .withOpacity(0.87),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                     Row(
                       mainAxisSize: MainAxisSize.min,
@@ -108,7 +117,9 @@ getPriorityDialog({required BuildContext context}) {
                                 borderRadius: BorderRadius.circular(7.r),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
                             child: Text(
                               "Cancel",
                               style: TextStyle(
@@ -130,7 +141,10 @@ getPriorityDialog({required BuildContext context}) {
                                 borderRadius: BorderRadius.circular(7.r),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              onChange.call(activPriopt);
+                              Navigator.pop(context);
+                            },
                             child: Text(
                               "Save",
                               style: TextStyle(
