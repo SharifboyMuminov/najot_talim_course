@@ -69,7 +69,7 @@ class StartScreen extends StatelessWidget {
                       text: "Start",
                       pading: EdgeInsets.symmetric(vertical: 12.he),
                       onTab: () {
-                        Navigator.pushReplacementNamed(context, RoutName.homeScreen);
+                        Navigator.pushReplacementNamed(context, RoutName.bottonCytem);
                       },
                     ),
                   ),

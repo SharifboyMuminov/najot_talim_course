@@ -1,4 +1,5 @@
 import 'package:default_project/screens/index/add/add_screen.dart';
+import 'package:default_project/screens/index/bottom_navi.dart';
 import 'package:default_project/screens/index/home/home_screen.dart';
 import 'package:default_project/screens/intro/onboading/onboading_screen.dart';
 import 'package:default_project/screens/intro/splash/splash_screen.dart';
@@ -40,7 +41,12 @@ class AppRoutes {
             return const AddScreen();
           },
         );
-
+      case RoutName.bottonCytem:
+        return MaterialPageRoute(
+          builder: (contex) {
+            return const BottomNavigationCostym();
+          },
+        );
       default:
         return navigate(
           const Scaffold(
@@ -63,4 +69,5 @@ class RoutName {
   static const String startScreen = "/start_screen";
   static const String homeScreen = "/home_screen";
   static const String addScreen = "/add_screen";
+  static const String bottonCytem = "/bottom_cystom";
 }
