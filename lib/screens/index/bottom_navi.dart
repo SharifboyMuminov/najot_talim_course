@@ -10,6 +10,8 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../utils/app_colors.dart';
 import '../../utils/app_images.dart';
+import 'dialogs/categoriy_dialog.dart';
+import 'dialogs/priority.dart';
 
 class BottomNavigationCostym extends StatefulWidget {
   const BottomNavigationCostym({super.key});
@@ -21,6 +23,7 @@ class BottomNavigationCostym extends StatefulWidget {
 class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
   late List<Widget> _screens;
   int activIndex = 0;
+  int activPriopt = 1;
   bool isShowBottomDialog = false;
   TextEditingController controllerAdd = TextEditingController();
   TextEditingController controllerDecreption = TextEditingController();
@@ -86,27 +89,6 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
                 onPressed: () {
                   isShowBottomDialog = !isShowBottomDialog;
                   setState(() {});
-                  // showModalBottomSheet(
-                  //   shape: RoundedRectangleBorder(
-                  //     borderRadius: BorderRadius.only(
-                  //       topLeft: Radius.circular(15.r),
-                  //       topRight: Radius.circular(15.r),
-                  //     ),
-                  //   ),
-                  //   context: context,
-                  //   builder: (context) {
-                  //     return Container(
-                  //       height: 300,
-                  //       child: Column(
-                  //         children: [
-                  //           TextField(),
-                  //           TextField()
-
-                  //         ],
-                  //       ),
-                  //     );
-                  //   },
-                  // );
                 },
                 child: SvgPicture.asset(
                   AppImages.plus,
@@ -201,53 +183,16 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
                             ),
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              gitCategoriyDialog(context: context);
+                            },
                             icon: SvgPicture.asset(
                               AppImages.categoriy,
                             ),
                           ),
                           IconButton(
                             onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return SizedBox(
-                                    height: 200,
-                                    width: double.infinity,
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 24.we, vertical: 225),
-                                      child: Material(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(7.r),
-                                        ),
-                                        color: AppColors.c_363636,
-                                        child: SingleChildScrollView(
-                                          child: Column(
-                                            children: [
-                                              Text(
-                                                "Task Priority",
-                                                style: TextStyle(
-                                                  fontSize: 16.sp,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: AppColors.c_FFFFFF
-                                                      .withOpacity(0.87),
-                                                ),
-                                              ),
-                                              Container(
-                                                width: double.infinity,
-                                                height: 1,
-                                                color: AppColors.c_979797,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              );
+                              getPriorityDialog(context: context);
                             },
                             icon: SvgPicture.asset(
                               AppImages.priorty,
