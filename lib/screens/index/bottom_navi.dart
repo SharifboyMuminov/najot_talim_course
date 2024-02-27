@@ -130,6 +130,7 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
+                alignment: Alignment.bottomCenter,
                 padding: EdgeInsets.symmetric(horizontal: 24.we),
                 width: width,
                 height: 260,
@@ -141,8 +142,9 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
                   ),
                 ),
                 child: SingleChildScrollView(
-                  padding: EdgeInsets.symmetric(vertical: 10.he),
+                  padding: EdgeInsets.symmetric(vertical: 15.he),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -165,11 +167,35 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
                         hintText: "Description",
                         textInputAction: TextInputAction.done,
                       ),
-                      15.getH(),
                       Row(
                         children: [
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              var a = await showTimePicker(
+                                context: context,
+                                initialEntryMode: TimePickerEntryMode.input,
+                                initialTime:
+                                    const TimeOfDay(hour: 8, minute: 0),
+                                builder: (BuildContext context, Widget? child) {
+                                  return MediaQuery(
+                                    data: MediaQuery.of(context)
+                                        .copyWith(alwaysUse24HourFormat: true),
+                                    child: child!,
+                                  );
+                                },
+                              );
+
+                              var b = await showDatePicker(
+                                barrierColor: Colors.black45,
+                                cancelText: "Cancel",
+                                confirmText: "Select",
+                                barrierDismissible: false,
+                                context: context,
+                                firstDate: DateTime.now(),
+                                lastDate: DateTime(2030),
+                                currentDate: DateTime.now(),
+                              );
+                            },
                             icon: SvgPicture.asset(
                               AppImages.time,
                             ),
@@ -181,7 +207,48 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
                             ),
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return SizedBox(
+                                    height: 200,
+                                    width: double.infinity,
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 24.we, vertical: 225),
+                                      child: Material(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(7.r),
+                                        ),
+                                        color: AppColors.c_363636,
+                                        child: SingleChildScrollView(
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                "Task Priority",
+                                                style: TextStyle(
+                                                  fontSize: 16.sp,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: AppColors.c_FFFFFF
+                                                      .withOpacity(0.87),
+                                                ),
+                                              ),
+                                              Container(
+                                                width: double.infinity,
+                                                height: 1,
+                                                color: AppColors.c_979797,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
                             icon: SvgPicture.asset(
                               AppImages.priorty,
                             ),
