@@ -10,14 +10,17 @@ class AddtextFild extends StatelessWidget {
     required this.controller,
     required this.hintText,
     required this.textInputAction,
+    required this.focusNode,
   });
   final TextEditingController controller;
   final String hintText;
   final TextInputAction textInputAction;
+  final FocusNode focusNode;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      focusNode: focusNode,
       controller: controller,
       textInputAction: textInputAction,
       cursorColor: AppColors.c_FFFFFF.withOpacity(0.87),
@@ -28,8 +31,7 @@ class AddtextFild extends StatelessWidget {
       ),
       maxLines: null,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(
-            horizontal: 12.we, vertical: 8.he),
+        contentPadding: EdgeInsets.symmetric(horizontal: 12.we, vertical: 8.he),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4.r),
           borderSide: BorderSide(color: AppColors.c_979797, width: 1.we),

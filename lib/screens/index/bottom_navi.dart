@@ -1,3 +1,5 @@
+import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
+
 import 'package:default_project/data/local/local_objescs.dart';
 import 'package:default_project/data/models/task/task_modul.dart';
 import 'package:default_project/screens/index/add/add_screen.dart';
@@ -29,6 +31,10 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
   bool isShowBottomDialog = false;
   TextEditingController controllerAdd = TextEditingController();
   TextEditingController controllerDecreption = TextEditingController();
+  DateTime? dateTime;
+  TimeOfDay? timeOfDay;
+  final FocusNode focusNode1 = FocusNode();
+  final FocusNode focusNode2 = FocusNode();
 
   TaskModul taskModul = TaskModul.initialValue();
 
@@ -146,18 +152,29 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
                         controller: controllerAdd,
                         hintText: 'Title',
                         textInputAction: TextInputAction.next,
+                        focusNode: focusNode1,
                       ),
                       10.getH(),
                       AddtextFild(
                         controller: controllerDecreption,
                         hintText: "Description",
                         textInputAction: TextInputAction.done,
+                        focusNode: focusNode2,
                       ),
                       Row(
                         children: [
                           IconButton(
                             onPressed: () async {
-                              var a = await showTimePicker(
+                              dateTime = await showDatePicker(
+                                cancelText: "Cancel",
+                                confirmText: "Select",
+                                barrierDismissible: false,
+                                context: context,
+                                firstDate: DateTime.now(),
+                                lastDate: DateTime(2030),
+                                currentDate: DateTime.now(),
+                              );
+                              timeOfDay = await showTimePicker(
                                 context: context,
                                 initialEntryMode: TimePickerEntryMode.input,
                                 initialTime:
@@ -170,17 +187,17 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
                                   );
                                 },
                               );
+                              if (dateTime != null && timeOfDay != null) {
+                                var day = dateTime.toString().split(" ")[0];
+                                var hour = timeOfDay!.hour.toString();
+                                var minut = timeOfDay!.minute.toString();
 
-                              var b = await showDatePicker(
-                                barrierColor: Colors.black45,
-                                cancelText: "Cancel",
-                                confirmText: "Select",
-                                barrierDismissible: false,
-                                context: context,
-                                firstDate: DateTime.now(),
-                                lastDate: DateTime(2030),
-                                currentDate: DateTime.now(),
-                              );
+                                hour = hour.length == 1 ? "0$hour" : hour;
+                                minut = hour.length == 1 ? "0$minut" : minut;
+
+                                taskModul = taskModul.copyWith(
+                                    hour: "$hour:$minut", days: day);
+                              }
                             },
                             icon: SvgPicture.asset(
                               AppImages.time,
@@ -193,7 +210,8 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
                                   onChange: (int value) {
                                     taskModul = taskModul.copyWith(
                                         categoriModul: categiries[value]);
-                                  }, categoriModul: taskModul.categoriModul);
+                                  },
+                                  categoriModul: taskModul.categoriModul);
                             },
                             icon: SvgPicture.asset(
                               AppImages.categoriy,
@@ -206,7 +224,9 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
                                   onChange: (int value) {
                                     taskModul =
                                         taskModul.copyWith(priority: value);
-                                  }, i: taskModul.priority);
+                                    // print(taskModul.getInfo());
+                                  },
+                                  i: taskModul.priority);
                             },
                             icon: SvgPicture.asset(
                               AppImages.priorty,
@@ -220,8 +240,14 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
                                 taskModul = taskModul.copyWith(
                                     title: controllerAdd.text,
                                     description: controllerDecreption.text);
+                                // print(taskModul.getInfo());
                                 if (taskModul.canAddTaskToDatabase()) {
+                                  controllerAdd.clear();
+                                  controllerDecreption.clear();
+                                  focusNode2.call();
+                                  tasks.add(taskModul);
                                   isShowBottomDialog = false;
+                                  taskModul = TaskModul.initialValue();
                                   setState(() {});
                                 }
                               }

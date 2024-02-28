@@ -11,7 +11,6 @@ gitCategoriyDialog(
     required ValueChanged<int> onChange,
     required CategoriModul categoriModul}) {
   int activIndex = categiries.indexOf(categoriModul);
-  print(activIndex);
 
   showDialog(
     context: context,

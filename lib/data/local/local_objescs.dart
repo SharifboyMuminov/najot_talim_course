@@ -1,4 +1,5 @@
 import 'package:default_project/data/models/categori/categori_modeul.dart';
+import 'package:default_project/data/models/task/task_modul.dart';
 import 'package:default_project/utils/app_images.dart';
 import 'package:flutter/material.dart';
 
@@ -64,3 +65,5 @@ List<CategoriModul> categiries = [
       icon: "assets/icons/categoriy_home.svg",
       title: "Home"),
 ];
+
+List<TaskModul> tasks = [];

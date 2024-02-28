@@ -8,14 +8,18 @@ class TaskModul {
   final String title;
   final String description;
   final CategoriModul categoriModul;
-  final DateTime dateTime;
+  final String day;
+  final String hourMinut;
   final int priority;
   final TaskStatus status;
+  bool isChek = false;
+  bool isDelet = false;
 
   TaskModul({
     this.id,
     required this.categoriModul,
-    required this.dateTime,
+    required this.day,
+    required this.hourMinut,
     required this.description,
     required this.priority,
     required this.status,
@@ -27,17 +31,20 @@ class TaskModul {
     String? title,
     String? description,
     CategoriModul? categoriModul,
-    DateTime? dateTime,
     int? priority,
     TaskStatus? status,
+    String? hour,
+    String? days,
   }) {
     return TaskModul(
-        categoriModul: categoriModul ?? this.categoriModul,
-        dateTime: dateTime ?? this.dateTime,
-        description: description ?? this.description,
-        priority: priority ?? this.priority,
-        status: status ?? this.status,
-        title: title ?? this.title);
+      categoriModul: categoriModul ?? this.categoriModul,
+      description: description ?? this.description,
+      priority: priority ?? this.priority,
+      status: status ?? this.status,
+      title: title ?? this.title,
+      hourMinut: hour ?? this.hourMinut,
+      day: days ?? this.day,
+    );
   }
 
   static TaskModul initialValue() {
@@ -46,9 +53,11 @@ class TaskModul {
             color: const Color(0xFFCCFF80),
             icon: "assets/icons/gracery.svg",
             title: "Grocery"),
-        dateTime: DateTime.now(),
+        day: "",
+        hourMinut: "",
         description: "",
         priority: 1,
+        id: 0,
         status: TaskStatus.missed,
         title: "");
   }
@@ -57,6 +66,8 @@ class TaskModul {
     if (priority == 0) return false;
     if (description.isEmpty) return false;
     if (title.isEmpty) return false;
+    if (hourMinut.isEmpty) return false;
+    if (day.isEmpty) return false;
 
     return true;
   }
@@ -80,5 +91,14 @@ class TaskModul {
           return TaskStatus.missed;
         }
     }
+  }
+
+  getInfo() {
+    return """
+$day
+$hourMinut
+$title
+$description
+$priority""";
   }
 }
