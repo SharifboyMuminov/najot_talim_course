@@ -1,5 +1,4 @@
-import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
-
+import 'package:default_project/data/local/local_data/local_database.dart';
 import 'package:default_project/data/local/local_objescs.dart';
 import 'package:default_project/data/models/task/task_modul.dart';
 import 'package:default_project/screens/index/add/add_screen.dart';
@@ -40,11 +39,17 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
 
   @override
   void initState() {
+    _initSet();
     _screens = const [
       HomeScreen(),
       AddScreen(),
     ];
     super.initState();
+  }
+
+  Future<void> _initSet() async {
+    tasks = await LocalDatabase.getAllTasks();
+    setState(() {});
   }
 
   @override
@@ -224,7 +229,6 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
                                   onChange: (int value) {
                                     taskModul =
                                         taskModul.copyWith(priority: value);
-                                    // print(taskModul.getInfo());
                                   },
                                   i: taskModul.priority);
                             },
@@ -234,17 +238,17 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
                           ),
                           Spacer(),
                           IconButton(
-                            onPressed: () {
+                            onPressed: () async {
                               if (controllerAdd.text.isNotEmpty &&
                                   controllerDecreption.text.isNotEmpty) {
                                 taskModul = taskModul.copyWith(
                                     title: controllerAdd.text,
                                     description: controllerDecreption.text);
-                                // print(taskModul.getInfo());
                                 if (taskModul.canAddTaskToDatabase()) {
+                                  await LocalDatabase.insertTask(taskModul);
+                                  _initSet();
                                   controllerAdd.clear();
                                   controllerDecreption.clear();
-                                  focusNode2.call();
                                   tasks.add(taskModul);
                                   isShowBottomDialog = false;
                                   taskModul = TaskModul.initialValue();
@@ -265,7 +269,6 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
             ),
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
