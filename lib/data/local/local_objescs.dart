@@ -23,18 +23,7 @@ List<OnboadingModul> onboadingModuls = [
       title: "Orgonaize your tasks"),
 ];
 
-List<CategoriModul> categiries = [
-  CategoriModul(color: const Color(0xFFCCFF80), icon: "💪", title: "Work"),
-  CategoriModul(color: const Color(0xFF80FFFF), icon: "👊", title: "Sport"),
-  CategoriModul(color: const Color(0xFF80FFD9), icon: "🌔", title: "Design"),
-  CategoriModul(
-      color: const Color(0xFF809CFF), icon: "🧑‍💻", title: "University"),
-  CategoriModul(color: const Color(0xFFFF80EB), icon: "🤐", title: "Social"),
-  CategoriModul(color: const Color(0xFF80FFA3), icon: "❤️", title: "Health"),
-  CategoriModul(color: const Color(0xFFFC80FF), icon: "⭐️", title: "Music"),
-  CategoriModul(color: const Color(0xFF80D1FF), icon: "🥷", title: "Movie"),
-  CategoriModul(color: const Color(0xFFFFCC80), icon: "🏙", title: "Home"),
-];
+List<CategoriModul> categiries = [];
 
 List<TaskModul> tasks = [];
 

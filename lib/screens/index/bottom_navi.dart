@@ -17,6 +17,7 @@ import '../../utils/app_colors.dart';
 import '../../utils/app_images.dart';
 import 'dialogs/categoriy_dialog.dart';
 import 'dialogs/priority.dart';
+import 'widgets/showSuccess_message.dart';
 
 class BottomNavigationCostym extends StatefulWidget {
   const BottomNavigationCostym({super.key});
@@ -27,7 +28,10 @@ class BottomNavigationCostym extends StatefulWidget {
 
 class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
   StreamController streamController = StreamController<bool>();
-  late List<Widget> _screens;
+  List<Widget> _screens = [
+    HomeScreen(),
+    AddScreen(),
+  ];
   int activIndex = 0;
   int activPriopt = 1;
   bool isShowBottomDialog = false;
@@ -42,19 +46,13 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
 
   @override
   void initState() {
-    _screens = const [
-      HomeScreen(),
-      AddScreen(),
-    ];
     _init();
-    
     _initCange();
-
     super.initState();
   }
 
   _initCange() async {
-    categiries.addAll(await LocalDatabase.getAllCategory());
+    categiries = await LocalDatabase.getAllCategory();
     setState(() {});
   }
 
@@ -65,8 +63,6 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
     ];
     setState(() {});
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -186,6 +182,8 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
                         children: [
                           IconButton(
                             onPressed: () async {
+                              focusNode1.unfocus();
+                              focusNode2.unfocus();
                               dateTime = await showDatePicker(
                                 cancelText: "Cancel",
                                 confirmText: "Select",
@@ -226,6 +224,8 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
                           ),
                           IconButton(
                             onPressed: () {
+                              focusNode1.unfocus();
+                              focusNode2.unfocus();
                               gitCategoriyDialog(
                                   context: context,
                                   onChange: (int value) {
@@ -240,6 +240,8 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
                           ),
                           IconButton(
                             onPressed: () {
+                              focusNode1.unfocus();
+                              focusNode2.unfocus();
                               getPriorityDialog(
                                   context: context,
                                   onChange: (int value) {
@@ -262,12 +264,13 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
                                     description: controllerDecreption.text);
                                 if (taskModul.canAddTaskToDatabase()) {
                                   await LocalDatabase.insertTask(taskModul);
+                                  streamController.add(true);
+                                  showToastMesseg("Seccses");
                                   controllerAdd.clear();
                                   controllerDecreption.clear();
                                   tasks.add(taskModul);
                                   isShowBottomDialog = false;
                                   taskModul = TaskModul.initialValue();
-                                  streamController.add(true);
                                   setState(() {});
                                 }
                               }

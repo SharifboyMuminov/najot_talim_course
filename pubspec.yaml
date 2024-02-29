@@ -40,6 +40,7 @@ dependencies:
   intl: ^0.19.0
   sqflite: ^2.3.1
   zoom_tap_animation: ^1.1.0
+  fluttertoast: ^8.2.4
   # shared_preferences: ^2.2.2
 
 dev_dependencies:

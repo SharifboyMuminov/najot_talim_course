@@ -26,8 +26,6 @@ class _HomeScreenState extends State<HomeScreen> {
     _initSet();
     if (widget.stream != null) {
       widget.stream!.listen((event) {
-        print("Keldi :)");
-
         _initSet();
       });
     }

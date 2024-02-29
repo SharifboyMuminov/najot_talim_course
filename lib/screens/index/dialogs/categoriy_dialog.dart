@@ -6,6 +6,9 @@ import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'delet_category.dart';
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 gitCategoriyDialog(
     {required BuildContext context,
     required ValueChanged<int> onChange,
@@ -54,7 +57,7 @@ gitCategoriyDialog(
                       child: GridView.builder(
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
+                          crossAxisCount: 4,
                         ),
                         itemCount: categiries.length,
                         itemBuilder: (context, index) {
@@ -71,6 +74,15 @@ gitCategoriyDialog(
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(7.r)),
                                 ),
+                                onLongPress: () {
+                                  deletCategoriy(
+                                    context: context,
+                                    onSet: () {
+                                      setState(() {});
+                                    },
+                                    categoriModul: categiries[index],
+                                  );
+                                },
                                 onPressed: () {
                                   activIndex = index;
                                   setState(() {});

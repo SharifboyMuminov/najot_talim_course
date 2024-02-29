@@ -31,7 +31,7 @@ class _AddCategoriyState extends State<AddCategoriy> {
   }
 
   Future<void> _initCange() async {
-    categiries.addAll(await LocalDatabase.getAllCategory());
+    categiries = await LocalDatabase.getAllCategory();
     setState(() {});
   }
 
