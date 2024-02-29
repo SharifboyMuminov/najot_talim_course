@@ -1,3 +1,4 @@
+import 'package:default_project/data/models/categori/categori_modeul.dart';
 import 'package:default_project/data/models/task/task_modul.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sqflite/sqflite.dart';
@@ -48,15 +49,29 @@ class LocalDatabase {
       ${TaskContans.category} $textType,
       ${TaskContans.priority} $intType
     )''');
+
+    await db.execute('''CREATE TABLE ${CategoryContans.tableNAme} (
+      ${CategoryContans.color} $textType,
+      ${CategoryContans.icon} $textType,
+      ${CategoryContans.title} $textType,
+      ${CategoryContans.id} $idType
+    )''');
   }
 
   static Future<TaskModul> insertTask(TaskModul taskModel) async {
-    debugPrint("INITIAL ID:${taskModel.id}");
     final db = await databaseInstance.database;
     int savedTaskID =
         await db.insert(TaskContans.tableName, taskModel.toJson());
-    debugPrint("SAVED ID:$savedTaskID");
     return taskModel.copyWith(id: savedTaskID);
+  }
+
+  static Future<CategoriModul> insertCategory(
+      CategoriModul categoriModul) async {
+    final db = await databaseInstance.database;
+    int savedTaskID =
+        await db.insert(CategoryContans.tableNAme, categoriModul.toJson());
+    debugPrint("SAVED ID:$savedTaskID");
+    return categoriModul.copyWith(id: savedTaskID);
   }
 
   static Future<List<TaskModul>> getAllTasks() async {
@@ -64,5 +79,32 @@ class LocalDatabase {
     String orderBy = "${TaskContans.id} DESC";
     List json = await db.query(TaskContans.tableName, orderBy: orderBy);
     return json.map((e) => TaskModul.fomJson(e)).toList();
+  }
+
+  static Future<List<CategoriModul>> getAllCategory() async {
+    final db = await databaseInstance.database;
+    String orderBy = "${CategoryContans.id} DESC";
+    List json = await db.query(CategoryContans.tableNAme, orderBy: orderBy);
+    return json.map((e) => CategoriModul.fromJson(e)).toList();
+  }
+
+  static Future<int> deleteTask(int id) async {
+    final db = await databaseInstance.database;
+    int deletedId = await db.delete(
+      TaskContans.tableName,
+      where: "${TaskContans.id} = ?",
+      whereArgs: [id],
+    );
+    return deletedId;
+  }
+
+  static Future<int> deleteCategoriy(int id) async {
+    final db = await databaseInstance.database;
+    int deletedId = await db.delete(
+      CategoryContans.tableNAme,
+      where: "${CategoryContans.id} = ?",
+      whereArgs: [id],
+    );
+    return deletedId;
   }
 }

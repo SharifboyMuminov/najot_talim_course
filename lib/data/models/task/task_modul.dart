@@ -1,6 +1,7 @@
 import 'package:default_project/data/models/categori/categori_modeul.dart';
 import 'package:flutter/material.dart';
 
+import '../../local/local_objescs.dart';
 import 'task_status.dart';
 
 class TaskModul {
@@ -120,64 +121,15 @@ class TaskContans {
   static const String category = "category";
 }
 
+
 CategoriModul getCategoriy(String categoriyName) {
-  switch (categoriyName) {
-    case "Grocery":
-      return CategoriModul(
-          color: const Color(0xFFCCFF80),
-          icon: "assets/icons/gracery.svg",
-          title: "Grocery");
-    case "Work":
-      return CategoriModul(
-          color: const Color(0xFFFF9680),
-          icon: "assets/icons/work.svg",
-          title: "Work");
-
-    case "Sport":
-      return CategoriModul(
-          color: const Color(0xFF80FFFF),
-          icon: "assets/icons/sport.svg",
-          title: "Sport");
-
-    case "Design":
-      return CategoriModul(
-          color: const Color(0xFF80FFD9),
-          icon: "assets/icons/design.svg",
-          title: "Design");
-
-    case "University":
-      return CategoriModul(
-          color: const Color(0xFF809CFF),
-          icon: "assets/icons/university.svg",
-          title: "University");
-    case "Social":
-      return CategoriModul(
-          color: const Color(0xFFFF80EB),
-          icon: "assets/icons/social.svg",
-          title: "Social");
-
-    case "Music":
-      return CategoriModul(
-          color: const Color(0xFFFC80FF),
-          icon: "assets/icons/music.svg",
-          title: "Music");
-
-    case "Health":
-      return CategoriModul(
-          color: const Color(0xFF80FFA3),
-          icon: "assets/icons/health.svg",
-          title: "Health");
-    case "Movie":
-      return CategoriModul(
-          color: const Color(0xFF80D1FF),
-          icon: "assets/icons/movie.svg",
-          title: "Movie");
-    default:
-      return CategoriModul(
-          color: const Color(0xFFFFCC80),
-          icon: "assets/icons/categoriy_home.svg",
-          title: "Home");
+  for (CategoriModul categoriModul in categiries) {
+    if (categoriModul.title == categoriyName) {
+      return categoriModul;
+    }
   }
+  return CategoriModul(
+      color: const Color(0xFF80FFD9), icon: "🌔", title: "Design");
 }
 
 TaskStatus getStatus(String statusText) {

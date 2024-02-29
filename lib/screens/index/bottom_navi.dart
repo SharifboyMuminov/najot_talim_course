@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:default_project/data/local/local_data/local_database.dart';
 import 'package:default_project/data/local/local_objescs.dart';
 import 'package:default_project/data/models/task/task_modul.dart';
@@ -24,6 +26,7 @@ class BottomNavigationCostym extends StatefulWidget {
 }
 
 class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
+  StreamController streamController = StreamController<bool>();
   late List<Widget> _screens;
   int activIndex = 0;
   int activPriopt = 1;
@@ -39,18 +42,31 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
 
   @override
   void initState() {
-    _initSet();
     _screens = const [
       HomeScreen(),
       AddScreen(),
     ];
+    _init();
+    
+    _initCange();
+
     super.initState();
   }
 
-  Future<void> _initSet() async {
-    tasks = await LocalDatabase.getAllTasks();
+  _initCange() async {
+    categiries.addAll(await LocalDatabase.getAllCategory());
     setState(() {});
   }
+
+  _init() async {
+    _screens = [
+      HomeScreen(stream: streamController.stream.asBroadcastStream()),
+      AddScreen(),
+    ];
+    setState(() {});
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -246,12 +262,12 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
                                     description: controllerDecreption.text);
                                 if (taskModul.canAddTaskToDatabase()) {
                                   await LocalDatabase.insertTask(taskModul);
-                                  _initSet();
                                   controllerAdd.clear();
                                   controllerDecreption.clear();
                                   tasks.add(taskModul);
                                   isShowBottomDialog = false;
                                   taskModul = TaskModul.initialValue();
+                                  streamController.add(true);
                                   setState(() {});
                                 }
                               }

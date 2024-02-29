@@ -1,10 +1,10 @@
 import 'package:default_project/data/local/local_objescs.dart';
 import 'package:default_project/data/models/categori/categori_modeul.dart';
+import 'package:default_project/screens/index/dialogs/add_categoriy/add_categoriy.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 
 gitCategoriyDialog(
     {required BuildContext context,
@@ -75,7 +75,12 @@ gitCategoriyDialog(
                                   activIndex = index;
                                   setState(() {});
                                 },
-                                child: SvgPicture.asset(categiries[index].icon),
+                                child: Text(
+                                  categiries[index].icon,
+                                  style: TextStyle(
+                                    fontSize: 18.sp,
+                                  ),
+                                ),
                               ),
                               5.getH(),
                               Text(
@@ -92,30 +97,52 @@ gitCategoriyDialog(
                         },
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 19.we),
-                      width: double.infinity,
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          backgroundColor: AppColors.c_8687E7,
-                          padding: EdgeInsets.symmetric(vertical: 12.he),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.r),
+                    Row(
+                      children: [
+                        Container(
+                          width: width / 2.8,
+                          margin: EdgeInsets.symmetric(horizontal: 19.we),
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                              backgroundColor: AppColors.c_8687E7,
+                              padding: EdgeInsets.symmetric(vertical: 12.he),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.r),
+                              ),
+                            ),
+                            onPressed: () {
+                              onChange.call(activIndex);
+                              Navigator.pop(context);
+                            },
+                            child: Text(
+                              "Add Category",
+                              style: TextStyle(
+                                color: AppColors.c_FFFFFF,
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
                           ),
                         ),
-                        onPressed: () {
-                          onChange.call(activIndex);
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          "Add Category",
-                          style: TextStyle(
-                            color: AppColors.c_FFFFFF,
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w400,
+                        SizedBox(
+                          width: width / 2.8,
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) {
+                                  return AddCategoriy(
+                                    onSet: () {
+                                      setState(() {});
+                                    },
+                                  );
+                                }),
+                              );
+                            },
+                            child: const Icon(Icons.add),
                           ),
                         ),
-                      ),
+                      ],
                     ),
                   ],
                 ),

@@ -6,13 +6,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../data/local/local_data/local_database.dart';
 import 'widget/emptu_show.dart';
 import 'widget/task_item.dart';
 
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, this.stream});
+  final Stream? stream;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -21,7 +23,21 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
+    _initSet();
+    if (widget.stream != null) {
+      widget.stream!.listen((event) {
+        print("Keldi :)");
+
+        _initSet();
+      });
+    }
+
     super.initState();
+  }
+
+  _initSet() async {
+    tasks = await LocalDatabase.getAllTasks();
+    setState(() {});
   }
 
   @override
@@ -68,8 +84,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           (index) {
                             return TaskItem(
                               taskModul: tasks[index],
-                              onTab: () {
-                                tasks[index].isChek = !tasks[index].isChek;
+                              onTab: () async {
+                                if (tasks[index].isDelet) {
+                                  if (tasks[index].id != null) {
+                                    await LocalDatabase.deleteTask(
+                                        tasks[index].id!);
+                                    tasks.remove(tasks[index]);
+                                  }
+                                } else {
+                                  tasks[index].isChek = !tasks[index].isChek;
+                                }
                                 setState(() {});
                               },
                               onChange: (bool? value) {
@@ -77,6 +101,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   tasks[index].isChek = !tasks[index].isChek;
                                   setState(() {});
                                 }
+                              },
+                              onLongPrees: () {
+                                tasks[index].isDelet = !tasks[index].isDelet;
+                                setState(() {});
                               },
                             );
                           },

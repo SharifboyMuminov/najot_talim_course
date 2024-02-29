@@ -24,46 +24,34 @@ List<OnboadingModul> onboadingModuls = [
 ];
 
 List<CategoriModul> categiries = [
+  CategoriModul(color: const Color(0xFFCCFF80), icon: "💪", title: "Work"),
+  CategoriModul(color: const Color(0xFF80FFFF), icon: "👊", title: "Sport"),
+  CategoriModul(color: const Color(0xFF80FFD9), icon: "🌔", title: "Design"),
   CategoriModul(
-      color: const Color(0xFFCCFF80),
-      icon: "assets/icons/gracery.svg",
-      title: "Grocery"),
-  CategoriModul(
-      color: const Color(0xFFFF9680),
-      icon: "assets/icons/work.svg",
-      title: "Work"),
-  CategoriModul(
-      color: const Color(0xFF80FFFF),
-      icon: "assets/icons/sport.svg",
-      title: "Sport"),
-  CategoriModul(
-      color: const Color(0xFF80FFD9),
-      icon: "assets/icons/design.svg",
-      title: "Design"),
-  CategoriModul(
-      color: const Color(0xFF809CFF),
-      icon: "assets/icons/university.svg",
-      title: "University"),
-  CategoriModul(
-      color: const Color(0xFFFF80EB),
-      icon: "assets/icons/social.svg",
-      title: "Social"),
-  CategoriModul(
-      color: const Color(0xFFFC80FF),
-      icon: "assets/icons/music.svg",
-      title: "Music"),
-  CategoriModul(
-      color: const Color(0xFF80FFA3),
-      icon: "assets/icons/health.svg",
-      title: "Health"),
-  CategoriModul(
-      color: const Color(0xFF80D1FF),
-      icon: "assets/icons/movie.svg",
-      title: "Movie"),
-  CategoriModul(
-      color: const Color(0xFFFFCC80),
-      icon: "assets/icons/categoriy_home.svg",
-      title: "Home"),
+      color: const Color(0xFF809CFF), icon: "🧑‍💻", title: "University"),
+  CategoriModul(color: const Color(0xFFFF80EB), icon: "🤐", title: "Social"),
+  CategoriModul(color: const Color(0xFF80FFA3), icon: "❤️", title: "Health"),
+  CategoriModul(color: const Color(0xFFFC80FF), icon: "⭐️", title: "Music"),
+  CategoriModul(color: const Color(0xFF80D1FF), icon: "🥷", title: "Movie"),
+  CategoriModul(color: const Color(0xFFFFCC80), icon: "🏙", title: "Home"),
 ];
 
 List<TaskModul> tasks = [];
+
+const List<Color> colors = [
+  Color(0xFF1D1D1D),
+  Colors.red,
+  Colors.blue,
+  Colors.orange,
+  Colors.yellowAccent,
+  Colors.tealAccent,
+  Colors.purpleAccent,
+  Colors.white10,
+  Colors.pinkAccent,
+  Colors.limeAccent,
+  Colors.lightBlueAccent,
+  Colors.deepPurpleAccent,
+  Colors.blueGrey,
+  Colors.lime,
+  Colors.amber,
+];
