@@ -1,3 +1,4 @@
+import 'package:default_project/data/local/local_objescs.dart';
 import 'package:default_project/data/models/categori/categori_modeul.dart';
 import 'package:default_project/data/models/task/task_modul.dart';
 import 'package:flutter/cupertino.dart';
@@ -47,7 +48,8 @@ class LocalDatabase {
       ${TaskContans.hour} $textType,
       ${TaskContans.status} $textType,
       ${TaskContans.category} $textType,
-      ${TaskContans.priority} $intType
+      ${TaskContans.priority} $intType,
+      ${TaskContans.isChek} $textType
     )''');
 
     await db.execute('''CREATE TABLE ${CategoryContans.tableNAme} (
@@ -106,5 +108,21 @@ class LocalDatabase {
       whereArgs: [id],
     );
     return deletedId;
+  }
+
+  static Future<int> updateTask(
+    TaskModul taskModel,
+    int id,
+  ) async {
+    print(taskModel.getInfo());
+
+    final db = await databaseInstance.database;
+    int updatedTaskId = await db.update(
+      TaskContans.tableName,
+      taskModel.toJson(),
+      where: "${TaskContans.id} = ?",
+      whereArgs: [id],
+    );
+    return updatedTaskId;
   }
 }

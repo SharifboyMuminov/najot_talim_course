@@ -1,6 +1,8 @@
+import 'package:default_project/data/models/task/task_modul.dart';
 import 'package:default_project/screens/index/add/add_screen.dart';
 import 'package:default_project/screens/index/bottom_navi.dart';
 import 'package:default_project/screens/index/home/home_screen.dart';
+import 'package:default_project/screens/index/info/info_screen.dart';
 import 'package:default_project/screens/intro/onboading/onboading_screen.dart';
 import 'package:default_project/screens/intro/splash/splash_screen.dart';
 import 'package:default_project/screens/intro/start/start_screen.dart';
@@ -31,7 +33,7 @@ class AppRoutes {
       case RoutName.homeScreen:
         return MaterialPageRoute(
           builder: (contex) {
-            return const HomeScreen();
+            return  HomeScreen(onSet: (g) {  },);
           },
         );
 
@@ -47,6 +49,18 @@ class AppRoutes {
             return const BottomNavigationCostym();
           },
         );
+
+      case RoutName.infoScreen:
+        {
+          TaskModul taskModul = settings.arguments as TaskModul;
+
+          return MaterialPageRoute(
+            builder: (contex) {
+              return InfoScreen(taskModul: taskModul);
+            },
+          );
+        }
+
       default:
         return navigate(
           const Scaffold(
@@ -70,4 +84,5 @@ class RoutName {
   static const String homeScreen = "/home_screen";
   static const String addScreen = "/add_screen";
   static const String bottonCytem = "/bottom_cystom";
+  static const String infoScreen = "/info_screen";
 }

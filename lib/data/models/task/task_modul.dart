@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:default_project/data/models/categori/categori_modeul.dart';
 import 'package:flutter/material.dart';
 
@@ -13,11 +15,13 @@ class TaskModul {
   final String hourMinut;
   final int priority;
   final TaskStatus status;
-  bool isChek = false;
-  bool isDelet = false;
+  bool isChek;
+  bool isDelet;
 
   TaskModul({
     this.id,
+    this.isChek = false,
+    this.isDelet = false,
     required this.categoriModul,
     required this.day,
     required this.hourMinut,
@@ -75,15 +79,16 @@ class TaskModul {
 
   factory TaskModul.fomJson(Map<String, dynamic> json) {
     return TaskModul(
-        id: json[TaskContans.id] as int?,
-        categoriModul:
-            getCategoriy(json[TaskContans.category] as String? ?? ""),
-        day: json[TaskContans.day] as String? ?? "",
-        hourMinut: json[TaskContans.hour] as String? ?? "",
-        description: json[TaskContans.decreption] as String? ?? "",
-        priority: json[TaskContans.priority] as int? ?? 0,
-        status: getStatus(json[TaskContans.status] as String? ?? ""),
-        title: json[TaskContans.title] as String? ?? "");
+      isChek: convetrBool(json[TaskContans.isChek] as String? ?? "false"),
+      id: json[TaskContans.id] as int?,
+      categoriModul: getCategoriy(json[TaskContans.category] as String? ?? ""),
+      day: json[TaskContans.day] as String? ?? "",
+      hourMinut: json[TaskContans.hour] as String? ?? "",
+      description: json[TaskContans.decreption] as String? ?? "",
+      priority: json[TaskContans.priority] as int? ?? 0,
+      status: getStatus(json[TaskContans.status] as String? ?? ""),
+      title: json[TaskContans.title] as String? ?? "",
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -95,7 +100,8 @@ class TaskModul {
       TaskContans.hour: hourMinut,
       TaskContans.priority: priority,
       TaskContans.status: status.name,
-      TaskContans.title: title
+      TaskContans.title: title,
+      TaskContans.isChek: isChek.toString()
     };
   }
 
@@ -119,8 +125,9 @@ class TaskContans {
   static const String priority = "priority";
   static const String status = "status";
   static const String category = "category";
-}
+  static const String isChek = "is_cheek";
 
+}
 
 CategoriModul getCategoriy(String categoriyName) {
   for (CategoriModul categoriModul in categiries) {
@@ -151,4 +158,9 @@ TaskStatus getStatus(String statusText) {
         return TaskStatus.missed;
       }
   }
+}
+
+bool convetrBool(String bol) {
+  if (bol == "true") return true;
+  return false;
 }

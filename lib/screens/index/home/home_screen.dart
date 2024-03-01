@@ -1,4 +1,7 @@
 import 'package:default_project/data/local/local_objescs.dart';
+import 'package:default_project/data/models/task/task_modul.dart';
+import 'package:default_project/screens/index/bottom_navi.dart';
+import 'package:default_project/screens/routes.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/app_images.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +16,12 @@ import 'widget/task_item.dart';
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, this.stream});
+  const HomeScreen({
+    super.key,
+    this.onSet,
+    this.stream,
+  });
+  final ValueChanged<TaskModul>? onSet;
   final Stream? stream;
 
   @override
@@ -90,7 +98,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     tasks.remove(tasks[index]);
                                   }
                                 } else {
-                                  tasks[index].isChek = !tasks[index].isChek;
+                                  Navigator.pushNamed(
+                                    context,
+                                    RoutName.infoScreen,
+                                    arguments: tasks[index],
+                                  );
                                 }
                                 setState(() {});
                               },
@@ -103,6 +115,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               onLongPrees: () {
                                 tasks[index].isDelet = !tasks[index].isDelet;
                                 setState(() {});
+                              },
+                              onTabSet: () {
+                                if (widget.onSet != null) {
+                                  isShowBottomDialog = true;
+                                  widget.onSet!.call(tasks[index]);
+                                }
                               },
                             );
                           },

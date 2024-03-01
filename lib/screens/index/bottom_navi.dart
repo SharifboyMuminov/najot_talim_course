@@ -17,7 +17,6 @@ import '../../utils/app_colors.dart';
 import '../../utils/app_images.dart';
 import 'dialogs/categoriy_dialog.dart';
 import 'dialogs/priority.dart';
-import 'widgets/showSuccess_message.dart';
 
 class BottomNavigationCostym extends StatefulWidget {
   const BottomNavigationCostym({super.key});
@@ -26,23 +25,28 @@ class BottomNavigationCostym extends StatefulWidget {
   State<BottomNavigationCostym> createState() => _BottomNavigationCostymState();
 }
 
+bool isShowBottomDialog = false;
+
 class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
   StreamController streamController = StreamController<bool>();
   List<Widget> _screens = [
-    HomeScreen(),
+    HomeScreen(
+      onSet: (v) {},
+    ),
     AddScreen(),
   ];
   int activIndex = 0;
   int activPriopt = 1;
-  bool isShowBottomDialog = false;
   TextEditingController controllerAdd = TextEditingController();
   TextEditingController controllerDecreption = TextEditingController();
+  bool isSetTask = false;
   DateTime? dateTime;
   TimeOfDay? timeOfDay;
   final FocusNode focusNode1 = FocusNode();
   final FocusNode focusNode2 = FocusNode();
 
   TaskModul taskModul = TaskModul.initialValue();
+  TaskModul? setTaskModul;
 
   @override
   void initState() {
@@ -58,7 +62,14 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
 
   _init() async {
     _screens = [
-      HomeScreen(stream: streamController.stream.asBroadcastStream()),
+      HomeScreen(
+        stream: streamController.stream.asBroadcastStream(),
+        onSet: (v) {
+          setTaskModul = v;
+          print(setTaskModul!.getInfo());
+          setState(() {});
+        },
+      ),
       AddScreen(),
     ];
     setState(() {});
@@ -212,7 +223,7 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
                                 var minut = timeOfDay!.minute.toString();
 
                                 hour = hour.length == 1 ? "0$hour" : hour;
-                                minut = hour.length == 1 ? "0$minut" : minut;
+                                minut = minut.length == 1 ? "0$minut" : minut;
 
                                 taskModul = taskModul.copyWith(
                                     hour: "$hour:$minut", days: day);
@@ -265,14 +276,34 @@ class _BottomNavigationCostymState extends State<BottomNavigationCostym> {
                                 if (taskModul.canAddTaskToDatabase()) {
                                   await LocalDatabase.insertTask(taskModul);
                                   streamController.add(true);
-                                  showToastMesseg("Seccses");
                                   controllerAdd.clear();
                                   controllerDecreption.clear();
                                   tasks.add(taskModul);
                                   isShowBottomDialog = false;
                                   taskModul = TaskModul.initialValue();
+
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      backgroundColor: Colors.black38,
+                                      content: const Text('Success :)'),
+                                    ),
+                                  );
                                   setState(() {});
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      backgroundColor: Colors.red,
+                                      content: const Text('Error!'),
+                                    ),
+                                  );
                                 }
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    backgroundColor: Colors.red,
+                                    content: const Text('Error!'),
+                                  ),
+                                );
                               }
                             },
                             icon: SvgPicture.asset(

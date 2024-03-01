@@ -1,4 +1,5 @@
 import 'package:default_project/data/models/task/task_modul.dart';
+import 'package:default_project/screens/index/bottom_navi.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/app_images.dart';
 import 'package:default_project/utils/size.dart';
@@ -12,11 +13,13 @@ class TaskItem extends StatelessWidget {
       required this.taskModul,
       required this.onTab,
       required this.onChange,
-      required this.onLongPrees});
+      required this.onLongPrees,
+      required this.onTabSet});
   final TaskModul taskModul;
   final VoidCallback onTab;
   final ValueChanged<bool?> onChange;
   final VoidCallback onLongPrees;
+  final VoidCallback onTabSet;
 
   @override
   Widget build(BuildContext context) {
@@ -46,109 +49,117 @@ class TaskItem extends StatelessWidget {
                   ),
                 ),
               )
-            : Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+            : Column(
                 children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Checkbox.adaptive(
-                      value: taskModul.isChek,
-                      onChanged: onChange,
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(
-                        width: 110.we,
-                        child: Text(
-                          taskModul.title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: AppColors.c_FFFFFF.withOpacity(0.87),
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 7.he),
-                      SizedBox(
-                        width: 120.we,
-                        child: Text(
-                          "${taskModul.day}  ${taskModul.hourMinut}",
-                          style: TextStyle(
-                            color: AppColors.c_AFAFAF,
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Spacer(),
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 8.we, vertical: 8.he),
-                        decoration: BoxDecoration(
-                            color: taskModul.categoriModul.color,
-                            borderRadius: BorderRadius.circular(5.r)),
-                        child: Row(
-                          children: [
-                            Text(
-                              maxLines: 1,
-                              taskModul.categoriModul.icon,
-                              style: TextStyle(fontSize: 15.sp),
-                            ),
-                            5.getW(),
-                            SizedBox(
-                              width: 40.we,
-                              child: Text(
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                taskModul.categoriModul.title,
-                                style: TextStyle(
-                                  color: AppColors.c_FFFFFF,
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ),
-                          ],
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Checkbox.adaptive(
+                          value: taskModul.isChek,
+                          onChanged: onChange,
                         ),
                       ),
-                      SizedBox(width: 12.we),
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 8.we, vertical: 8.he),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5.r),
-                          border: Border.all(
-                              color: AppColors.c_8687E7, width: 1.we),
-                        ),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(
-                              AppImages.priorty,
-                              width: 14.we,
-                              height: 14.we,
-                            ),
-                            Text(
-                              taskModul.priority.toString(),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(
+                            width: 110.we,
+                            child: Text(
+                              taskModul.title,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                color: AppColors.c_E8E8E8,
-                                fontSize: 12.sp,
+                                color: AppColors.c_FFFFFF.withOpacity(0.87),
+                                fontSize: 16.sp,
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                          SizedBox(height: 7.he),
+                          SizedBox(
+                            width: 120.we,
+                            child: Text(
+                              "${taskModul.day}  ${taskModul.hourMinut}",
+                              style: TextStyle(
+                                color: AppColors.c_AFAFAF,
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Spacer(),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 8.we, vertical: 8.he),
+                            decoration: BoxDecoration(
+                                color: taskModul.categoriModul.color,
+                                borderRadius: BorderRadius.circular(5.r)),
+                            child: Row(
+                              children: [
+                                Text(
+                                  maxLines: 1,
+                                  taskModul.categoriModul.icon,
+                                  style: TextStyle(fontSize: 15.sp),
+                                ),
+                                5.getW(),
+                                SizedBox(
+                                  width: 40.we,
+                                  child: Text(
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    taskModul.categoriModul.title,
+                                    style: TextStyle(
+                                      color: AppColors.c_FFFFFF,
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 12.we),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 8.we, vertical: 8.he),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5.r),
+                              border: Border.all(
+                                  color: AppColors.c_8687E7, width: 1.we),
+                            ),
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  AppImages.priorty,
+                                  width: 14.we,
+                                  height: 14.we,
+                                ),
+                                Text(
+                                  taskModul.priority.toString(),
+                                  style: TextStyle(
+                                    color: AppColors.c_E8E8E8,
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ],
+                  ),
+                  IconButton(
+                    onPressed: onTabSet,
+                    icon: const Icon(Icons.supervisor_account_sharp),
                   ),
                 ],
               ),
