@@ -1,9 +1,6 @@
-import 'dart:ffi';
-
 import 'package:default_project/data/models/categori/categori_modeul.dart';
 import 'package:flutter/material.dart';
 
-import '../../local/local_objescs.dart';
 import 'task_status.dart';
 
 class TaskModul {
@@ -78,10 +75,20 @@ class TaskModul {
   }
 
   factory TaskModul.fomJson(Map<String, dynamic> json) {
+    List<String> categoriy =
+        (json[TaskContans.category] as String? ?? "").split("//");
+    Map<String, dynamic> dic = {
+      CategoryContans.color: categoriy[1],
+      CategoryContans.title: categoriy[0],
+      CategoryContans.icon: categoriy[2]
+    };
+    print(categoriy);
+    print(dic);
+
     return TaskModul(
       isChek: convetrBool(json[TaskContans.isChek] as String? ?? "false"),
       id: json[TaskContans.id] as int?,
-      categoriModul: getCategoriy(json[TaskContans.category] as String? ?? ""),
+      categoriModul: CategoriModul.fromJson(dic),
       day: json[TaskContans.day] as String? ?? "",
       hourMinut: json[TaskContans.hour] as String? ?? "",
       description: json[TaskContans.decreption] as String? ?? "",
@@ -94,7 +101,8 @@ class TaskModul {
   Map<String, dynamic> toJson() {
     return {
       TaskContans.id: id,
-      TaskContans.category: categoriModul.title,
+      TaskContans.category:
+          "${categoriModul.title}//${categoriModul.color.value}//${categoriModul.icon}",
       TaskContans.decreption: description,
       TaskContans.day: day,
       TaskContans.hour: hourMinut,
@@ -126,17 +134,6 @@ class TaskContans {
   static const String status = "status";
   static const String category = "category";
   static const String isChek = "is_cheek";
-
-}
-
-CategoriModul getCategoriy(String categoriyName) {
-  for (CategoriModul categoriModul in categiries) {
-    if (categoriModul.title == categoriyName) {
-      return categoriModul;
-    }
-  }
-  return CategoriModul(
-      color: const Color(0xFF80FFD9), icon: "🌔", title: "Design");
 }
 
 TaskStatus getStatus(String statusText) {
