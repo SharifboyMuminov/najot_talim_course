@@ -53,4 +53,46 @@ class ApiProvider {
       return NetworkResponse(errorText: error.toString());
     }
   }
+
+  Future<NetworkResponse> addProduct(ProductModul productModel) async {
+    Uri uri = Uri.https(AppContans.baseUrl, "/api/v1/products");
+    try {
+      http.Response response = await http.post(
+        uri,
+        headers: {
+          "Authorization": "Bearer ${AppContans.token}",
+          "Content-Type": "application/json",
+        },
+        body: jsonEncode([productModel.toJsonForAdd()]),
+      );
+      if (response.statusCode == 201) {
+        return NetworkResponse(data: "Product added successfully!");
+      }
+      return NetworkResponse(errorText: response.statusCode.toString());
+    } catch (error) {
+      return NetworkResponse(errorText: error.toString());
+    }
+  }
+
+  Future<NetworkResponse> deleteProduct(String productUUID) async {
+    Uri uri = Uri.https(AppContans.baseUrl, "/api/v1/products");
+    try {
+      http.Response response = await http.delete(
+        uri,
+        headers: {
+          "Authorization": "Bearer ${AppContans.token}",
+          "Content-Type": "application/json",
+        },
+        body: jsonEncode([
+          {"_uuid": productUUID}
+        ]),
+      );
+      if (response.statusCode == 200) {
+        return NetworkResponse(data: "Product deleted successfully!");
+      }
+      return NetworkResponse(errorText: response.statusCode.toString());
+    } catch (error) {
+      return NetworkResponse(errorText: error.toString());
+    }
+  }
 }

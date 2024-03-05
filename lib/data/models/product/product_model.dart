@@ -13,6 +13,16 @@ class ProductModul {
     required this.prodictId,
   });
 
+  static ProductModul getDefaultProduct() {
+    return ProductModul(
+      decoretion: "",
+      imageUrl: "",
+      price: 0,
+      prodctName: "",
+      prodictId: "",
+    );
+  }
+
   factory ProductModul.fromJson(Map<String, dynamic> json) {
     return ProductModul(
       decoretion: json["decreption"] as String? ?? "",
@@ -32,6 +42,16 @@ class ProductModul {
       "product_name": prodctName,
     };
   }
+
+  Map<String, dynamic> toJsonForAdd() {
+    return {
+      "decreption": decoretion,
+      "iamge_url": imageUrl,
+      "price": price,
+      "product_name": prodctName,
+    };
+  }
+  
 
   ProductModul copyWithe({
     String? prodctName,

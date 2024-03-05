@@ -1,10 +1,10 @@
 import 'package:default_project/data/models/product/product_model.dart';
 import 'package:default_project/data/network/api_provider.dart';
+import 'package:default_project/screens/add/add_screen.dart';
 import 'package:default_project/screens/info/info_screen.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,6 +16,10 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   ApiProvider apiProvider = ApiProvider();
 
+  change() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
@@ -26,7 +30,20 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return AddScreen(
+                      onSet: () {
+                        setState(() {});
+                      },
+                    );
+                  },
+                ),
+              );
+            },
             icon: Icon(
               Icons.add,
               size: 25.sp,
@@ -61,6 +78,34 @@ class _HomeScreenState extends State<HomeScreen> {
                       margin: EdgeInsets.symmetric(
                           horizontal: 20.we, vertical: 10.he),
                       child: TextButton(
+                        onLongPress: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog.adaptive(
+                                title: const Text(
+                                    "Do you want to delete the product?"),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text("Canel"),
+                                  ),
+                                  TextButton(
+                                    onPressed: () async {
+                                      await apiProvider.deleteProduct(
+                                          products[index].prodictId);
+                                      change();
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text("Ok"),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
                         style: TextButton.styleFrom(
                           padding: EdgeInsets.only(bottom: 10.he),
                           shape: RoundedRectangleBorder(
