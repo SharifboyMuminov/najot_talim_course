@@ -113,7 +113,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                       await apiProvider.deleteProduct(
                                           products[index].prodictId);
                                       change();
-                                      Navigator.pop(context);
+                                      if (context.mounted) {
+                                        Navigator.pop(context);
+                                      }
                                     },
                                     child: const Text("Ok"),
                                   ),

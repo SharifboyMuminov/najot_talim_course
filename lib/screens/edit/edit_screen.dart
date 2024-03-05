@@ -115,8 +115,10 @@ class _EditScreenState extends State<EditScreen> {
                       );
                       await apiProvider.updateProduct(productModul!);
                       widget.onSet.call();
-                      Navigator.pop(context);
-                      Navigator.pop(context);
+                      if (context.mounted) {
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      }
                     }
                   }
                 },
