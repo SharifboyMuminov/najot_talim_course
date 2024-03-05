@@ -6,6 +6,7 @@ import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../data/local/storage_repository.dart';
 import '../../data/models/one_call/daily_models.dart';
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
@@ -24,6 +25,8 @@ class _InfoScreenState extends State<InfoScreen> {
   @override
   void initState() {
     dailys = widget.dailys;
+    isActiv = StorageRepository.getBool(key: "them");
+    setState(() {});
     super.initState();
   }
 
@@ -44,6 +47,7 @@ class _InfoScreenState extends State<InfoScreen> {
               } else {
                 AdaptiveTheme.of(context).setLight();
               }
+              StorageRepository.setBool(key: 'them', value: v);
               isActiv = v;
               setState(() {});
             },
