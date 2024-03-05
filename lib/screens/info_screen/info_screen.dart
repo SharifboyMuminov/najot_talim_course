@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:default_project/screens/info_screen/widgets/pogoda.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/my_extensions.dart';
@@ -18,6 +19,7 @@ class InfoScreen extends StatefulWidget {
 
 class _InfoScreenState extends State<InfoScreen> {
   late List<DailyModels> dailys;
+  bool isActiv = false;
 
   @override
   void initState() {
@@ -33,6 +35,20 @@ class _InfoScreenState extends State<InfoScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
+        actions: [
+          Switch.adaptive(
+            value: isActiv,
+            onChanged: (v) {
+              if (v) {
+                AdaptiveTheme.of(context).setDark();
+              } else {
+                AdaptiveTheme.of(context).setLight();
+              }
+              isActiv = v;
+              setState(() {});
+            },
+          ),
+        ],
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -50,36 +66,18 @@ class _InfoScreenState extends State<InfoScreen> {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 15.we, vertical: 30.he),
               decoration: BoxDecoration(
-                color: AppColors.c_FFFFFF,
+                // color: AppColors.c_FFFFFF,
                 borderRadius: BorderRadius.circular(15.r),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.shade100,
-                    blurRadius: 40,
-                  ),
-                ],
               ),
               child: Column(
                 children: [
                   Row(
                     children: [
-                      Text(
-                        "Tommorow",
-                        style: TextStyle(
-                          color: AppColors.c_313341,
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
+                      Text("Tommorow",
+                          style: Theme.of(context).textTheme.headlineMedium),
                       Spacer(),
-                      Text(
-                        "${(dailys[0].tempModel.day).round()}c",
-                        style: TextStyle(
-                          color: AppColors.c_313341,
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
+                      Text("${(dailys[0].tempModel.day).round()}c",
+                          style: Theme.of(context).textTheme.titleLarge),
                       Image.network(
                           dailys[0].inWeatherModel[0].icon.getWeatherIconUrl()),
                     ],
@@ -110,23 +108,11 @@ class _InfoScreenState extends State<InfoScreen> {
               (index) {
                 return Row(
                   children: [
-                    Text(
-                      1.getWeekdayName(week),
-                      style: TextStyle(
-                        color: AppColors.c_313341,
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
+                    Text(1.getWeekdayName(week),
+                        style: Theme.of(context).textTheme.headlineSmall),
                     Spacer(),
-                    Text(
-                      ("${(dailys[index + 1].tempModel.day).round()}c"),
-                      style: TextStyle(
-                        color: AppColors.c_313341,
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                    Text(("${(dailys[index + 1].tempModel.day).round()}c"),
+                        style: Theme.of(context).textTheme.titleLarge),
                     Image.network(dailys[index + 1]
                         .inWeatherModel[0]
                         .icon

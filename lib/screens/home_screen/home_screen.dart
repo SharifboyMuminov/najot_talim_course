@@ -48,7 +48,6 @@ class _HomeScreenState extends State<HomeScreen> {
         statusBarColor: Colors.transparent,
       ),
       child: Scaffold(
-        backgroundColor: AppColors.c_FFFFFF,
         body: SingleChildScrollView(
           padding: EdgeInsets.symmetric(vertical: 20),
           child: Column(
@@ -64,11 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       searcheText = controllerSearche.text;
                     });
                   },
-                  style: TextStyle(
-                    fontSize: 20.sp,
-                    color: AppColors.c_313341,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: Theme.of(context).textTheme.headlineMedium,
                   cursorColor: AppColors.c_313341,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(vertical: 15),
@@ -125,21 +120,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 30.getH(),
-                                Text(
-                                  cityModul!.name,
-                                  style: TextStyle(
-                                    color: AppColors.c_313341,
-                                    fontSize: 24.sp,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
+                                Text(cityModul!.name,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineLarge),
                                 20.getH(),
-                                Text(
-                                  cityModul!.dt.getParsedDate(),
-                                  style: TextStyle(
-                                      color: AppColors.c_9A938C,
-                                      fontSize: 18.sp),
-                                ),
+                                Text(cityModul!.dt.getParsedDate(),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium),
                                 Row(
                                   children: [
                                     Image.network(
@@ -153,29 +142,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                             (cityModul!.mainModul.temp - 273.15)
                                                 .toString()
                                                 .substring(0, 3),
-                                        style: TextStyle(
-                                          color: AppColors.c_313341,
-                                          fontSize: 40.sp,
-                                          fontWeight: FontWeight.w500,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineLarge,
                                         children: [
                                           TextSpan(
-                                            text: " c\n",
-                                            style: TextStyle(
-                                              color: AppColors.c_313341,
-                                              fontSize: 20.sp,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
+                                              text: " c\n",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium),
                                           TextSpan(
-                                            text:
-                                                cityModul!.weatherModul[0].maiN,
-                                            style: TextStyle(
-                                              color: AppColors.c_313341,
-                                              fontSize: 18.sp,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
+                                              text: cityModul!
+                                                  .weatherModul[0].maiN,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headlineLarge),
                                         ],
                                       ),
                                     ),
@@ -187,21 +168,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                       "assets/icons/rain_file.svg",
                                       width: 60,
                                     ),
-                                    Text(
-                                      "RainFall",
-                                      style: TextStyle(
-                                        color: AppColors.c_313341,
-                                        fontSize: 18.sp,
-                                      ),
-                                    ),
+                                    Text("RainFall",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineSmall),
                                     const Spacer(),
-                                    Text(
-                                      "${cityModul!.mainModul.humidity}cm",
-                                      style: TextStyle(
-                                        color: AppColors.c_313341,
-                                        fontSize: 16.sp,
-                                      ),
-                                    ),
+                                    Text("${cityModul!.mainModul.humidity}cm",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium),
                                   ],
                                 ),
                                 20.getH(),
@@ -213,19 +188,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     Text(
                                       "Wind",
-                                      style: TextStyle(
-                                        color: AppColors.c_313341,
-                                        fontSize: 18.sp,
-                                      ),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineMedium,
                                     ),
                                     const Spacer(),
                                     Text(
-                                      "${(cityModul!.windModul.speed * 3.6).toString().split(".")[0]}cm",
-                                      style: TextStyle(
-                                        color: AppColors.c_313341,
-                                        fontSize: 16.sp,
-                                      ),
-                                    ),
+                                        "${(cityModul!.windModul.speed * 3.6).toString().split(".")[0]}cm",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium),
                                   ],
                                 ),
                                 20.getH(),
@@ -236,21 +208,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                       "assets/icons/humidity.svg",
                                       width: 60,
                                     ),
-                                    Text(
-                                      "Humidity",
-                                      style: TextStyle(
-                                        color: AppColors.c_313341,
-                                        fontSize: 18.sp,
-                                      ),
-                                    ),
+                                    Text("Humidity",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineMedium),
                                     const Spacer(),
-                                    Text(
-                                      "${cityModul!.mainModul.humidity}%",
-                                      style: TextStyle(
-                                        color: AppColors.c_313341,
-                                        fontSize: 16.sp,
-                                      ),
-                                    ),
+                                    Text("${cityModul!.mainModul.humidity}%",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium),
                                   ],
                                 ),
                                 90.getH(),
@@ -258,14 +224,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      "Today",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 18.sp,
-                                        color: AppColors.c_313341,
-                                      ),
-                                    ),
+                                    Text("Today",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineSmall),
                                     TextButton(
                                       onPressed: () {
                                         if (oneCallDataModels != null) {
@@ -283,13 +245,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                       },
                                       child: Row(
                                         children: [
-                                          Text(
-                                            "Next 7 Days",
-                                            style: TextStyle(
-                                              color: AppColors.c_313341,
-                                              fontSize: 16.sp,
-                                            ),
-                                          ),
+                                          Text("Next 7 Days",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium),
                                           SizedBox(width: 5.we),
                                           Icon(
                                             Icons.arrow_forward_ios_rounded,
@@ -336,24 +295,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   .icon
                                                   .getWeatherIconUrl()),
                                               Text(
-                                                "${oneCallDataModels!.hourlyModels[index].temp.round()}c",
-                                                style: TextStyle(
-                                                  color: AppColors.c_313341,
-                                                  fontSize: 14.sp,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
+                                                  "${oneCallDataModels!.hourlyModels[index].temp.round()}c",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleMedium),
                                               Text(
-                                                oneCallDataModels!
-                                                    .hourlyModels[index].dt
-                                                    .toInt()
-                                                    .getParsedHour(),
-                                                style: TextStyle(
-                                                  color: AppColors.c_313341,
-                                                  fontSize: 14.sp,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
+                                                  oneCallDataModels!
+                                                      .hourlyModels[index].dt
+                                                      .toInt()
+                                                      .getParsedHour(),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleMedium),
                                             ],
                                           );
                                         },
