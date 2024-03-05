@@ -15,9 +15,24 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   ApiProvider apiProvider = ApiProvider();
+  ScrollController scrollController = ScrollController();
+  double elevetion = 0;
 
   change() {
     setState(() {});
+  }
+
+  @override
+  void initState() {
+    scrollController.addListener(() {
+      if (scrollController.position.pixels > 0) {
+        elevetion = 1;
+      } else {
+        elevetion = 0;
+      }
+      setState(() {});
+    });
+    super.initState();
   }
 
   @override
@@ -51,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ],
-        elevation: 0,
+        elevation: elevetion,
         backgroundColor: Colors.white,
         centerTitle: true,
         title: Text(
@@ -69,7 +84,8 @@ class _HomeScreenState extends State<HomeScreen> {
             List<ProductModul> products =
                 snapshop.data!.data as List<ProductModul>;
             return ListView(
-              padding: EdgeInsets.symmetric(horizontal: 10.he),
+              controller: scrollController,
+              padding: EdgeInsets.symmetric(horizontal: 8.he),
               children: [
                 ...List.generate(
                   products.length,
@@ -169,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Text(snapshop.data!.errorText),
             );
           }
-          return Center(
+          return const Center(
             child: CircularProgressIndicator.adaptive(),
           );
         },
