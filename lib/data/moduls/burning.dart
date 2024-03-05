@@ -1,8 +1,8 @@
-import 'package:default_project/moduls/persons.dart';
+import 'package:default_project/data/moduls/persons.dart';
 
 class Burning {
   String burning;
-  List<Person> people;
+  List<PersonModul> people;
 
   Burning({
     required this.burning,
@@ -12,9 +12,10 @@ class Burning {
   factory Burning.fromJson(Map<String, dynamic> json) {
     return Burning(
       burning: json["burning_name"] as String? ?? "Null",
-      people:
-          (json["people"] as List?)?.map((e) => Person.fromJson(e)).toList() ??
-              [],
+      people: (json["people"] as List?)
+              ?.map((e) => PersonModul.fromJson(e))
+              .toList() ??
+          [],
     );
   }
 }

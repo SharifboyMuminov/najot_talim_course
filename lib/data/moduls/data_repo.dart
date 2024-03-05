@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:default_project/moduls/burning.dart';
+import 'package:default_project/data/moduls/burning.dart';
 import 'package:flutter/services.dart';
 
 class DataRepository {

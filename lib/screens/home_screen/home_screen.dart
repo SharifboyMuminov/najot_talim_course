@@ -1,5 +1,4 @@
-import 'package:default_project/moduls/data_repo.dart';
-import 'package:default_project/moduls/persons.dart';
+import 'package:default_project/data/local/local_database/local_databas.dart';
 import 'package:default_project/screens/add_screen.dart/add_screen.dart';
 import 'package:default_project/screens/global_widget.dart/top_button.dart';
 import 'package:default_project/screens/home_screen/widgets/empty_show.dart';
@@ -11,7 +10,8 @@ import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
+
+import '../../data/local/local_list/local.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,18 +21,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late List<Person> ls1;
-  late List<Person> ls2;
-
   bool showSearche = false;
   String changeTextFild = "";
 
   @override
   void initState() {
-    ls1 = [...DataRepository.instanse.allSubject[0].people];
-    ls2 = [...DataRepository.instanse.allSubject[0].people];
-
+    _getAllData();
     super.initState();
+  }
+
+  _getAllData() async {
+    personDebtes = await LocalDatabase.getAllDebtors();
+    setState(() {});
   }
 
   @override
@@ -87,61 +87,38 @@ class _HomeScreenState extends State<HomeScreen> {
                     showSearche ? 88.getH() : const SizedBox(),
                     if (showSearche)
                       SearcheTextFild(
-                        onChge: (String value) {
-                          setState(
-                            () {
-                              ls1 = ls1
-                                  .where(
-                                    (element) =>
-                                        element.fullname.toLowerCase().contains(
-                                              value.toLowerCase(),
-                                            ),
-                                  )
-                                  .toList();
-
-                              if (value.isEmpty) {
-                                ls1 = ls2;
-                              }
-                            },
-                          );
-                        },
-                        onTabXmark: () {
-                          setState(() {
-                            showSearche = false;
-                            ls1 = ls2;
-                          });
-                        },
+                        onChge: (String value) {},
+                        onTabXmark: () {},
                       ),
                     15.getH(),
-                    if (ls1.isNotEmpty)
+                    if (personDebtes.isNotEmpty)
                       ...List.generate(
-                        ls1.length,
+                        personDebtes.length,
                         (index) {
                           return ItemNoteButton(
-                            isActivRemove: ls1[index].isRemove,
-                            onTab: () {
-                              if (ls1[index].isRemove) {
-                                setState(
-                                  () {
-                                    ls2.remove(ls1[index]);
-                                    ls1.remove(ls1[index]);
-                                  },
-                                );
+                            isActivRemove: personDebtes[index].isRemove,
+                            onTab: () async {
+                              if (personDebtes[index].isRemove &&
+                                  personDebtes[index].id != null) {
+                                await LocalDatabase.deleteDebtors(
+                                    personDebtes[index].id!);
+                                _getAllData();
                               }
                             },
                             onLongPress: () {
                               setState(
                                 () {
-                                  ls1[index].isRemove = !ls1[index].isRemove;
+                                  personDebtes[index].isRemove =
+                                      !personDebtes[index].isRemove;
                                 },
                               );
                             },
-                            item: ls1[index],
+                            item: personDebtes[index],
                           );
                         },
                       ),
-                    if (ls1.isEmpty) 182.getH(),
-                    if (ls1.isEmpty)
+                    if (personDebtes.isEmpty) 182.getH(),
+                    if (personDebtes.isEmpty)
                       ShowEmptyImage(
                         isSearhe: showSearche,
                       ),
@@ -152,38 +129,27 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-        floatingActionButton: Container(
-          padding: EdgeInsets.symmetric(horizontal: 15.we, vertical: 15.we),
-          decoration: const BoxDecoration(
-            color: AppColors.c_252525,
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black,
-                blurRadius: 10,
-                spreadRadius: 1,
-                offset: Offset(0, 5),
-              ),
-            ],
-          ),
-          child: IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return AddScreen(
-                      ls1: ls1,
-                      onSchange: () {
-                        setState(() {});
-                      },
-                    );
-                  },
-                ),
-              );
-            },
-            icon: SvgPicture.asset(AppImages.plus),
-          ),
+        floatingActionButton: SizedBox(
+          height: 70.we,
+          width: 70.we,
+          child: FloatingActionButton(
+              backgroundColor: AppColors.c_3B3B3B,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return AddScreen(onSchange: () {
+                        _getAllData();
+                      });
+                    },
+                  ),
+                );
+              },
+              child: Icon(
+                Icons.add,
+                size: 35.we,
+              )),
         ),
       ),
     );

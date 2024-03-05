@@ -1,4 +1,5 @@
-import 'package:default_project/moduls/persons.dart';
+import 'package:default_project/data/local/local_database/local_databas.dart';
+import 'package:default_project/data/moduls/persons.dart';
 import 'package:default_project/screens/global_widget.dart/top_button.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/app_images.dart';
@@ -12,10 +13,8 @@ import 'widget/show_dialog.dart';
 class AddScreen extends StatefulWidget {
   const AddScreen({
     super.key,
-    required this.ls1,
     required this.onSchange,
   });
-  final List<Person> ls1;
   final Function onSchange;
 
   @override
@@ -23,7 +22,7 @@ class AddScreen extends StatefulWidget {
 }
 
 class _AddScreenState extends State<AddScreen> {
-  late List<Person> ls1;
+  PersonModul personModul = PersonModul.defoultModul();
 
   bool isSvae = true;
   bool isPop = false;
@@ -33,7 +32,6 @@ class _AddScreenState extends State<AddScreen> {
 
   @override
   void initState() {
-    ls1 = widget.ls1;
     super.initState();
   }
 
@@ -61,32 +59,26 @@ class _AddScreenState extends State<AddScreen> {
                   ButtonTop(
                     icon: AppImages.arrowBack,
                     onTab: () {
-                      if (controllerTitle.text.isEmpty) {
+                      if (controllerSubTitle.text.isNotEmpty &&
+                          controllerSubTitle.text.isNotEmpty) {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertView(
+                              onTabSave: () async {
+                                await _saveData();
+                                widget.onSchange.call();
+                              },
+                              onTabDiscard: () {
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                              },
+                            );
+                          },
+                        );
+                      } else {
                         Navigator.pop(context);
                       }
-
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertView(
-                            onTabSave: () {
-                              ls1.add(
-                                Person(
-                                    fullname: controllerTitle.text,
-                                    text: controllerSubTitle.text,
-                                    isRemove: false),
-                              );
-                              widget.onSchange.call();
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                            },
-                            onTabDiscard: () {
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                            },
-                          );
-                        },
-                      );
                     },
                   ),
                   const Spacer(),
@@ -102,37 +94,8 @@ class _AddScreenState extends State<AddScreen> {
                         context: context,
                         builder: (context) {
                           return AlertView(
-                            onTabSave: () {
-                              if (controllerTitle.text.isNotEmpty &&
-                                  controllerSubTitle.text.isNotEmpty) {
-                                ls1.add(
-                                  Person(
-                                      fullname: controllerTitle.text,
-                                      text: controllerSubTitle.text,
-                                      isRemove: false),
-                                );
-                                isSvae = false;
-                                isPop = true;
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text("Save ^_^"),
-                                  ),
-                                );
-                                widget.onSchange.call();
-                                Navigator.pop(context);
-                                Navigator.pop(context);
-
-                                setState(() {});
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    duration: Duration(seconds: 2),
-                                    content: Text("Error empty text :("),
-                                    backgroundColor: Colors.red,
-                                  ),
-                                );
-                                Navigator.pop(context);
-                              }
+                            onTabSave: () async {
+                              await _saveData();
                             },
                             onTabDiscard: () {
                               Navigator.pop(context);
@@ -152,6 +115,7 @@ class _AddScreenState extends State<AddScreen> {
                 child: Column(
                   children: [
                     TextField(
+                      textInputAction: TextInputAction.next,
                       // ignorePointers: false,
                       controller: controllerTitle,
                       maxLength: null,
@@ -180,6 +144,7 @@ class _AddScreenState extends State<AddScreen> {
                                   BorderSide(color: AppColors.c_252525))),
                     ),
                     TextField(
+                      textInputAction: TextInputAction.done,
                       controller: controllerSubTitle,
                       maxLength: null,
                       maxLines: null,
@@ -214,5 +179,32 @@ class _AddScreenState extends State<AddScreen> {
         ),
       ),
     );
+  }
+
+  _saveData() async {
+    if (controllerTitle.text.isNotEmpty && controllerSubTitle.text.isNotEmpty) {
+      personModul = personModul.copyWith(
+          fullName: controllerTitle.text, descreption: controllerSubTitle.text);
+      await LocalDatabase.insertDebtors(personModul);
+      isSvae = false;
+      isPop = true;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Save ^_^"),
+        ),
+      );
+      widget.onSchange.call();
+      Navigator.pop(context);
+      Navigator.pop(context);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          duration: Duration(seconds: 2),
+          content: Text("Error empty text :("),
+          backgroundColor: Colors.red,
+        ),
+      );
+      Navigator.pop(context);
+    }
   }
 }
