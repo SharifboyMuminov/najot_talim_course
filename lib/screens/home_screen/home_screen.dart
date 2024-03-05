@@ -24,6 +24,16 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.add,
+              size: 25.sp,
+              color: Colors.black,
+            ),
+          ),
+        ],
         elevation: 0,
         backgroundColor: Colors.white,
         centerTitle: true,
@@ -38,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: FutureBuilder(
         future: apiProvider.getAllProduct(),
         builder: (context, snapshop) {
-          if (snapshop.data!.data != null) {
+          if (snapshop.hasData) {
             List<ProductModul> products =
                 snapshop.data!.data as List<ProductModul>;
             return ListView(
@@ -63,7 +73,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             MaterialPageRoute(
                               builder: (context) {
                                 return InfoScreen(
-                                    productModul: products[index]);
+                                  productModul: products[index],
+                                  onSet: () {
+                                    setState(() {});
+                                  },
+                                );
                               },
                             ),
                           );
@@ -105,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             );
           }
-          if (snapshop.data!.errorText.isNotEmpty) {
+          if (snapshop.hasError) {
             return Center(
               child: Text(snapshop.data!.errorText),
             );

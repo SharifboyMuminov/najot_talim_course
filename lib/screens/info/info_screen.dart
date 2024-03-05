@@ -1,23 +1,49 @@
 import 'package:default_project/data/models/product/product_model.dart';
+import 'package:default_project/screens/edit/edit_screen.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 class InfoScreen extends StatelessWidget {
-  const InfoScreen({super.key, required this.productModul});
+  const InfoScreen(
+      {super.key, required this.productModul, required this.onSet});
   final ProductModul productModul;
+  final VoidCallback onSet;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return EditScreen(
+                      productModul: productModul,
+                      onSet: () {
+                        onSet.call();
+                      },
+                    );
+                  },
+                ),
+              );
+            },
+            icon: Icon(
+              Icons.edit,
+              color: Colors.black,
+              size: 20.sp,
+            ),
+          ),
+        ],
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios_new,
             color: Colors.black,
           ),
@@ -43,24 +69,54 @@ class InfoScreen extends StatelessWidget {
               child: Image.network(productModul.imageUrl),
             ),
             50.getH(),
-            RichText(
-              text: TextSpan(
-                text: "Model: ",
+            _getRichText("Model:   ", productModul.prodctName),
+            10.getH(),
+            _getRichText("Price:   ", productModul.price.toString()),
+            30.getH(),
+            Center(
+              child: Text(
+                "Descreption",
                 style: TextStyle(
                   color: Colors.black,
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w700,
                 ),
-                children: [
-                  TextSpan(
-                    text: productModul.prodctName,
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
+              ),
+            ),
+            10.getH(),
+            Text(
+              productModul.decoretion,
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  _getRichText(String text1, String text2) {
+    return RichText(
+      text: TextSpan(
+        text: text1,
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 18.sp,
+          fontWeight: FontWeight.w500,
+        ),
+        children: [
+          TextSpan(
+            text: text2,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 22.sp,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
       ),
     );
   }

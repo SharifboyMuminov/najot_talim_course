@@ -25,6 +25,7 @@ class ProductModul {
 
   Map<String, dynamic> toJson() {
     return {
+      "_uuid": prodictId,
       "decreption": decoretion,
       "iamge_url": imageUrl,
       "price": price,
