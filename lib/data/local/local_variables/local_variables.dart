@@ -8,49 +8,7 @@ List<CagetegoriyModul> categpriyes = [
   CagetegoriyModul(id: 4, name: "Espresso"),
 ];
 
-List<CoffeModul> coffeFavorite = [
-  CoffeModul(
-    imageUr:
-        "https://static.onecms.io/wp-content/uploads/sites/19/2009/12/21/chocolate-cappucino-ck-x.jpg",
-    count: 0,
-    cagetegoriyModul: categpriyes[2],
-    descreption: "asdfasdf",
-    name: "Cappucino",
-    price: 20000,
-    sizeDish: "S",
-    subTitle: "With Chocolate",
-  ),
-  CoffeModul(
-      count: 0,
-      cagetegoriyModul: categpriyes[2],
-      descreption: "asdf",
-      name: "Cappucino",
-      price: 25000,
-      sizeDish: "M",
-      subTitle: "With Oat Milk",
-      imageUr:
-          'https://4tololo.ru/sites/default/files/images/20160311134552.jpg'),
-  CoffeModul(
-      imageUr:
-          "https://dyvn6jpt1f0d3.cloudfront.net/wp-content/uploads/2019/05/07111756/recipe-creamy-chocolate-coffee-1000x1000.jpg",
-      count: 0,
-      cagetegoriyModul: categpriyes[2],
-      descreption: "",
-      name: "Cappucino",
-      price: 30000,
-      sizeDish: "S",
-      subTitle: "With Chocolate"),
-  CoffeModul(
-      imageUr:
-          "https://perfectdailygrind.com/wp-content/uploads/2017/09/anchorheadcoffee_18_9_2017_10_59_54_598-1-e1505774955739.jpg",
-      count: 0,
-      cagetegoriyModul: categpriyes[2],
-      descreption: "asdf",
-      name: "Cappucino",
-      price: 35000,
-      sizeDish: "L",
-      subTitle: "With Oat Milk"),
-];
+List<CoffeModul> coffeFavorite = [];
 
 List<CoffeModul> coffeCappuchchino = [
   CoffeModul(
@@ -222,4 +180,12 @@ List<CoffeModul> coffeEspresso = [
       price: 58000,
       sizeDish: "L",
       subTitle: "With Chocolate"),
+];
+
+List<String> homeScreenTitleButtons = [
+  "All",
+  "Mocha",
+  "Latte",
+  "Cappucino",
+  "Espresso",
 ];
