@@ -1,14 +1,11 @@
-import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:default_project/data/models/city/city_modul.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/my_extensions.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../data/local/storage_repository.dart';
 import '../../data/models/network_response.dart';
 import '../../data/models/one_call/one_call_models/one_call_data_models.dart';
 import '../../data/repositories/weather_repository.dart';

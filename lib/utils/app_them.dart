@@ -8,7 +8,7 @@ class AppTheme {
       backgroundColor: Colors.white,
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarBrightness: Brightness.dark,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: Brightness.dark,
         statusBarColor: Colors.white,
       ),
     ),
@@ -116,7 +116,7 @@ class AppTheme {
       backgroundColor: Colors.black,
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarBrightness: Brightness.light,
-        statusBarIconBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.light,
         statusBarColor: Colors.grey,
       ),
     ),
