@@ -1,0 +1,17 @@
+{
+  "splash_screen": {
+    "title": "FIND THE BEST COFFEE FOR YOU",
+    "button_text": "Proceed"
+  },
+  "home_screen": {
+    "favorite": "Your Favorites",
+    "popular": "Popular Now",
+    "money": "{} soum"
+  },
+  "info_screen": {
+    "description": "Description",
+    "size": "Size",
+    "button_title_one": "Add to cart",
+    "button_title_two": "Buy now"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "splash_screen": {
+    "title": "O'ZIZ UCHUN ENG ZO'R QAHVANI TOPING",
+    "button_text": "Davom eting"
+  },
+  "home_screen": {
+    "favorite": "Sevimlilaringiz",
+    "popular": "Hozir mashhur",
+    "money": "{} so'm"
+  },
+  "info_screen": {
+    "description": "Tavsilot",
+    "size": "Hajmi",
+    "button_title_one": "Savatchaga qo'shish",
+    "button_title_two": "Hozir xarid qilish"
+  }
+}
