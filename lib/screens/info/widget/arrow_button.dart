@@ -6,7 +6,8 @@ import 'package:flutter_svg/svg.dart';
 import '../../../utils/app_colors.dart';
 
 class ArrowButtonMy extends StatelessWidget {
-  const ArrowButtonMy({super.key});
+  const ArrowButtonMy({super.key, required this.onTab});
+  final VoidCallback onTab;
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +20,7 @@ class ArrowButtonMy extends StatelessWidget {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
         ),
-        onPressed: () {
-          Navigator.pop(context);
-        },
+        onPressed: onTab,
         child: SvgPicture.asset(
           "assets/icons/arrow.svg",
           width: 18.we,

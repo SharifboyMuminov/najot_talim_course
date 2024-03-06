@@ -1,3 +1,4 @@
+import 'package:default_project/data/local/local_data/local_data.dart';
 import 'package:default_project/data/local/local_variables/local_variables.dart';
 import 'package:default_project/screens/info/info_screen.dart';
 import 'package:default_project/utils/app_colors.dart';
@@ -21,6 +22,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int activIndex = 0;
   List<CoffeModul> activList = [];
+  bool isShowTitle = false;
+  ScrollController scrollController = ScrollController();
 
   setActivList() {
     switch (activIndex) {
@@ -61,7 +64,23 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     setActivList();
+    setFavorite();
+
+    scrollController.addListener(() {
+      if (scrollController.position.pixels > 41.he) {
+        isShowTitle = true;
+      } else {
+        isShowTitle = false;
+      }
+      setState(() {});
+    });
+
     super.initState();
+  }
+
+  Future<void> setFavorite() async {
+    coffeFavorite = await LocalDatabase.getAllFavoriteCoffe();
+    setState(() {});
   }
 
   @override
@@ -69,6 +88,19 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.c_0C0F14,
+        centerTitle: true,
+        title: coffeFavorite.isNotEmpty
+            ? isShowTitle
+                ? Text(
+                    "home_screen.favorite".tr(),
+                    style: TextStyle(
+                      color: AppColors.c_FFFFFF,
+                      fontSize: 24.sp,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  )
+                : null
+            : null,
         leading: IconButton(
           onPressed: () {},
           icon: SvgPicture.asset(
@@ -95,6 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       backgroundColor: AppColors.c_0C0F14,
       body: SingleChildScrollView(
+        controller: scrollController,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -123,6 +156,21 @@ class _HomeScreenState extends State<HomeScreen> {
                         return FavoriteItem(
                           coffeModul: coffeFavorite[index],
                           onTabAdd: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return InfoScreen(
+                                    coffeModul: coffeFavorite[index],
+                                    onSet: () {
+                                      setFavorite();
+                                    },
+                                  );
+                                },
+                              ),
+                            );
+                          },
                         );
                       },
                     ),
@@ -196,7 +244,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           builder: (context) {
                             return InfoScreen(
                               coffeModul: coffeModul,
-                              onSet: () {},
+                              onSet: () {
+                                setState(() {});
+                              },
                             );
                           },
                         ),

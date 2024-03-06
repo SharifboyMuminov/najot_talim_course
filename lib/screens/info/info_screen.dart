@@ -1,3 +1,5 @@
+import 'package:default_project/data/local/local_data/local_data.dart';
+import 'package:default_project/data/local/local_variables/local_variables.dart';
 import 'package:default_project/data/models/coffe_modul/coffe_modul.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
@@ -55,10 +57,30 @@ class _InfoScreenState extends State<InfoScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ArrowButtonMy(),
+                      ArrowButtonMy(
+                        onTab: () async {
+                          if (isFavorite) {
+                            if (!coffeFavorite.contains(coffeModul)) {
+                              coffeModul.isFavorite = isFavorite;
+                              await LocalDatabase.insertFavoriteCoffe(
+                                  coffeModul);
+                            }
+                          } else {
+                            if (coffeModul.id != null) {
+                              await LocalDatabase.deleteFavoriteCoffe(
+                                  coffeModul.id!);
+                            }
+                          }
+                          if (context.mounted) {
+                            widget.onSet.call();
+                            Navigator.pop(context);
+                          }
+                        },
+                      ),
                       IconButton(
                         onPressed: () {
                           isFavorite = !isFavorite;
+                          coffeModul.isFavorite = isFavorite;
 
                           setState(() {});
                         },

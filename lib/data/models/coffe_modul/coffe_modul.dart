@@ -28,6 +28,7 @@ class CoffeModul {
 
   factory CoffeModul.fromJson(Map<String, dynamic> json) {
     return CoffeModul(
+      isFavorite: getisFavorite(json[CoffeModulContans.isFavorite] as String? ?? "true"),
       id: json[CoffeModulContans.id],
       count: json[CoffeModulContans.count] as int? ?? 0,
       cagetegoriyModul:
@@ -40,6 +41,18 @@ class CoffeModul {
       imageUr: json[CoffeModulContans.imageUr] as String? ??
           "https://static.onecms.io/wp-content/uploads/sites/19/2009/12/21/chocolate-cappucino-ck-x.jpg",
     );
+  }
+
+  Map<String, dynamic> toJsonFavorute() {
+    return {
+      CoffeModulContans.descreption: descreption.toString(),
+      CoffeModulContans.imageUr: imageUr.toString(),
+      CoffeModulContans.isFavorite: isFavorite.toString(),
+      CoffeModulContans.name: name.toString(),
+      CoffeModulContans.cagetegoriyModul: cagetegoriyModul.id,
+      CoffeModulContans.price: price.toInt(),
+      CoffeModulContans.subTitle: subTitle.toString(),
+    };
   }
 
   CoffeModul copyWithe(
@@ -77,6 +90,11 @@ class CoffeModul {
   }
 }
 
+bool getisFavorite(String text) {
+  if (text == "true") return true;
+  return false;
+}
+
 CagetegoriyModul _getCategory(int id) {
   switch (id) {
     case 1:
@@ -89,7 +107,8 @@ CagetegoriyModul _getCategory(int id) {
 }
 
 class CoffeModulContans {
-  static const String table = "CoffeTable";
+  static const String tableFavorite = "favorite_table";
+  static const String tableSave = "save_table";
   static const String name = "name";
   static const String id = "id";
   static const String isFavorite = "is_favorite";
