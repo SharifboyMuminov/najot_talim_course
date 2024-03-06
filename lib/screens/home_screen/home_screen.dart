@@ -17,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   ApiProvider apiProvider = ApiProvider();
   ScrollController scrollController = ScrollController();
   double elevetion = 0;
+  bool isShowtitle = false;
 
   change() {
     setState(() {});
@@ -25,6 +26,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     scrollController.addListener(() {
+      if (scrollController.position.pixels > 42) {
+        isShowtitle = true;
+      } else {
+        isShowtitle = false;
+      }
       if (scrollController.position.pixels > 0) {
         elevetion = 1;
       } else {
@@ -69,13 +75,13 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: elevetion,
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Text(
+        title: isShowtitle ? Text(
           "Apple Shoping",
           style: TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 22.sp,
               color: Colors.black),
-        ),
+        ) : null,
       ),
       body: FutureBuilder(
         future: apiProvider.getAllProduct(),
@@ -87,6 +93,14 @@ class _HomeScreenState extends State<HomeScreen> {
               controller: scrollController,
               padding: EdgeInsets.symmetric(horizontal: 8.he),
               children: [
+                Text(
+                  "Apple Shoping",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 22.sp,
+                      color: Colors.black),
+                ),
+                20.getH(),
                 ...List.generate(
                   products.length,
                   (index) {
