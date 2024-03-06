@@ -1,8 +1,8 @@
 import 'package:default_project/data/local/local_variables/local_variables.dart';
+import 'package:default_project/screens/info/info_screen.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,7 +10,6 @@ import 'package:flutter_svg/svg.dart';
 import '../../data/models/coffe_modul/coffe_modul.dart';
 import 'widget/categoriy_button.dart';
 import 'widget/favorite_item.dart';
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -190,7 +189,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   CoffeModul coffeModul = activList[index];
                   return CategoryButton(
                     coffeModul: coffeModul,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return InfoScreen(
+                              coffeModul: coffeModul,
+                              onSet: () {},
+                            );
+                          },
+                        ),
+                      );
+                    },
                   );
                 },
               ),
