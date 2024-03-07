@@ -1,8 +1,8 @@
-class CagetegoriyModul {
+class CategoriyModul {
   final int id;
   final String name;
 
-  CagetegoriyModul({
+  CategoriyModul({
     required this.id,
     required this.name,
   });

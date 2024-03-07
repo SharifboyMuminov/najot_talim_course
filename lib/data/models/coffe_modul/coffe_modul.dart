@@ -11,7 +11,7 @@ class CoffeModul {
   final int count;
   final String imageUr;
   bool isFavorite;
-  final CagetegoriyModul cagetegoriyModul;
+  final CategoriyModul cagetegoriyModul;
 
   CoffeModul({
     this.id,
@@ -28,8 +28,9 @@ class CoffeModul {
 
   factory CoffeModul.fromJson(Map<String, dynamic> json) {
     return CoffeModul(
-      isFavorite: getisFavorite(json[CoffeModulContans.isFavorite] as String? ?? "true"),
-      id: json[CoffeModulContans.id],
+      isFavorite: getisFavorite(
+          json[CoffeModulContans.isFavorite] as String? ?? "true"),
+      id: json[CoffeModulContans.id] as int?,
       count: json[CoffeModulContans.count] as int? ?? 0,
       cagetegoriyModul:
           _getCategory(json[CoffeModulContans.cagetegoriyModul] as int? ?? 1),
@@ -59,7 +60,7 @@ class CoffeModul {
       {String? name,
       String? descreption,
       num? price,
-      CagetegoriyModul? cagetegoriyModul,
+      CategoriyModul? cagetegoriyModul,
       int? count,
       String? sizeDish,
       String? subTitle,
@@ -72,7 +73,7 @@ class CoffeModul {
       price: price ?? this.price,
       sizeDish: sizeDish ?? this.sizeDish,
       subTitle: subTitle ?? this.subTitle,
-      imageUr: imageUr ?? this.imageUr,
+      imageUr: imageUrl ?? this.imageUr,
     );
   }
 
@@ -95,7 +96,7 @@ bool getisFavorite(String text) {
   return false;
 }
 
-CagetegoriyModul _getCategory(int id) {
+CategoriyModul _getCategory(int id) {
   switch (id) {
     case 1:
       return categpriyes[0];

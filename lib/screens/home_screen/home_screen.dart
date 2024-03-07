@@ -205,7 +205,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         onPressed: () {
                           activIndex = index;
                           setActivList();
-                          setState(() {});
                         },
                         child: Text(
                           homeScreenTitleButtons[index],
@@ -245,7 +244,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             return InfoScreen(
                               coffeModul: coffeModul,
                               onSet: () {
-                                setState(() {});
+                                setFavorite();
                               },
                             );
                           },

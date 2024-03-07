@@ -10,7 +10,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'widget/arrow_button.dart';
 import 'widget/image_overide.dart';
 import 'widget/size_item.dart';
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 class InfoScreen extends StatefulWidget {
   const InfoScreen({super.key, required this.coffeModul, required this.onSet});
@@ -22,7 +21,7 @@ class InfoScreen extends StatefulWidget {
 }
 
 class _InfoScreenState extends State<InfoScreen> {
-  CoffeModul coffeModul = CoffeModul.getDefault();
+  late CoffeModul coffeModul;
   int activIndex = 0;
   bool isFavorite = false;
 
@@ -92,7 +91,7 @@ class _InfoScreenState extends State<InfoScreen> {
                       ),
                     ],
                   ),
-                  Spacer(),
+                  const Spacer(),
                   ImageOverItem(
                     coffeModul: coffeModul,
                     onTabAdd: () {},
@@ -143,7 +142,7 @@ class _InfoScreenState extends State<InfoScreen> {
                 setState(() {});
               },
             ),
-            Spacer(),
+            const Spacer(),
             SizedBox(
               width: double.infinity,
               child: TextButton(

@@ -1,11 +1,11 @@
 import 'package:default_project/data/models/categoriy/categoriy_modul.dart';
 import 'package:default_project/data/models/coffe_modul/coffe_modul.dart';
 
-List<CagetegoriyModul> categpriyes = [
-  CagetegoriyModul(id: 1, name: "Mocha"),
-  CagetegoriyModul(id: 2, name: "Latte"),
-  CagetegoriyModul(id: 3, name: "Cappucino"),
-  CagetegoriyModul(id: 4, name: "Espresso"),
+List<CategoriyModul> categpriyes = [
+  CategoriyModul(id: 1, name: "Mocha"),
+  CategoriyModul(id: 2, name: "Latte"),
+  CategoriyModul(id: 3, name: "Cappucino"),
+  CategoriyModul(id: 4, name: "Espresso"),
 ];
 
 List<CoffeModul> coffeFavorite = [];

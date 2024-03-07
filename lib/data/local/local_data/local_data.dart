@@ -50,10 +50,11 @@ class LocalDatabase {
     )''');
   }
 
-  static Future<void> insertFavoriteCoffe(CoffeModul coffeModul) async {
+  static Future<int> insertFavoriteCoffe(CoffeModul coffeModul) async {
     final db = await databaseInstance.database;
-    await db.insert(
+    int saveId = await db.insert(
         CoffeModulContans.tableFavorite, coffeModul.toJsonFavorute());
+    return saveId;
   }
 
   static Future<List<CoffeModul>> getAllFavoriteCoffe() async {
@@ -61,7 +62,9 @@ class LocalDatabase {
     String orderBy = "${CoffeModulContans.id} DESC";
     List json =
         await db.query(CoffeModulContans.tableFavorite, orderBy: orderBy);
-    return json.map((e) => CoffeModul.fromJson(e)).toList();
+
+    List<CoffeModul> lst = json.map((e) => CoffeModul.fromJson(e)).toList();
+    return lst;
   }
 
   static Future<int> deleteFavoriteCoffe(int id) async {
