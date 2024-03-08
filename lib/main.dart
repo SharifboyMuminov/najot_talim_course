@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'screens/home_screen/home_screen.dart';
+import 'screens/category/categoriy_screen.dart';
 
 void main(List<String> args) {
   runApp(MyApp());
 }
-
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -24,7 +22,7 @@ class MyApp extends StatelessWidget {
           home: child,
         );
       },
-      child: HomeScreen(),
+      child: CategoryScreen(),
     );
   }
 }
