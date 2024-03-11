@@ -15,16 +15,28 @@ class LangucheModel {
       required this.hintTextTo});
 
   void changeLAngucher() {
-    String storage = this.fromLanguchar;
-    this.fromLanguchar = this.toLanguage;
-    this.toLanguage = storage;
+    String storage = fromLanguchar;
+    fromLanguchar = toLanguage;
+    toLanguage = storage;
 
-    storage = this.from;
-    this.from = this.to;
-    this.to = storage;
+    storage = from;
+    from = to;
+    to = storage;
 
-    storage = this.hintTextFrom;
-    this.hintTextFrom = this.hintTextTo;
-    this.hintTextTo = storage;
+    storage = hintTextFrom;
+    hintTextFrom = hintTextTo;
+    hintTextTo = storage;
+  }
+
+  void setRu() {
+    toLanguage = "Russia";
+    to = "ru";
+    hintTextTo = "Напишите здес...";
+  }
+
+  void setEng() {
+    toLanguage = "English";
+    to = 'en';
+    hintTextTo = 'You write here...';
   }
 }

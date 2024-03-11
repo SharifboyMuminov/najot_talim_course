@@ -1,3 +1,4 @@
+import 'package:default_project/screens/home/widget/launcher_button.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   String onchangeString = "";
   TextEditingController controller = TextEditingController();
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
+  int activLauncher = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +34,44 @@ class _HomeScreenState extends State<HomeScreen> {
         statusBarBrightness: Brightness.light,
         statusBarIconBrightness: Brightness.dark,
         statusBarColor: Colors.white,
-        systemNavigationBarDividerColor:Colors.white, 
+        systemNavigationBarDividerColor: Colors.white,
       ),
       child: Scaffold(
+        drawer: Drawer(
+          backgroundColor: Colors.white,
+          child: Column(
+            children: [
+              110.getH(),
+              LauncherButton(
+                title: "🇺🇿  <->  🇬🇧",
+                isChek: activLauncher == 0,
+                onTab: () {
+                  activLauncher = 0;
+                  activLanguache.setEng();
+                  setState(() {});
+                },
+              ),
+              LauncherButton(
+                title: "🇺🇿  <->  🇷🇺",
+                isChek: activLauncher == 1,
+                onTab: () {
+                  activLanguache.setRu();
+                  activLauncher = 1;
+                  setState(() {});
+                },
+              ),
+            ],
+          ),
+        ),
+        key: _key,
         appBar: AppBar(
           elevation: 0.1,
           backgroundColor: AppColors.c_96E9C6,
           leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              _key.currentState!.openDrawer();
+              setState(() {});
+            },
             icon: SvgPicture.asset(
               "assets/icons/menu.svg",
               width: 22.we,
@@ -79,95 +112,99 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-        body: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(vertical: 10.he, horizontal: 20.we),
-          child: Column(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: Color(0xFFFFFFFF),
-                  borderRadius: BorderRadius.circular(5.r),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.shade200,
-                      blurRadius: 30,
-                    ),
-                  ],
-                ),
-                child: TextField(
-                  cursorColor: AppColors.c_96E9C6,
-                  style: TextStyle(
-                    fontSize: 22.sp,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  controller: controller,
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        controller.clear();
-                        setState(() {});
-                      },
-                      icon: Icon(
-                        Icons.clear,
-                        color: AppColors.c_96E9C6,
-                      ),
-                    ),
-                    contentPadding: EdgeInsets.symmetric(
-                        horizontal: 10.we, vertical: 15.he),
-                    hintText: activLanguache.hintTextFrom,
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.zero,
-                      borderSide: BorderSide.none,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.zero,
-                      borderSide: BorderSide.none,
-                    ),
-                    helperStyle: TextStyle(
-                      fontSize: 22.sp,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.grey.shade100,
-                    ),
-                  ),
-                  maxLines: null,
-                  onChanged: (v) {
-                    onchangeString = v;
-                  },
-                ),
-              ),
-              20.getH(),
-              if (onchangeString.isNotEmpty)
-                FutureBuilder(
-                  future: TransLation.getTranslation(
-                      onchangeString, activLanguache.from, activLanguache.to),
-                  builder: (context, snapshop) {
-                    if (snapshop.hasError) {
-                      return Text("Error :(");
-                    }
-                    if (snapshop.hasData) {
-                      return Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 10.we, vertical: 10.he),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: AppColors.c_96E9C6,
-                          borderRadius: BorderRadius.circular(5.r),
+        body: Column(
+          children: [
+            SingleChildScrollView(
+              padding: EdgeInsets.symmetric(vertical: 10.he, horizontal: 20.we),
+              child: Column(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Color(0xFFFFFFFF),
+                      borderRadius: BorderRadius.circular(5.r),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.shade200,
+                          blurRadius: 30,
                         ),
-                        child: Text(
-                          snapshop.data as String,
-                          style: TextStyle(
-                            fontSize: 22.sp,
-                            fontWeight: FontWeight.w500,
+                      ],
+                    ),
+                    child: TextField(
+                      cursorColor: AppColors.c_96E9C6,
+                      style: TextStyle(
+                        fontSize: 22.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      controller: controller,
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            controller.clear();
+                            setState(() {});
+                          },
+                          icon: Icon(
+                            Icons.clear,
+                            color: AppColors.c_96E9C6,
                           ),
                         ),
-                      );
-                    }
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 10.we, vertical: 15.he),
+                        hintText: activLanguache.hintTextFrom,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.zero,
+                          borderSide: BorderSide.none,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.zero,
+                          borderSide: BorderSide.none,
+                        ),
+                        helperStyle: TextStyle(
+                          fontSize: 22.sp,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.grey.shade100,
+                        ),
+                      ),
+                      maxLines: null,
+                      onChanged: (v) {
+                        onchangeString = v;
+                      },
+                    ),
+                  ),
+                  20.getH(),
+                  if (onchangeString.isNotEmpty)
+                    FutureBuilder(
+                      future: TransLation.getTranslation(onchangeString,
+                          activLanguache.from, activLanguache.to),
+                      builder: (context, snapshop) {
+                        if (snapshop.hasError) {
+                          return Text("Error :(");
+                        }
+                        if (snapshop.hasData) {
+                          return Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10.we, vertical: 10.he),
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: AppColors.c_96E9C6,
+                              borderRadius: BorderRadius.circular(5.r),
+                            ),
+                            child: Text(
+                              snapshop.data as String,
+                              style: TextStyle(
+                                fontSize: 22.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          );
+                        }
 
-                    return CircularProgressIndicator.adaptive();
-                  },
-                ),
-            ],
-          ),
+                        return CircularProgressIndicator.adaptive();
+                      },
+                    ),
+                ],
+              ),
+            ),
+          ],
         ),
         floatingActionButton: Container(
           margin: EdgeInsets.symmetric(horizontal: 10.he),
