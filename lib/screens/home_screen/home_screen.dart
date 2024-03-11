@@ -1,6 +1,6 @@
 import 'package:default_project/data/local/local_database/local_databas.dart';
 import 'package:default_project/screens/add_screen.dart/add_screen.dart';
-import 'package:default_project/screens/global_widget.dart/top_button.dart';
+import 'package:default_project/screens/widget/top_button.dart';
 import 'package:default_project/screens/home_screen/widgets/empty_show.dart';
 import 'package:default_project/screens/home_screen/widgets/item_note.dart';
 import 'package:default_project/screens/home_screen/widgets/text_fild.dart';
@@ -103,6 +103,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                 await LocalDatabase.deleteDebtors(
                                     personDebtes[index].id!);
                                 _getAllData();
+                              } else {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return AddScreen(
+                                        onSchange: () {
+                                          _getAllData();
+                                        },
+                                        isInfo: true,
+                                        personModul: personDebtes[index],
+                                      );
+                                    },
+                                  ),
+                                );
                               }
                             },
                             onLongPress: () {

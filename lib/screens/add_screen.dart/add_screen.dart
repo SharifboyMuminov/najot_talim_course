@@ -1,6 +1,6 @@
 import 'package:default_project/data/local/local_database/local_databas.dart';
 import 'package:default_project/data/moduls/persons.dart';
-import 'package:default_project/screens/global_widget.dart/top_button.dart';
+import 'package:default_project/screens/widget/top_button.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/app_images.dart';
 import 'package:default_project/utils/size.dart';
@@ -14,8 +14,12 @@ class AddScreen extends StatefulWidget {
   const AddScreen({
     super.key,
     required this.onSchange,
+    this.personModul,
+    this.isInfo = false,
   });
   final Function onSchange;
+  final bool isInfo;
+  final PersonModul? personModul;
 
   @override
   State<AddScreen> createState() => _AddScreenState();
@@ -26,12 +30,18 @@ class _AddScreenState extends State<AddScreen> {
 
   bool isSvae = true;
   bool isPop = false;
+  bool isChane = false;
 
   final TextEditingController controllerTitle = TextEditingController();
   final TextEditingController controllerSubTitle = TextEditingController();
 
   @override
   void initState() {
+    if (widget.personModul != null) {
+      personModul = widget.personModul!;
+      controllerTitle.text = personModul.fullname;
+      controllerSubTitle.text = personModul.text;
+    }
     super.initState();
   }
 
@@ -110,13 +120,12 @@ class _AddScreenState extends State<AddScreen> {
             ),
             Expanded(
               child: SingleChildScrollView(
-                padding:
-                    EdgeInsets.symmetric(horizontal: 15.we, vertical: 30.he),
+                padding: EdgeInsets.symmetric(
+                    horizontal: 15.we, vertical: 30.he),
                 child: Column(
                   children: [
                     TextField(
                       textInputAction: TextInputAction.next,
-                      // ignorePointers: false,
                       controller: controllerTitle,
                       maxLength: null,
                       maxLines: null,
@@ -148,7 +157,6 @@ class _AddScreenState extends State<AddScreen> {
                       controller: controllerSubTitle,
                       maxLength: null,
                       maxLines: null,
-                      onChanged: (v) {},
                       cursorColor: AppColors.c_CCCCCC,
                       style: TextStyle(
                         color: AppColors.c_FFFFFF,
