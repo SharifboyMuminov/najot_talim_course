@@ -34,34 +34,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 stretch: false,
                 pinned: true,
                 elevation: 0,
-                // leading: IconButton(
-                //   style: IconButton.styleFrom(
-                //     backgroundColor: Colors.white,
-                //     shape: RoundedRectangleBorder(
-                //       borderRadius: BorderRadius.circular(10.r),
-                //     ),
-                //   ),
-                //   onPressed: () {},
-                //   icon: Icon(
-                //     Icons.arrow_back,
-                //     color: Colors.black,
-                //   ),
-                // ),
-                // actions: [
-                //   IconButton(
-                //     style: IconButton.styleFrom(
-                //       backgroundColor: Colors.white,
-                //       shape: RoundedRectangleBorder(
-                //         borderRadius: BorderRadius.circular(10.r),
-                //       ),
-                //     ),
-                //     onPressed: () {},
-                //     icon: Icon(
-                //       Icons.more_horiz,
-                //       color: Colors.black,
-                //     ),
-                //   ),
-                // ],
                 expandedHeight: 420,
                 flexibleSpace: FlexibleSpaceBar(
                   background: Container(
@@ -69,7 +41,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         horizontal: 20.we, vertical: 20.he),
                     decoration: BoxDecoration(
                       color: AppColors.cF5F6FA,
-                      // color: Colors.red,
                       borderRadius: BorderRadius.circular(15.r),
                     ),
                     child: Column(
@@ -188,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       ...List.generate(
-                        10,
+                        22,
                         (index) {
                           return Container(
                             margin: EdgeInsets.symmetric(vertical: 20.he),
@@ -258,11 +229,10 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 IconButton(
                   style: TextButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.r),
-                    ),
-                    backgroundColor: Colors.red
-                  ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.r),
+                      ),
+                      backgroundColor: Colors.red),
                   onPressed: () {},
                   icon: Icon(Icons.arrow_back),
                 ),
