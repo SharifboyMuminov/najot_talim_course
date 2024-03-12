@@ -60,6 +60,24 @@ class _HomeScreenState extends State<HomeScreen> {
                   setState(() {});
                 },
               ),
+              LauncherButton(
+                title: "🇺🇿  <->  🇫🇷",
+                isChek: activLauncher == 2,
+                onTab: () {
+                  activLanguache.setFranc();
+                  activLauncher = 2;
+                  setState(() {});
+                },
+              ),
+              LauncherButton(
+                title: "🇺🇿  <->  🇹🇷",
+                isChek: activLauncher == 3,
+                onTab: () {
+                  activLanguache.setTurk();
+                  activLauncher = 3;
+                  setState(() {});
+                },
+              ),
             ],
           ),
         ),

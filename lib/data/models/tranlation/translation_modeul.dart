@@ -39,4 +39,16 @@ class LangucheModel {
     to = 'en';
     hintTextTo = 'You write here...';
   }
+
+  void setFranc() {
+    toLanguage = "English";
+    to = 'fr';
+    hintTextTo = 'écris dans cet espace';
+  }
+
+  void setTurk() {
+    toLanguage = "English";
+    to = 'tr';
+    hintTextTo = 'Bu alana yaz';
+  }
 }
