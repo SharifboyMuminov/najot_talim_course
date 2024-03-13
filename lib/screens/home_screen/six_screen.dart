@@ -8,10 +8,20 @@ class SixScreen extends StatefulWidget {
 }
 
 class _SixScreenState extends State<SixScreen> {
+  late AnimationController animationController;
   double right = 110;
   double left = 110;
   double bottom = 330;
   double top = 330;
+  bool isTop = false;
+  bool isRight = false;
+  bool isLeft = false;
+  bool isBottom = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +51,25 @@ class _SixScreenState extends State<SixScreen> {
             child: Column(
               children: [
                 TextButton(
-                  onPressed: () {
-                    top = top - 20;
-                    bottom = bottom + 20;
+                  onPressed: () async {
+                    isRight = false;
+                    isLeft = false;
+                    isBottom = false;
+                    isTop = true;
                     setState(() {});
+                    while (true) {
+                      await Future.delayed(const Duration(milliseconds: 100));
+                      if (top - 20 < 0) {
+                        setState(() {});
+                        break;
+                      } else if (isTop) {
+                        top = top - 20;
+                        bottom = bottom + 20;
+                        setState(() {});
+                      } else {
+                        break;
+                      }
+                    }
                   },
                   child: const Icon(
                     Icons.arrow_upward_outlined,
@@ -55,22 +80,65 @@ class _SixScreenState extends State<SixScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     TextButton(
-                      onPressed: () {
-                        left = left - 20;
-                        right = right + 20;
+                      onPressed: () async {
+                        isRight = false;
+                        isTop = false;
+                        isBottom = false;
+                        isLeft = true;
                         setState(() {});
+
+                        while (true) {
+                          await Future.delayed(
+                              const Duration(milliseconds: 100));
+                          if (left - 20 < 0) {
+                            break;
+                          } else if (isLeft) {
+                            left = left - 20;
+                            right = right + 20;
+                            setState(() {});
+                          } else {
+                            break;
+                          }
+                        }
                       },
                       child: const Icon(
                         Icons.arrow_back,
                         size: 40,
                       ),
                     ),
-                    const SizedBox(width: 20),
                     TextButton(
                       onPressed: () {
-                        right = right - 20;
-                        left = left + 20;
+                        isRight = false;
+                        isTop = false;
+                        isBottom = false;
+                        isLeft = false;
                         setState(() {});
+                      },
+                      child: const Icon(
+                        Icons.stop,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        isRight = true;
+                        isLeft = false;
+                        isBottom = false;
+                        isTop = false;
+
+                        while (true) {
+                          await Future.delayed(
+                              const Duration(milliseconds: 100));
+                          if (right - 20 < 0) {
+                            setState(() {});
+                            break;
+                          } else if (isRight) {
+                            right = right - 20;
+                            left = left + 20;
+                            setState(() {});
+                          } else {
+                            break;
+                          }
+                        }
                       },
                       child: const Icon(
                         Icons.arrow_forward,
@@ -80,10 +148,24 @@ class _SixScreenState extends State<SixScreen> {
                   ],
                 ),
                 TextButton(
-                  onPressed: () {
-                    bottom = bottom - 20;
-                    top = top + 20;
-                    setState(() {});
+                  onPressed: () async {
+                    isTop = false;
+                    isRight = false;
+                    isLeft = false;
+                    isBottom = true;
+                    while (true) {
+                      await Future.delayed(const Duration(milliseconds: 100));
+                      if (bottom - 20 < 0) {
+                        setState(() {});
+                        break;
+                      } else if (isBottom) {
+                        bottom = bottom - 20;
+                        top = top + 20;
+                        setState(() {});
+                      } else {
+                        break;
+                      }
+                    }
                   },
                   child: const Icon(
                     Icons.arrow_downward,
