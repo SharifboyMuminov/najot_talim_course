@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-import 'screens/contorl.dart';
+import 'screens/controller_screen.dart';
 import 'view_models/user_view_model.dart';
 
 void main(List<String> args) {
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
           home: child,
         );
       },
-      child: const ControlScreen(),
+      child: const ControllerScreen(),
     );
   }
 }

@@ -2,8 +2,8 @@ import 'package:default_project/screens/home_screen/home_screen.dart';
 import 'package:default_project/screens/info/info_screen.dart';
 import 'package:flutter/material.dart';
 
-class ControlScreen extends StatelessWidget {
-  const ControlScreen({super.key});
+class ControllerScreen extends StatelessWidget {
+  const ControllerScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
