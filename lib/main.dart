@@ -1,13 +1,28 @@
+import 'package:default_project/data/repository/state_repository.dart';
+import 'package:default_project/data/repository/user_repository.dart';
+import 'package:default_project/view_models/state_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
-import 'screens/home_screen/home_screen.dart';
+import 'screens/contorl.dart';
+import 'view_models/user_view_model.dart';
 
 void main(List<String> args) {
-  runApp(MyApp());
+  UserRepository userRepository = UserRepository();
+  StateRepository stateRepository = StateRepository();
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+            create: (_) => UserView(userRepository: userRepository)),
+        ChangeNotifierProvider(
+            create: (_) => StateView(stateRepository: stateRepository)),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
-
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -24,7 +39,7 @@ class MyApp extends StatelessWidget {
           home: child,
         );
       },
-      child: HomeScreen(),
+      child: const ControlScreen(),
     );
   }
 }

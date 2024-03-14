@@ -1,10 +1,10 @@
-import 'package:default_project/data/models/user/user_model.dart';
-import 'package:default_project/view_models/user_view_model.dart';
+import 'package:default_project/data/models/state/state_model.dart';
+import 'package:default_project/view_models/state_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class InfoScreen extends StatelessWidget {
+  const InfoScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,29 +22,35 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         title: const Text(
-          "Actior",
+          "States",
           style: TextStyle(
             color: Colors.black,
             fontSize: 22,
           ),
         ),
       ),
-      body: context.watch<UserView>().users.isNotEmpty
+      body: context.watch<StateView>().states.isNotEmpty
           ? ListView(
               children: [
                 ...List.generate(
-                  context.watch<UserView>().users.length,
+                  context.watch<StateView>().states.length,
                   (index) {
-                    UserModel userModel =
-                        context.watch<UserView>().users[index];
+                    StateModel stateModel =
+                        context.watch<StateView>().states[index];
 
                     return Container(
                       margin: const EdgeInsets.symmetric(vertical: 20),
                       child: ListTile(
+                        title: Text(stateModel.stateNameModel.nameState),
                         leading: Image.network(
-                          userModel.avatarUrl,
+                          stateModel.stateGerbModel.png,
+                          width: 50,
+                          height: 50,
                         ),
-                        title: Text(userModel.name),
+                        trailing: Image.network(
+                          stateModel.stateFlagModel.png,
+                          width: 70,
+                        ),
                       ),
                     );
                   },
