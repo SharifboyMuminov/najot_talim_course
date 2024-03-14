@@ -3,8 +3,29 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController animationController;
+  late Animation cirkl;
+
+  @override
+  void initState() {
+    animationController =
+        AnimationController(vsync: this, duration: Duration(seconds: 5));
+    cirkl = Tween<double>(begin: 0, end: 6.5).animate(animationController);
+    animationController.forward();
+    animationController.addListener(() {
+      setState(() {});
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +69,8 @@ class HomeScreen extends StatelessWidget {
             Container(
               color: Colors.grey.shade100,
               child: CustomPaint(
-                size: Size(double.infinity, 200),
-                painter: MyPainterFive(),
+                size: Size(200, 200),
+                painter: MyPainterFive(son: cirkl.value),
               ),
             ),
           ],
@@ -60,30 +81,20 @@ class HomeScreen extends StatelessWidget {
 }
 
 class MyPainterFive extends CustomPainter {
+  MyPainterFive({required this.son});
+  final double son;
+
   @override
   void paint(Canvas canvas, Size size) {
     final centr = Offset(size.width / 2, size.height / 2);
     final radius = min(size.width / 2, size.height / 2);
-    Path path = Path();
-
-    path.lineTo(0, size.height * 0.65);
-
-    path.quadraticBezierTo(
-      size.width * 0.2,
-      size.height * 0.5,
-      size.width * 0.5,
-      size.height * 0.5,
+    canvas.drawArc(
+      Rect.fromCenter(center: centr, width: 150, height: 150),
+      5,
+      son,
+      false,
+      Paint(),
     );
-    path.quadraticBezierTo(
-      size.width * 8,
-      size.height * 5,
-      size.width,
-      size.height * 0.65,
-    );
-    path.lineTo(size.width, 0);
-    path.close();
-
-    canvas.drawPath(path, Paint());
   }
 
   @override
