@@ -15,7 +15,7 @@ class StateModel {
     required this.stateGerbModel,
   });
 
-  factory StateModel.fomJson(Map<String, dynamic> json) {
+  factory StateModel.fromJson(Map<String, dynamic> json) {
     return StateModel(
       stateFlagModel: StateFlagModel.fromJson(json["flags"]),
       stateGerbModel: StateGerbModel.fromJson(json["coatOfArms"]),

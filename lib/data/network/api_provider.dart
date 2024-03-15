@@ -35,7 +35,7 @@ class ApiProvider {
 
       if (response.statusCode == HttpStatus.ok) {
         networkResponse.data = (jsonDecode(response.body) as List?)
-                ?.map((e) => StateModel.fomJson(e))
+                ?.map((e) => StateModel.fromJson(e))
                 .toList() ??
             [];
       } else {}
