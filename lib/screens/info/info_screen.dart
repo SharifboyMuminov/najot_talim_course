@@ -33,7 +33,7 @@ class _InfoScreenState extends State<InfoScreen> {
       body: Stack(
         children: [
           Image.network(
-            context.watch<BookViewModel>().activList[index].imageUrl,
+            context.watch<BookViewModel>().activeList[index].imageUrl,
             fit: BoxFit.cover,
             width: width,
             height: height,
@@ -81,14 +81,14 @@ class _InfoScreenState extends State<InfoScreen> {
               children: [
                 65.getH(),
                 Text(
-                  context.watch<BookViewModel>().activList[index].name,
+                  context.watch<BookViewModel>().activeList[index].name,
                   style: AppTextStyle.robotoBold.copyWith(
                     fontSize: 24.sp,
                     color: AppColors.c_000000,
                   ),
                 ),
                 Text(
-                  context.watch<BookViewModel>().activList[index].mualif,
+                  context.watch<BookViewModel>().activeList[index].mualif,
                   style: AppTextStyle.robotoMedium.copyWith(
                     fontSize: 18.sp,
                     color: AppColors.c_939393,
@@ -106,9 +106,9 @@ class _InfoScreenState extends State<InfoScreen> {
                     ],
                   ),
                   child: Hero(
-                    tag: context.watch<BookViewModel>().activList[index].imageUrl,
+                    tag: context.watch<BookViewModel>().activeList[index].imageUrl,
                     child: Image.network(
-                      context.watch<BookViewModel>().activList[index].imageUrl,
+                      context.watch<BookViewModel>().activeList[index].imageUrl,
                       fit: BoxFit.cover,
                       width: 180.we,
                       height: 280.he,
@@ -153,7 +153,7 @@ class _InfoScreenState extends State<InfoScreen> {
                             Text(
                               context
                                   .watch<BookViewModel>()
-                                  .activList[index]
+                                  .activeList[index]
                                   .rate
                                   .toString(),
                               style: AppTextStyle.robotoBold.copyWith(
@@ -212,7 +212,7 @@ class _InfoScreenState extends State<InfoScreen> {
                   MaterialPageRoute(
                     builder: (context) {
                       return EditScreen(
-                        bookModel: context.watch<BookViewModel>().activList[index],
+                        bookModel: context.watch<BookViewModel>().activeList[index],
                       );
                     },
                   ),

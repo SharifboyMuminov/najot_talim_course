@@ -120,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
           SliverPadding(
             padding: EdgeInsets.symmetric(horizontal: 20.we, vertical: 20.he),
             sliver: SliverGrid.builder(
-              itemCount: context.watch<BookViewModel>().activList.length,
+              itemCount: context.watch<BookViewModel>().activeList.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisSpacing: 24,
@@ -129,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               itemBuilder: ((context, index) {
                 BookModel bookModel =
-                    context.watch<BookViewModel>().activList[index];
+                    context.watch<BookViewModel>().activeList[index];
                 return InkWell(
                   onLongPress: () {
                     showDialog(

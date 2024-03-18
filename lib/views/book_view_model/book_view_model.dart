@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 class BookViewModel extends ChangeNotifier {
   BookRepository bookRepository;
   List<BookModel> books = [];
-  List<BookModel> activList = [];
+  List<BookModel> activeList = [];
   bool isLoading = false;
   String errorText = "";
 
@@ -66,9 +66,9 @@ class BookViewModel extends ChangeNotifier {
 
   Future<void> activCategory() async {
     if (activCategoriyIndex == 0) {
-      activList = books;
+      activeList = books;
     } else {
-      activList = books
+      activeList = books
           .where((element) => element.category.id == activCategoriyIndex)
           .toList();
     }
