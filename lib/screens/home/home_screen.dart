@@ -23,23 +23,29 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Align(
-              alignment: Alignment.topRight,
-              child: Text(
-                providerListen.text,
-                style: TextStyle(
-                  fontSize: 24.sp,
-                  color: AppColors.c_000000,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.we, vertical: 20.he),
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Text(
+                  providerListen.text,
+                  style: TextStyle(
+                    fontSize: 24.sp,
+                    color: AppColors.c_000000,
+                  ),
                 ),
               ),
             ),
-            Align(
-              alignment: Alignment.topRight,
-              child: Text(
-                providerListen.result,
-                style: TextStyle(
-                  fontSize: 28.sp,
-                  color: AppColors.c_000000,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.we, vertical: 20.he),
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Text(
+                  providerListen.result,
+                  style: TextStyle(
+                    fontSize: 28.sp,
+                    color: AppColors.c_000000,
+                  ),
                 ),
               ),
             ),
@@ -62,12 +68,15 @@ class HomeScreen extends StatelessWidget {
                       CalculationButton(
                           onTab: () {
                             provider.clearText();
-                          }, title: "C", color: AppColors.c_FF6060),
+                          },
+                          title: "C",
+                          color: AppColors.c_FF6060),
                       CalculationButton(
                           onTab: () {
                             provider.addText("%");
-
-                          }, title: "%", color: AppColors.c_00B0D7),
+                          },
+                          title: "%",
+                          color: AppColors.c_00B0D7),
                       CalculationButton(
                         onTab: () {
                           provider.deleteOne();
@@ -79,8 +88,9 @@ class HomeScreen extends StatelessWidget {
                       CalculationButton(
                           onTab: () {
                             provider.addText("/");
-
-                          }, title: "/", color: AppColors.c_00B0D7),
+                          },
+                          title: "/",
+                          color: AppColors.c_00B0D7),
                     ],
                   ),
                   Row(
@@ -98,7 +108,6 @@ class HomeScreen extends StatelessWidget {
                         color: AppColors.c_000000,
                         onTab: () {
                           provider.addText("8");
-
                         },
                       ),
                       CalculationButton(
@@ -106,7 +115,6 @@ class HomeScreen extends StatelessWidget {
                         color: AppColors.c_000000,
                         onTab: () {
                           provider.addText("9");
-
                         },
                       ),
                       CalculationButton(
@@ -114,7 +122,6 @@ class HomeScreen extends StatelessWidget {
                         color: AppColors.c_00B0D7,
                         onTab: () {
                           provider.addText("*");
-
                         },
                       ),
                     ],
@@ -127,7 +134,6 @@ class HomeScreen extends StatelessWidget {
                         color: AppColors.c_000000,
                         onTab: () {
                           provider.addText("4");
-
                         },
                       ),
                       CalculationButton(
@@ -135,7 +141,6 @@ class HomeScreen extends StatelessWidget {
                         color: AppColors.c_000000,
                         onTab: () {
                           provider.addText("5");
-
                         },
                       ),
                       CalculationButton(
@@ -143,7 +148,6 @@ class HomeScreen extends StatelessWidget {
                         color: AppColors.c_000000,
                         onTab: () {
                           provider.addText("6");
-
                         },
                       ),
                       CalculationButton(
@@ -151,7 +155,6 @@ class HomeScreen extends StatelessWidget {
                         color: AppColors.c_00B0D7,
                         onTab: () {
                           provider.addText("-");
-
                         },
                       ),
                     ],
@@ -164,7 +167,6 @@ class HomeScreen extends StatelessWidget {
                         color: AppColors.c_000000,
                         onTab: () {
                           provider.addText("1");
-
                         },
                       ),
                       CalculationButton(
@@ -172,7 +174,6 @@ class HomeScreen extends StatelessWidget {
                         color: AppColors.c_000000,
                         onTab: () {
                           provider.addText("2");
-
                         },
                       ),
                       CalculationButton(
@@ -180,7 +181,6 @@ class HomeScreen extends StatelessWidget {
                         color: AppColors.c_000000,
                         onTab: () {
                           provider.addText("3");
-
                         },
                       ),
                       CalculationButton(
@@ -188,7 +188,6 @@ class HomeScreen extends StatelessWidget {
                         color: AppColors.c_00B0D7,
                         onTab: () {
                           provider.addText("+");
-
                         },
                       ),
                     ],
@@ -201,7 +200,6 @@ class HomeScreen extends StatelessWidget {
                         color: AppColors.c_000000,
                         onTab: () {
                           provider.addText(".");
-
                         },
                       ),
                       CalculationButton(
@@ -209,7 +207,6 @@ class HomeScreen extends StatelessWidget {
                         color: AppColors.c_000000,
                         onTab: () {
                           provider.addText("0");
-
                         },
                       ),
                       CalculationButton(
