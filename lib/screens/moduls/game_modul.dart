@@ -10,7 +10,7 @@ class GameModul {
   final String developer;
   final String releaseDate;
   final String freetogameProfileUrl;
-
+  
   GameModul({
     required this.title,
     required this.thumbnail,

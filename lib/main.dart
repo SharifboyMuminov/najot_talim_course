@@ -1,9 +1,10 @@
-import 'package:default_project/screens/home_screen/info_screen.dart';
+import 'package:default_project/view_models/count_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'screens/home_screen/home_screen.dart';
+import 'screens/one/one_screen.dart';
 
 SharedPreferences? sharedPreferences;
 
@@ -12,8 +13,16 @@ Future<void> shared() async {
 }
 
 void main(List<String> args) {
+  WidgetsFlutterBinding.ensureInitialized();
   shared();
-  runApp(MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => CountViewModel()..increment())
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -31,15 +40,13 @@ class MyApp extends StatelessWidget {
           home: child,
         );
       },
-      child: getString().isEmpty
-          ? LoginScreen()
-          : HomeScreen(),
+      child: OneScreen(),
     );
   }
 }
 
-String getString(){
-  if(sharedPreferences != null){
+String getString() {
+  if (sharedPreferences != null) {
     return sharedPreferences!.getString("email") ?? "";
   }
   return "";
