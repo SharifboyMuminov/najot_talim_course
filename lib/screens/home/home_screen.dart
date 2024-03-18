@@ -30,7 +30,6 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 children: [
                   ClipRRect(
-
                     child: Material(
                       child: IconButton(
                         onPressed: () {},
