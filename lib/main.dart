@@ -1,13 +1,20 @@
+import 'package:default_project/view_model/calculation_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 import 'screens/home/home_screen.dart';
 
 void main(List<String> args) {
-  runApp(MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_)=>CalculatorViewModel()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
-
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
