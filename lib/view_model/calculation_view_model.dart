@@ -7,12 +7,21 @@ class CalculatorViewModel extends ChangeNotifier {
   String errorText = "";
 
   void addText(String tex) {
-    text = text + tex;
+    if ("%*/+-".contains(tex)) {
+      if (text.isNotEmpty && !"%*/+-".contains(text[text.length - 1])) {
+        text = text + tex;
+      }
+    } else {
+      text = text + tex;
+    }
     notifyListeners();
   }
 
   void natija() {
-    result = calculator.eval(text).toString();
+    if(text.isNotEmpty && !"%*/+-".contains(text[text.length - 1])){
+      result = calculator.eval(text).toString();
+
+    }
     notifyListeners();
   }
 
