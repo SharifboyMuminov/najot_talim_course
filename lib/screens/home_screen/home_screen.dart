@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../login/widget/text_filde.dart';
+import '../widget/text_filde.dart';
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 class HomeScreen extends StatefulWidget {
@@ -25,6 +25,9 @@ class _HomeScreenState extends State<HomeScreen> {
     height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Home Screen"),
+      ),
 
       // body: SingleChildScrollView(
       //   child: Column(

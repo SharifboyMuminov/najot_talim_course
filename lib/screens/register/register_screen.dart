@@ -1,34 +1,32 @@
-import 'package:default_project/screens/register/register_screen.dart';
-import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
-import 'package:default_project/view/authe_view.dart';
-import 'package:default_project/view/login_view.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import '../../utils/app_colors.dart';
+import '../../view/authe_view.dart';
+import '../../view/login_view.dart';
 import '../widget/text_filde.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController controllerEmail = TextEditingController();
   final TextEditingController controllerPassword = TextEditingController();
+  final TextEditingController controllerName = TextEditingController();
   bool obThorText = false;
 
   @override
   Widget build(BuildContext context) {
-    width = MediaQuery.of(context).size.width;
-    height = MediaQuery.of(context).size.height;
-
+    var provide = Provider.of<AuthViewModel>(context, listen: false);
+    var provideListen = Provider.of<AuthViewModel>(context, listen: true);
     return Scaffold(
-      body: context.watch<AuthViewModel>().loading
+      body: provideListen.loading
           ? const Center(
               child: CircularProgressIndicator.adaptive(),
             )
@@ -50,6 +48,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   10.getH(),
+                  TextFromFieldMyWidget(
+                    icon: "assets/icons/person.svg",
+                    hitText: 'Name',
+                    controller: controllerName,
+                    onTab: () {},
+                    onChange: context.read<LoginViewModel>().updateEmail,
+                  ),
+                  3.getH(),
                   TextFromFieldMyWidget(
                     icon: "assets/icons/messeg.svg",
                     hitText: 'Email',
@@ -80,11 +86,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         backgroundColor: AppColors.c_1317DD,
                       ),
                       onPressed: () {
-                        context.read<AuthViewModel>().loginUser(
-                              context,
-                              password: controllerPassword.text,
-                              email: controllerEmail.text,
-                            );
+                        provide.register(
+                          context,
+                          email: controllerEmail.text,
+                          name: controllerName.text,
+                          password: controllerPassword.text,
+                        );
                       },
                       child: Text(
                         "LOGIN",
@@ -107,17 +114,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   10.getH(),
                   TextButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return RegisterScreen();
-                          },
-                        ),
-                      );
+                      Navigator.pop(context);
                     },
                     child: Text(
-                      "Sign Up",
+                      "Log in with",
                       style: TextStyle(
                         color: AppColors.c_131212.withOpacity(0.8),
                         fontWeight: FontWeight.w500,

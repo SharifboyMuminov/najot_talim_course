@@ -15,6 +15,8 @@ class LoginViewModel extends ChangeNotifier {
     password = v;
   }
 
+
+
   login(BuildContext context) async {
     debugPrint("Keldi");
 
@@ -45,5 +47,15 @@ class LoginViewModel extends ChangeNotifier {
     } catch (e) {
       print(e);
     }
+  }
+
+  Future<void> register(
+    BuildContext context, {
+    required String email,
+    required String name,
+    required String password,
+  }) async {
+    UserCredential userCredential = await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: email, password: password);
   }
 }

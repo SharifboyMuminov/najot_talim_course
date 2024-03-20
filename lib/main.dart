@@ -1,14 +1,15 @@
 import 'dart:async';
 
+import 'package:default_project/screens/splash/splash_creen.dart';
+import 'package:default_project/view/authe_view.dart';
 import 'package:default_project/view/login_view.dart';
+import 'package:default_project/view/tab_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
-import 'screens/home_screen/home_screen.dart';
-import 'screens/login/login_screen.dart';
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,6 +18,8 @@ Future<void> main(List<String> args) async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => LoginViewModel()),
+        ChangeNotifierProvider(create: (_) => TabViewModel()),
+        ChangeNotifierProvider(create: (_) => AuthViewModel()),
       ],
       child: const MyApp(),
     ),
@@ -38,7 +41,7 @@ class MyApp extends StatelessWidget {
           home: child,
         );
       },
-      child: LoginScreen(),
+      child: SplashScreen(),
     );
   }
 }
