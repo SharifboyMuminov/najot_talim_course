@@ -1,5 +1,6 @@
 import 'package:default_project/screens/login/login_screen.dart';
 import 'package:default_project/screens/tabbar.dart';
+import 'package:default_project/utils/size.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -67,6 +68,8 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Center(
         child: SvgPicture.asset(

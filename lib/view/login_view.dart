@@ -15,8 +15,6 @@ class LoginViewModel extends ChangeNotifier {
     password = v;
   }
 
-
-
   login(BuildContext context) async {
     debugPrint("Keldi");
 
@@ -40,12 +38,12 @@ class LoginViewModel extends ChangeNotifier {
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        debugPrint('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        debugPrint('The account already exists for that email.');
       }
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
     }
   }
 
@@ -55,7 +53,7 @@ class LoginViewModel extends ChangeNotifier {
     required String name,
     required String password,
   }) async {
-    UserCredential userCredential = await FirebaseAuth.instance
+    await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password);
   }
 }

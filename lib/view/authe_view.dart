@@ -1,10 +1,11 @@
 import 'package:default_project/screens/login/login_screen.dart';
 import 'package:default_project/screens/tabbar.dart';
 import 'package:default_project/utils/app_colors.dart';
-import 'package:default_project/utils/contans.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../utils/app_contans.dart';
 
 class AuthViewModel extends ChangeNotifier {
   bool _isLoading = false;

@@ -1,9 +1,10 @@
 import 'package:default_project/screens/home_screen/home_screen.dart';
 import 'package:default_project/screens/profile/profile_screen.dart';
-import 'package:default_project/view/login_view.dart';
 import 'package:default_project/view/tab_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'product/product_screen.dart';
 
 class TabScreen extends StatefulWidget {
   const TabScreen({super.key});
@@ -13,7 +14,7 @@ class TabScreen extends StatefulWidget {
 }
 
 class _TabScreenState extends State<TabScreen> {
-  final List<Widget> _screens = const [HomeScreen(), ProfileScreen()];
+  final List<Widget> _screens = const [HomeScreen(),ProductScreen() ,ProfileScreen()];
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +24,12 @@ class _TabScreenState extends State<TabScreen> {
       body: _screens[provideListen.activeScreen],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: provideListen.activeScreen,
-        onTap: (v){
+        onTap: (v) {
           provide.setActiveScreen(v);
         },
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.shopping_basket), label: "Products"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
         ],
       ),

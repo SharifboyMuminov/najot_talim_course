@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:default_project/screens/splash/splash_creen.dart';
 import 'package:default_project/view/authe_view.dart';
+import 'package:default_project/view/categoriy_view.dart';
 import 'package:default_project/view/login_view.dart';
+import 'package:default_project/view/product_view.dart';
 import 'package:default_project/view/tab_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +22,8 @@ Future<void> main(List<String> args) async {
         ChangeNotifierProvider(create: (_) => LoginViewModel()),
         ChangeNotifierProvider(create: (_) => TabViewModel()),
         ChangeNotifierProvider(create: (_) => AuthViewModel()),
+        ChangeNotifierProvider(create: (_) => CategoryViewModel()..getCategories()),
+        ChangeNotifierProvider(create: (_) => ProductViewModel()..getCategories()),
       ],
       child: const MyApp(),
     ),

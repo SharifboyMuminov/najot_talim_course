@@ -1,10 +1,10 @@
+import 'package:default_project/data/model/category/category_model.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
+import 'package:default_project/view/categoriy_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
-import '../widget/text_filde.dart';
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 class HomeScreen extends StatefulWidget {
@@ -23,70 +23,78 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
+    var providerListen = Provider.of<CategoryViewModel>(context);
+    var provider = Provider.of<CategoryViewModel>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
         title: Text("Home Screen"),
       ),
-
-      // body: SingleChildScrollView(
-      //   child: Column(
-      //     children: [
-      //       30.getH(),
-      //       Image.asset(
-      //         "assets/images/img.png",
-      //         height: 225.he,
-      //       ),
-      //       16.getH(),
-      //       Text(
-      //         "LOGIN",
-      //         style: TextStyle(
-      //           color: Color(0xFF000000),
-      //           fontSize: 22.sp,
-      //           fontWeight: FontWeight.w600,
-      //         ),
-      //       ),
-      //       10.getH(),
-      //       TextFromFieldMyWidget(
-      //         icon: "assets/icons/messeg.svg",
-      //         hitText: 'Email',
-      //         controller: controllerEmail,
-      //         onTab: () {},
-      //       ),
-      //       3.getH(),
-      //       TextFromFieldMyWidget(
-      //         icon: "assets/icons/login.svg",
-      //         hitText: 'Password',
-      //         controller: controllerPassword,
-      //         isPassword: true,
-      //         obscureText: obThorText,
-      //         onTab: () {
-      //           obThorText = !obThorText;
-      //           setState(() {});
-      //         },
-      //       ),
-      //       Container(
-      //         width: double.infinity,
-      //         margin: EdgeInsets.symmetric(horizontal: 52.we,vertical: 50.he),
-      //         child: TextButton(
-      //           style: TextButton.styleFrom(
-      //             padding: EdgeInsets.symmetric(vertical: 17.he),
-      //             backgroundColor: AppColors.c_1317DD,
-      //           ),
-      //           onPressed: () {},
-      //           child: Text(
-      //             "LOGIN",
-      //             style: TextStyle(
-      //               fontWeight: FontWeight.w600,
-      //               fontSize: 18.sp,
-      //               color: AppColors.c_FFFFFF,
-      //             ),
-      //           ),
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // ),
+      body: providerListen.loading
+          ? const Center(
+              child: CircularProgressIndicator.adaptive(),
+            )
+          : ListView(
+              children: [
+                ...List.generate(
+                  context.watch<CategoryViewModel>().categories.length,
+                  (index) {
+                    CategoryModel categoryModel =
+                        context.watch<CategoryViewModel>().categories[index];
+                    return Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10.we,vertical: 20.he),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image.network(
+                            categoryModel.imageUrl,
+                            width: 200,
+                            height: 250,
+                            fit: BoxFit.cover,
+                          ),
+                          SizedBox(width: 10.we),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                categoryModel.categoryName,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              20.getH(),
+                              Text(
+                                categoryModel.countProduct.toString(),
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          provider.insertCategory(
+            context,
+            categoryModel: CategoryModel(
+                countProduct: 11,
+                categoryName: "Sharifjon",
+                docId: "",
+                imageUrl:
+                    "https://atlas-content-cdn.pixelsquid.com/stock-images/women-s-pants-sweatpants-Od4xByD-600.jpg"),
+          );
+        },
+      ),
     );
   }
 }
