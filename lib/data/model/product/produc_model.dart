@@ -7,8 +7,10 @@ class ProductModel {
   num rate;
   String phoneNumber;
   String gender;
+  String description;
 
   ProductModel({
+    required this.description,
     required this.gender,
     required this.nameProduct,
     required this.categoryId,
@@ -21,6 +23,7 @@ class ProductModel {
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
+      description: json["description"] as String? ?? "",
       gender: json["gender"] as String? ?? "",
       nameProduct: json["name_product"] as String? ?? "",
       categoryId: json['category_id'] as String? ?? "",
@@ -34,6 +37,7 @@ class ProductModel {
 
   Map<String, dynamic> toJson() {
     return {
+      "description": description,
       'category_id': categoryId,
       'gender': gender,
       'name_product': categoryId,
@@ -47,6 +51,7 @@ class ProductModel {
 
   Map<String, dynamic> toJsonForUpdate() {
     return {
+      "description": description,
       'category_id': categoryId,
       'gender': gender,
       'name_product': categoryId,
@@ -66,8 +71,10 @@ class ProductModel {
     String? phoneNumber,
     String? gender,
     String? nameProduct,
+    String? description,
   }) {
     return ProductModel(
+      description: description ?? this.description,
       categoryId: categoryId ?? this.categoryId,
       docId: docId ?? this.docId,
       imageUrl: imageUrl ?? this.imageUrl,

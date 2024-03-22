@@ -1,4 +1,4 @@
-import 'package:default_project/screens/home_screen/home_screen.dart';
+import 'package:default_project/screens/category/category_screen.dart';
 import 'package:default_project/screens/profile/profile_screen.dart';
 import 'package:default_project/view/tab_view.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ class TabScreen extends StatefulWidget {
 }
 
 class _TabScreenState extends State<TabScreen> {
-  final List<Widget> _screens = const [HomeScreen(),ProductScreen() ,ProfileScreen()];
+  final List<Widget> _screens = const [CategoryScreen(),ProductScreen() ,ProfileScreen()];
 
   @override
   Widget build(BuildContext context) {

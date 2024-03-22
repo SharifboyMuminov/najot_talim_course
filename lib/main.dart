@@ -22,8 +22,9 @@ Future<void> main(List<String> args) async {
         ChangeNotifierProvider(create: (_) => LoginViewModel()),
         ChangeNotifierProvider(create: (_) => TabViewModel()),
         ChangeNotifierProvider(create: (_) => AuthViewModel()),
+        ChangeNotifierProvider(create: (_) => ProductViewModel()..getProducts()),
         ChangeNotifierProvider(create: (_) => CategoryViewModel()..getCategories()),
-        ChangeNotifierProvider(create: (_) => ProductViewModel()..getCategories()),
+
       ],
       child: const MyApp(),
     ),

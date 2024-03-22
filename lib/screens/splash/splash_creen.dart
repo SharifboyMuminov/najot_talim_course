@@ -4,6 +4,9 @@ import 'package:default_project/utils/size.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
+
+import '../../view/categoriy_view.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -70,6 +73,8 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
+    // context.read<CategoryViewModel>().getCategories();
+
     return Scaffold(
       body: Center(
         child: SvgPicture.asset(

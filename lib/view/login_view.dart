@@ -1,7 +1,7 @@
+import 'package:default_project/screens/category/category_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../screens/home_screen/home_screen.dart';
 
 class LoginViewModel extends ChangeNotifier {
   String email = "";
@@ -31,7 +31,7 @@ class LoginViewModel extends ChangeNotifier {
           context,
           MaterialPageRoute(
             builder: (context) {
-              return const HomeScreen();
+              return const CategoryScreen();
             },
           ),
         );
