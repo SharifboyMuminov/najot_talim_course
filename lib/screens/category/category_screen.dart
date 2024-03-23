@@ -1,5 +1,6 @@
 import 'package:default_project/data/model/category/category_model.dart';
 import 'package:default_project/screens/category/add_category_screen.dart';
+import 'package:default_project/screens/category/show_products_category.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:default_project/view/categoriy_view.dart';
@@ -62,7 +63,17 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     CategoryModel categoryModel =
                         context.watch<CategoryViewModel>().categories[index];
                     return InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ShowCategoryProductScreen(
+                                  docId: categoryModel.docId, context: context);
+                            },
+                          ),
+                        );
+                      },
                       onLongPress: () {
                         showDialog(
                           context: context,

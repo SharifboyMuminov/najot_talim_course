@@ -1,55 +1,45 @@
-import 'package:default_project/data/model/product/produc_model.dart';
-import 'package:default_project/screens/product/add_product_screen.dart';
 import 'package:default_project/screens/info/info_screen.dart';
-import 'package:default_project/screens/widget/stagger_grid.dart';
-import 'package:default_project/view/product_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-class ProductScreen extends StatefulWidget {
-  const ProductScreen({super.key});
+import '../../data/model/product/produc_model.dart';
+import '../../view/product_view.dart';
+import '../widget/stagger_grid.dart';
+
+class ShowCategoryProductScreen extends StatefulWidget {
+  const ShowCategoryProductScreen(
+      {super.key, required this.docId, required this.context});
+
+  final String docId;
+  final BuildContext context;
 
   @override
-  State<ProductScreen> createState() => _ProductScreenState();
+  State<ShowCategoryProductScreen> createState() =>
+      _ShowCategoryProductScreenState();
 }
 
-class _ProductScreenState extends State<ProductScreen> {
+class _ShowCategoryProductScreenState extends State<ShowCategoryProductScreen> {
+  @override
+  void initState() {
+    Future.microtask(() {
+      widget.context.read<ProductViewModel>().getProductsCategory(widget.docId);
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var providerListen = Provider.of<ProductViewModel>(context);
     var provider = Provider.of<ProductViewModel>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Product Screen"),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return AddScreen(
-                      context: context,
-                    );
-                  },
-                ),
-              );
-            },
-            icon: Icon(
-              Icons.add,
-              size: 25.sp,
-            ),
-          ),
-        ],
-      ),
       body: providerListen.loading
           ? const Center(
               child: CircularProgressIndicator.adaptive(),
             )
           : StaggerGridMyWidget(
               child: List.generate(
-                providerListen.products.length,
+                providerListen.productsCategory.length,
                 (index) {
                   ProductModel productModel = providerListen.products[index];
 
@@ -129,7 +119,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                 ),
                               ),
                             ),
-                            Text(productModel.nameProduct),
+                            Text(productModel.phoneNumber),
                             Text(productModel.price.toString()),
                           ],
                         ),

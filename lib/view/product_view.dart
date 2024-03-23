@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 class ProductViewModel extends ChangeNotifier {
   List<ProductModel> products = [];
+  List<ProductModel> productsCategory = [];
 
   bool _loading = false;
   bool _error = false;
@@ -14,6 +15,21 @@ class ProductViewModel extends ChangeNotifier {
   bool get loading => _loading;
 
   bool get error => _error;
+
+  Future<void> getProductsCategory(String docId) async {
+    _notefication(true);
+    await FirebaseFirestore.instance
+        .collection(AppConstants.productTableName)
+    .where("category_id",isEqualTo: docId)
+        .get()
+        .then((value) {
+      productsCategory =
+          value.docs.map((e) => ProductModel.fromJson(e.data())).toList();
+    });
+    globalProducts = products;
+    _notefication(false);
+  }
+
 
   Future<void> getProducts() async {
     _notefication(true);
@@ -23,7 +39,6 @@ class ProductViewModel extends ChangeNotifier {
         .then((value) {
       products =
           value.docs.map((e) => ProductModel.fromJson(e.data())).toList();
-      debugPrint(products.toString());
     });
     globalProducts = products;
     _notefication(false);
@@ -81,6 +96,8 @@ class ProductViewModel extends ChangeNotifier {
       noteficationError(true);
       return;
     }
+    debugPrint(categoryId);
+
     for (var i in globalCategories) {
       if (i.categoryName == categoryId) {
         categoryId = i.docId;

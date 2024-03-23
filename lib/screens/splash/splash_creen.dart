@@ -4,9 +4,6 @@ import 'package:default_project/utils/size.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
-
-import '../../view/categoriy_view.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -18,24 +15,26 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController animationController;
-  late Animation<double> animationSize;
+  late Animation<Alignment> animationAlign;
 
   @override
   void initState() {
     _init();
     animationController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 3),
+      duration: const Duration(seconds: 2),
     );
 
-    animationSize = Tween<double>(begin: 10.0, end: 300.0).animate(
+    animationAlign =
+        Tween<Alignment>(begin: Alignment.topCenter, end: Alignment.center)
+            .animate(
       CurvedAnimation(
         parent: animationController,
         curve: Curves.bounceIn,
       ),
     )..addListener(() {
-        setState(() {});
-      });
+            setState(() {});
+          });
     animationController.forward();
 
     super.initState();
@@ -76,12 +75,23 @@ class _SplashScreenState extends State<SplashScreen>
     // context.read<CategoryViewModel>().getCategories();
 
     return Scaffold(
-      body: Center(
-        child: SvgPicture.asset(
-          "assets/icons/time.svg",
-          width: animationSize.value,
-        ),
+      body: Stack(
+        children: [
+          Align(
+            alignment: animationAlign.value,
+            child: SvgPicture.asset(
+              "assets/icons/basket.svg",
+              width: 200.we,
+            ),
+          ),
+        ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
   }
 }

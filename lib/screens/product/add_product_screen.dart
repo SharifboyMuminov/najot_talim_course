@@ -37,7 +37,7 @@ class _AddScreenState extends State<AddScreen> {
   String textGender = "Universal";
 
   List<String> listGender = [
-    "Male",
+    "Men",
     "Woman",
     "Universal",
   ];
@@ -77,6 +77,7 @@ class _AddScreenState extends State<AddScreen> {
         actions: [
           IconButton(
             onPressed: () {
+              debugPrint("Icon: ${textEditingControllerProductName.text}");
               context.read<ProductViewModel>().testInsert(
                     context,
                     description: textEditingControllerDescription.text,
