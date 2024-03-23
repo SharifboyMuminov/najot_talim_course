@@ -13,6 +13,8 @@ class AuthViewModel extends ChangeNotifier {
 
   bool get loading => _isLoading;
 
+  User? get getUser => FirebaseAuth.instance.currentUser;
+
   // Msh1234$
 
   Future<void> register(

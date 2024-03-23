@@ -72,7 +72,7 @@ class _InfoScreenState extends State<InfoScreen> {
               Container(
                 color: AppColors.c_FFFFFF,
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20.we),
+                  padding: EdgeInsets.symmetric(horizontal: 20.we,vertical: 20.he),
                   decoration: BoxDecoration(
                     // color: Colors.red,
                     borderRadius: BorderRadius.only(

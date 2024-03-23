@@ -9,10 +9,9 @@ import '../widget/stagger_grid.dart';
 
 class ShowCategoryProductScreen extends StatefulWidget {
   const ShowCategoryProductScreen(
-      {super.key, required this.docId, required this.context});
+      {super.key, required this.docId});
 
   final String docId;
-  final BuildContext context;
 
   @override
   State<ShowCategoryProductScreen> createState() =>
@@ -23,7 +22,10 @@ class _ShowCategoryProductScreenState extends State<ShowCategoryProductScreen> {
   @override
   void initState() {
     Future.microtask(() {
-      widget.context.read<ProductViewModel>().getProductsCategory(widget.docId);
+      context.read<ProductViewModel>().getProductsCategory(widget.docId);
+      // WLMvvlBZvlcKLweZ9nuw
+      // WLMvvlBZvlcKLweZ9nuw
+
     });
     super.initState();
   }

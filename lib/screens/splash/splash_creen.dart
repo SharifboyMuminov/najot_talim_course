@@ -48,11 +48,12 @@ class _SplashScreenState extends State<SplashScreen>
 
     User? user = FirebaseAuth.instance.currentUser;
     if (user == null) {
+
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) {
-            return LoginScreen();
+            return const LoginScreen();
           },
         ),
       );
@@ -61,7 +62,7 @@ class _SplashScreenState extends State<SplashScreen>
         context,
         MaterialPageRoute(
           builder: (context) {
-            return TabScreen();
+            return const TabScreen();
           },
         ),
       );
@@ -72,7 +73,6 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
-    // context.read<CategoryViewModel>().getCategories();
 
     return Scaffold(
       body: Stack(

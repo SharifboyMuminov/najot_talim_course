@@ -20,16 +20,15 @@ class ProductViewModel extends ChangeNotifier {
     _notefication(true);
     await FirebaseFirestore.instance
         .collection(AppConstants.productTableName)
-    .where("category_id",isEqualTo: docId)
+        .where("category_id", isEqualTo: docId)
         .get()
         .then((value) {
       productsCategory =
           value.docs.map((e) => ProductModel.fromJson(e.data())).toList();
     });
-    globalProducts = products;
+
     _notefication(false);
   }
-
 
   Future<void> getProducts() async {
     _notefication(true);
@@ -91,7 +90,8 @@ class ProductViewModel extends ChangeNotifier {
         imageUrl.isEmpty ||
         phoneNumber.isEmpty ||
         price.isEmpty ||
-        rate.isEmpty || description.isEmpty) {
+        rate.isEmpty ||
+        description.isEmpty) {
       debugPrint("ASDF");
       noteficationError(true);
       return;
@@ -105,7 +105,7 @@ class ProductViewModel extends ChangeNotifier {
     }
     try {
       ProductModel productModel = ProductModel(
-        description:description,
+        description: description,
         gender: genderProduct,
         nameProduct: nameProduct,
         categoryId: categoryId,
