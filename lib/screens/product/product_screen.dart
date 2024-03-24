@@ -1,5 +1,6 @@
+import 'package:default_project/data/local/local_varibalse.dart';
 import 'package:default_project/data/model/product/produc_model.dart';
-import 'package:default_project/screens/product/add_product_screen.dart';
+import 'package:default_project/screens/update_and_add_product/add_update_product_screen.dart';
 import 'package:default_project/screens/info/info_screen.dart';
 import 'package:default_project/screens/widget/stagger_grid.dart';
 import 'package:default_project/utils/app_colors.dart';
@@ -45,7 +46,7 @@ class _ProductScreenState extends State<ProductScreen> {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return AddScreen(
+                    return AddAndUpdateScreen(
                       context: context,
                     );
                   },
@@ -88,6 +89,9 @@ class _ProductScreenState extends State<ProductScreen> {
                       ),
                       child: InkWell(
                         onTap: () {
+                          globalAnimationController.reverse();
+
+
                           Navigator.push(
                             context,
                             MaterialPageRoute(

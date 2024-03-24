@@ -1,3 +1,4 @@
+import 'package:default_project/data/local/local_varibalse.dart';
 import 'package:default_project/data/model/category/category_model.dart';
 import 'package:default_project/screens/info/info_screen.dart';
 import 'package:flutter/material.dart';
@@ -25,8 +26,6 @@ class _ShowCategoryProductScreenState extends State<ShowCategoryProductScreen> {
       context
           .read<ProductViewModel>()
           .getProductsCategory(widget.categoryModel.docId);
-      // WLMvvlBZvlcKLweZ9nuw
-      // WLMvvlBZvlcKLweZ9nuw
     });
     super.initState();
   }
@@ -37,6 +36,16 @@ class _ShowCategoryProductScreenState extends State<ShowCategoryProductScreen> {
     var provider = Provider.of<ProductViewModel>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+            globalAnimationController.forward();
+          },
+          icon: Icon(
+            Icons.arrow_back_ios,
+            size: 24.sp,
+          ),
+        ),
         centerTitle: false,
         title: Text(
           widget.categoryModel.categoryName,

@@ -1,3 +1,4 @@
+import 'package:default_project/data/local/local_varibalse.dart';
 import 'package:default_project/data/model/category/category_model.dart';
 import 'package:default_project/screens/category/add_category_screen.dart';
 import 'package:default_project/screens/category/show_products_category.dart';
@@ -104,6 +105,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             .categories[index];
                         return InkWell(
                           onTap: () {
+                            globalAnimationController.reverse();
                             Navigator.push(
                               context,
                               MaterialPageRoute(

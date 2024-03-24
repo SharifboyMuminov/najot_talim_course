@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 class ProductViewModel extends ChangeNotifier {
   List<ProductModel> products = [];
   List<ProductModel> productsCategory = [];
+  ProductModel defaultProduct = ProductModel.getDefaultProduct();
 
   bool _loading = false;
   bool _error = false;
@@ -15,6 +16,35 @@ class ProductViewModel extends ChangeNotifier {
   bool get loading => _loading;
 
   bool get error => _error;
+
+  Future<void> getProductForId(BuildContext context,
+      {required String docId}) async {
+    _notefication(true);
+    try {
+      await FirebaseFirestore.instance
+          .collection(AppConstants.productTableName)
+          .doc(docId)
+          .get()
+          .then((value) {
+        var data = value.data();
+        if (data != null) {
+          defaultProduct = ProductModel.fromJson(data);
+        }
+      });
+      _notefication(false);
+    } on FirebaseException catch (_) {
+      _notefication(false);
+
+      if (!context.mounted) return;
+
+      showSnackBarMy(context, "on FirebaseException catch (_)");
+    } catch (_) {
+      _notefication(false);
+
+      if (!context.mounted) return;
+      showSnackBarMy(context, "catch (_)");
+    }
+  }
 
   Future<void> getProductsCategory(String docId) async {
     _notefication(true);
@@ -73,7 +103,37 @@ class ProductViewModel extends ChangeNotifier {
     }
   }
 
-  void testInsert(
+  Future<void> updateProduct(BuildContext context,
+      {required ProductModel productModel}) async {
+    _notefication(true);
+    try {
+      await FirebaseFirestore.instance
+          .collection(AppConstants.productTableName)
+          .doc(productModel.docId)
+          .update(productModel.toJson());
+      _notefication(false);
+      getProducts();
+
+      if (!context.mounted) return;
+
+      showSnackBarMy(context, "Malumot yangilandi :)", Colors.black26);
+    } on FirebaseException catch (_) {
+      _notefication(false);
+
+      if (!context.mounted) return;
+
+      showSnackBarMy(context, "on FirebaseException catch (_)");
+      return;
+    } catch (_) {
+      _notefication(false);
+
+      if (!context.mounted) return;
+      showSnackBarMy(context, "catch (_)");
+      return;
+    }
+  }
+
+  Future<void> testInsert(
     BuildContext context, {
     required String nameProduct,
     required String genderProduct,
@@ -83,7 +143,8 @@ class ProductViewModel extends ChangeNotifier {
     required String rate,
     required String categoryId,
     required String description,
-  }) {
+    ProductModel? productModelKegan,
+  }) async {
     if (nameProduct.isEmpty ||
         genderProduct.isEmpty ||
         categoryId.isEmpty ||
@@ -97,27 +158,47 @@ class ProductViewModel extends ChangeNotifier {
       return;
     }
     debugPrint(categoryId);
-
-    for (var i in globalCategories) {
-      if (i.categoryName == categoryId) {
-        categoryId = i.docId;
+    if (productModelKegan != null) {
+      for (var i in globalCategories) {
+        if (i.categoryName == categoryId) {
+          categoryId = i.docId;
+        }
       }
     }
+
     try {
-      ProductModel productModel = ProductModel(
-        description: description,
-        gender: genderProduct,
-        nameProduct: nameProduct,
-        categoryId: categoryId,
-        docId: '',
-        imageUrl: imageUrl,
-        price: num.parse(price),
-        rate: num.parse(rate),
-        phoneNumber: phoneNumber,
-      );
-      insertProducts(context, productModel: productModel);
+      if (productModelKegan != null) {
+        productModelKegan = productModelKegan.copyWith(
+          description: description,
+          gender: genderProduct,
+          nameProduct: nameProduct,
+          categoryId: categoryId,
+          docId: productModelKegan.docId,
+          imageUrl: imageUrl,
+          price: num.parse(price),
+          rate: num.parse(rate),
+          phoneNumber: phoneNumber,
+        );
+        updateProduct(context, productModel: productModelKegan);
+      } else {
+        ProductModel productModel = ProductModel(
+          emailReques: "",
+          description: description,
+          gender: genderProduct,
+          nameProduct: nameProduct,
+          categoryId: categoryId,
+          docId: '',
+          imageUrl: imageUrl,
+          price: num.parse(price),
+          rate: num.parse(rate),
+          phoneNumber: phoneNumber,
+        );
+        insertProducts(context, productModel: productModel);
+        return;
+      }
     } catch (e) {
       showSnackBarMy(context, "Error type :(");
+      return;
     }
   }
 

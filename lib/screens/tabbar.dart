@@ -3,11 +3,11 @@ import 'package:default_project/screens/profile/profile_screen.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:default_project/view/tab_view.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import '../data/local/local_varibalse.dart';
 import 'product/product_screen.dart';
 import 'request/request_screen.dart';
 
@@ -20,7 +20,6 @@ class TabScreen extends StatefulWidget {
 
 class _TabScreenState extends State<TabScreen>
     with SingleTickerProviderStateMixin {
-  late AnimationController animationController;
   late Animation<double> animation;
   final List<Widget> _screens = const [
     CategoryScreen(),
@@ -31,16 +30,17 @@ class _TabScreenState extends State<TabScreen>
 
   @override
   void initState() {
-    animationController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 1));
+    globalAnimationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
 
-    animation =
-        Tween<double>(begin: -100.0, end: 0.0).animate(animationController);
+    animation = Tween<double>(begin: -100.0, end: 0.0)
+        .animate(globalAnimationController);
 
-    animationController.forward();
-    animationController.addListener(() {
+    globalAnimationController.forward();
+    globalAnimationController.addListener(() {
       setState(() {});
     });
+
     super.initState();
   }
 
@@ -107,6 +107,12 @@ class _TabScreenState extends State<TabScreen>
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    globalAnimationController.dispose();
+    super.dispose();
   }
 
   Widget _getButton(
