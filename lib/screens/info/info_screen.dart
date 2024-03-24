@@ -1,10 +1,8 @@
 import 'package:default_project/data/local/local_varibalse.dart';
 import 'package:default_project/data/model/product/produc_model.dart';
-import 'package:default_project/screens/update_and_add_product/add_update_product_screen.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:default_project/view/product_view.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';

@@ -1,6 +1,8 @@
 import 'package:default_project/screens/update_and_add_product/add_update_product_screen.dart';
+import 'package:default_project/screens/widget/product_item.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:default_project/view/request_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +13,7 @@ import '../../utils/app_colors.dart';
 import '../info/info_screen.dart';
 import '../widget/rate.dart';
 import '../widget/stagger_grid.dart';
+import 'widget/show_dialog.dart';
 
 class RequestScreen extends StatefulWidget {
   const RequestScreen({super.key});
@@ -64,25 +67,13 @@ class _RequestScreenState extends State<RequestScreen> {
                       context.watch<RequestViewModel>().requestProduct[index];
 
                   // debugPrint("Ink");
-                  return Ink(
-                    height: index.isEven ? 200.he : 250.he,
-                    padding: EdgeInsets.only(bottom: 5.he),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.r),
-                      color: AppColors.c_FFFFFF,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          blurRadius: 30,
-                          spreadRadius: 1,
-                          offset: const Offset(0, 17),
-                        ),
-                      ],
-                    ),
-                    child: InkWell(
-                      onTap: () {
+                  return ProductItem(
+                      onLongPress: () {
+                        showMyDialog(context, productModel: productModel);
+                      },
+                      index: index,
+                      onTab: () {
                         globalAnimationController.reverse();
-
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -92,42 +83,7 @@ class _RequestScreenState extends State<RequestScreen> {
                           ),
                         );
                       },
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: Hero(
-                              tag: productModel.docId,
-                              child: Image.network(
-                                productModel.imageUrl,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "  ${productModel.nameProduct}",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18.sp,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 5.we),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("${productModel.price}som"),
-                                Rate(rate: productModel.rate.toString()),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
+                      productModel: productModel);
                 },
               ),
             ),
