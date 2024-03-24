@@ -87,6 +87,11 @@ class ProductViewModel extends ChangeNotifier {
           .doc(cf.id)
           .update({"doc_id": cf.id});
       getProducts();
+
+      if (!context.mounted) return;
+
+      showSnackBarMy(context, "Malumot saqlandi :)",Colors.black45);
+
       if (!context.mounted) return;
       Navigator.pop(context);
       _notefication(false);

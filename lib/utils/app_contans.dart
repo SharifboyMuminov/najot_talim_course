@@ -5,4 +5,5 @@ class AppConstants {
   static  RegExp phoneRegExp = RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)');
   static const String categoryTableName = "category";
   static const String productTableName = "products";
+  static const String productRequestTableName = "request_products";
 }

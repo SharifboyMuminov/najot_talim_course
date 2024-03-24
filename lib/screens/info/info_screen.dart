@@ -11,9 +11,11 @@ import 'package:provider/provider.dart';
 import '../widget/rate.dart';
 
 class InfoScreen extends StatefulWidget {
-  const InfoScreen({super.key, required this.productModel});
+  const InfoScreen(
+      {super.key, required this.productModel, this.isRequest = false});
 
   final ProductModel productModel;
+  final bool isRequest;
 
   @override
   State<InfoScreen> createState() => _InfoScreenState();
@@ -31,7 +33,6 @@ class _InfoScreenState extends State<InfoScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: AppColors.c_FFFFFF,
       body: context.watch<ProductViewModel>().loading
@@ -73,13 +74,27 @@ class _InfoScreenState extends State<InfoScreen> {
                         size: 25.sp,
                       ),
                     ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.favorite_border,
-                        size: 25.sp,
+                    if (widget.isRequest)
+                      IconButton(
+                        onPressed: () {
+                          context.read<ProductViewModel>().insertProducts(
+                              context,
+                              productModel: productModel);
+                          globalAnimationController.forward();
+                        },
+                        icon: Icon(
+                          Icons.check,
+                          size: 25.sp,
+                        ),
                       ),
-                    ),
+                    if (!widget.isRequest)
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.favorite_border,
+                          size: 25.sp,
+                        ),
+                      ),
                   ],
                   expandedHeight: 400.he,
                   flexibleSpace: FlexibleSpaceBar(
@@ -116,6 +131,16 @@ class _InfoScreenState extends State<InfoScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            if (widget.isRequest)
+                              Text(
+                                productModel.emailReques,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 22.sp,
+                                ),
+                              ),
+                            if (widget.isRequest) 10.getH(),
                             Text(
                               productModel.nameProduct,
                               style: TextStyle(
@@ -140,6 +165,16 @@ class _InfoScreenState extends State<InfoScreen> {
                                 ),
                                 Rate(rate: productModel.rate.toString()),
                               ],
+                            ),
+                            10.getH(),
+                            Text(
+                              "${productModel.price} sum",
+                              maxLines: 2,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 22.sp,
+                              ),
                             ),
                             20.getH(),
                             Text(
