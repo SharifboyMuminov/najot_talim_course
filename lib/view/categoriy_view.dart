@@ -23,9 +23,8 @@ class CategoryViewModel extends ChangeNotifier {
         .then((value) {
       categories =
           value.docs.map((e) => CategoryModel.fromJson(e.data())).toList();
-      debugPrint(categories.toString());
+      globalCategories = categories;
     });
-    globalCategories = categories;
     _notefication(false);
   }
 
@@ -91,8 +90,7 @@ class CategoryViewModel extends ChangeNotifier {
       getCategories();
 
       if (!context.mounted) return;
-      showSnackBarMy(
-          context, "data deleted successfully :)", Colors.grey);
+      showSnackBarMy(context, "data deleted successfully :)", Colors.grey);
     } on FirebaseException catch (_) {
       if (!context.mounted) return;
       showSnackBarMy(context, "Error on FirebaseException catch");

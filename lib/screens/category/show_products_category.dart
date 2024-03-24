@@ -1,6 +1,8 @@
 import 'package:default_project/data/local/local_varibalse.dart';
 import 'package:default_project/data/model/category/category_model.dart';
 import 'package:default_project/screens/info/info_screen.dart';
+import 'package:default_project/screens/widget/product_item.dart';
+import 'package:default_project/screens/widget/show_dialog_product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -66,89 +68,22 @@ class _ShowCategoryProductScreenState extends State<ShowCategoryProductScreen> {
                 (index) {
                   ProductModel productModel = providerListen.products[index];
 
-                  return InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return InfoScreen(productModel: productModel);
-                          },
-                        ),
-                      );
-                    },
-                    onLongPress: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog.adaptive(
-                            title: Text(
-                              "Do you want to delete the reference?",
-                              style: TextStyle(
-                                fontSize: 18.sp,
-                              ),
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text(
-                                  "Canel",
-                                  style: TextStyle(fontSize: 16.sp),
-                                ),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  provider.deleteProduct(context,
-                                      productModel: productModel);
-                                  Navigator.pop(context);
-                                },
-                                child: Text(
-                                  "Yes",
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                    color: Colors.red,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10.r),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.4),
-                              blurRadius: 30,
-                              spreadRadius: 5,
-                            ),
-                          ],
-                        ),
-                        height: index.isEven ? 200 : 250,
-                        child: Column(
-                          children: [
-                            Expanded(
-                              child: Hero(
-                                tag: productModel.docId,
-                                child: Image.network(
-                                  productModel.imageUrl,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            Text(productModel.phoneNumber),
-                            Text(productModel.price.toString()),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
+                  return ProductItem(
+                      onLongPress: (){
+                        showDialogProduct(context, productModel: productModel);
+                      },
+                      index: index,
+                      onTab: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return InfoScreen(productModel: productModel);
+                            },
+                          ),
+                        );
+                      },
+                      productModel: productModel);
                 },
               ),
             ),

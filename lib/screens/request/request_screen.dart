@@ -1,5 +1,7 @@
 import 'package:default_project/screens/update_and_add_product/add_update_product_screen.dart';
+import 'package:default_project/screens/widget/product_item.dart';
 import 'package:default_project/utils/size.dart';
+import 'package:default_project/view/product_view.dart';
 import 'package:default_project/view/request_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,6 +12,7 @@ import '../../data/model/product/produc_model.dart';
 import '../../utils/app_colors.dart';
 import '../info/info_screen.dart';
 import '../widget/rate.dart';
+import '../widget/show_dialog.dart';
 import '../widget/stagger_grid.dart';
 
 class RequestScreen extends StatefulWidget {
@@ -33,107 +36,65 @@ class _RequestScreenState extends State<RequestScreen> {
             fontWeight: FontWeight.w900,
           ),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return AddAndUpdateScreen(context: context);
+
+      ),
+      body: StreamBuilder<List<ProductModel>>(
+        stream: context.read<RequestViewModel>().listenRequestProduct(),
+        builder:
+            (BuildContext context, AsyncSnapshot<List<ProductModel>> snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                "Error :(",
+                style: TextStyle(color: Colors.black, fontSize: 25.sp),
+              ),
+            );
+          }
+          if(snapshot.hasData){
+            return RefreshIndicator(
+              onRefresh: () async{
+                await Future.delayed(const Duration(seconds: 1),(){
+                  context.read<RequestViewModel>().getProducts();
+                });
+              },
+              child: StaggerGridMyWidget(
+                child: List.generate(
+                  context.watch<RequestViewModel>().requestProduct.length,
+                      (index) {
+                    ProductModel productModel =
+                    context.watch<RequestViewModel>().requestProduct[index];
+
+                    return ProductItem(
+                        onLongPress: () {
+                          showMyDialogRequest(context,
+                              productModel: productModel);
+                        },
+                        index: index,
+                        onTab: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return InfoScreen(
+                                  productModel: productModel,
+                                  isRequest: true,
+                                );
+                              },
+                            ),
+                          );
+                        },
+                        productModel: productModel);
                   },
                 ),
-              );
-            },
-            icon: Icon(
-              Icons.add,
-              size: 22.sp,
-            ),
-          ),
-        ],
-      ),
-      body: context.watch<RequestViewModel>().loading
-          ? const Center(
-              child: CircularProgressIndicator.adaptive(),
-            )
-          : StaggerGridMyWidget(
-              child: List.generate(
-                context.watch<RequestViewModel>().requestProduct.length,
-                (index) {
-                  ProductModel productModel =
-                      context.watch<RequestViewModel>().requestProduct[index];
-
-                  // debugPrint("Ink");
-                  return Ink(
-                    height: index.isEven ? 200.he : 250.he,
-                    padding: EdgeInsets.only(bottom: 5.he),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.r),
-                      color: AppColors.c_FFFFFF,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          blurRadius: 30,
-                          spreadRadius: 1,
-                          offset: const Offset(0, 17),
-                        ),
-                      ],
-                    ),
-                    child: InkWell(
-                      onTap: () {
-                        globalAnimationController.reverse();
-
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return InfoScreen(
-                                productModel: productModel,
-                                isRequest: true,
-                              );
-                            },
-                          ),
-                        );
-                      },
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: Hero(
-                              tag: productModel.docId,
-                              child: Image.network(
-                                productModel.imageUrl,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "  ${productModel.nameProduct}",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18.sp,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 5.we),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("${productModel.price}som"),
-                                Rate(rate: productModel.rate.toString()),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
               ),
-            ),
+            );
+          }
+
+          return const Center(
+            child: CircularProgressIndicator.adaptive(),
+          );
+        },
+      ),
     );
   }
 }

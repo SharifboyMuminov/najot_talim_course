@@ -12,6 +12,16 @@ class RequestViewModel extends ChangeNotifier {
 
   get loading => _loading;
 
+  Stream<List<ProductModel>> listenRequestProduct() =>FirebaseFirestore.instance
+      .collection(AppConstants.productRequestTableName)
+      .snapshots()
+      .map(
+        (event) =>
+        event.docs.map((doc) => ProductModel.fromJson(doc.data())).toList(),
+  );
+
+
+
   Future<void> getProducts() async {
     _notefication(true);
     await FirebaseFirestore.instance

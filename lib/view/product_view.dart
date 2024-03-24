@@ -47,6 +47,7 @@ class ProductViewModel extends ChangeNotifier {
   }
 
   Future<void> getProductsCategory(String docId) async {
+    // debugPrint(docId);
     _notefication(true);
     await FirebaseFirestore.instance
         .collection(AppConstants.productTableName)
@@ -90,7 +91,7 @@ class ProductViewModel extends ChangeNotifier {
 
       if (!context.mounted) return;
 
-      showSnackBarMy(context, "Malumot saqlandi :)",Colors.black45);
+      showSnackBarMy(context, "Malumot saqlandi :)", Colors.black45);
 
       if (!context.mounted) return;
       Navigator.pop(context);
@@ -158,18 +159,20 @@ class ProductViewModel extends ChangeNotifier {
         price.isEmpty ||
         rate.isEmpty ||
         description.isEmpty) {
-      debugPrint("ASDF");
+      // debugPrint("ASDF");
       noteficationError(true);
       return;
     }
-    debugPrint(categoryId);
-    if (productModelKegan != null) {
-      for (var i in globalCategories) {
-        if (i.categoryName == categoryId) {
-          categoryId = i.docId;
-        }
+    // bZh5ZkMDE0OKnQ4NlnAC
+    for (var i in globalCategories) {
+      // debugPrint("Hello");
+      debugPrint(i.categoryName);
+
+      if (i.categoryName == categoryId) {
+        categoryId = i.docId;
       }
     }
+    // debugPrint(categoryId);
 
     try {
       if (productModelKegan != null) {
@@ -219,17 +222,17 @@ class ProductViewModel extends ChangeNotifier {
       _notefication(false);
       if (!context.mounted) return;
 
-      showSnackBarMy(context, "Malumot O'chirildi :)", Colors.transparent);
+      showSnackBarMy(context, "Malumot O'chirildi :)");
     } on FirebaseException catch (_) {
       _notefication(false);
       if (!context.mounted) return;
 
-      showSnackBarMy(context, "Error data base :(", Colors.transparent);
+      showSnackBarMy(context, "Error data base :(");
     } catch (_) {
       _notefication(false);
       if (!context.mounted) return;
 
-      showSnackBarMy(context, "Error connect :(", Colors.transparent);
+      showSnackBarMy(context, "Error connect :(");
     }
   }
 
