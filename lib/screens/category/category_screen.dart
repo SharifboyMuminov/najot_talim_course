@@ -1,6 +1,7 @@
 import 'package:default_project/data/model/category/category_model.dart';
 import 'package:default_project/screens/category/add_category_screen.dart';
 import 'package:default_project/screens/category/show_products_category.dart';
+import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:default_project/view/authe_view.dart';
 import 'package:default_project/view/categoriy_view.dart';
@@ -10,7 +11,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import 'widget/show_reques.dart';
-
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({super.key});
@@ -39,6 +39,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
           : CustomScrollView(
               slivers: [
                 SliverAppBar(
+                  backgroundColor: AppColors.c_FFFFFF,
                   pinned: true,
                   actions: [
                     IconButton(
@@ -108,7 +109,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               MaterialPageRoute(
                                 builder: (context) {
                                   return ShowCategoryProductScreen(
-                                    docId: categoryModel.docId,
+                                    categoryModel: categoryModel,
                                   );
                                 },
                               ),
@@ -147,7 +148,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         );
                       },
                     ),
-                    gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2, // Number of columns
                       mainAxisSpacing: 20.he, // Spacing between rows
                       crossAxisSpacing: 20.we, // Spacing between columns

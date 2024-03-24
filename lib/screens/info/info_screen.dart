@@ -3,6 +3,8 @@ import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../widget/rate.dart';
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 class InfoScreen extends StatefulWidget {
@@ -26,6 +28,7 @@ class _InfoScreenState extends State<InfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.c_FFFFFF,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -53,7 +56,7 @@ class _InfoScreenState extends State<InfoScreen> {
             flexibleSpace: FlexibleSpaceBar(
               background: Column(
                 children: [
-                  30.getH(),
+                  50.getH(),
                   Expanded(
                     child: Hero(
                       tag: productModel.docId,
@@ -72,7 +75,8 @@ class _InfoScreenState extends State<InfoScreen> {
               Container(
                 color: AppColors.c_FFFFFF,
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20.we,vertical: 20.he),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 20.we, vertical: 20.he),
                   decoration: BoxDecoration(
                     // color: Colors.red,
                     borderRadius: BorderRadius.only(
@@ -92,15 +96,21 @@ class _InfoScreenState extends State<InfoScreen> {
                         ),
                       ),
                       10.getH(),
-                      Text(
-                        productModel.gender != "Universal"
-                            ? "For ${productModel.gender}"
-                            : productModel.gender,
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 22.sp,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            productModel.gender != "Universal"
+                                ? "For ${productModel.gender}"
+                                : productModel.gender,
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 22.sp,
+                            ),
+                          ),
+                          Rate(rate: productModel.rate.toString()),
+                        ],
                       ),
                       20.getH(),
                       Text(
@@ -120,7 +130,6 @@ class _InfoScreenState extends State<InfoScreen> {
                           fontSize: 16.sp,
                         ),
                       ),
-
                     ],
                   ),
                 ),

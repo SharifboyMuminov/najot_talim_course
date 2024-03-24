@@ -1,3 +1,4 @@
+import 'package:default_project/data/model/category/category_model.dart';
 import 'package:default_project/screens/info/info_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,10 +9,9 @@ import '../../view/product_view.dart';
 import '../widget/stagger_grid.dart';
 
 class ShowCategoryProductScreen extends StatefulWidget {
-  const ShowCategoryProductScreen(
-      {super.key, required this.docId});
+  const ShowCategoryProductScreen({super.key, required this.categoryModel});
 
-  final String docId;
+  final CategoryModel categoryModel;
 
   @override
   State<ShowCategoryProductScreen> createState() =>
@@ -22,10 +22,11 @@ class _ShowCategoryProductScreenState extends State<ShowCategoryProductScreen> {
   @override
   void initState() {
     Future.microtask(() {
-      context.read<ProductViewModel>().getProductsCategory(widget.docId);
+      context
+          .read<ProductViewModel>()
+          .getProductsCategory(widget.categoryModel.docId);
       // WLMvvlBZvlcKLweZ9nuw
       // WLMvvlBZvlcKLweZ9nuw
-
     });
     super.initState();
   }
@@ -35,6 +36,17 @@ class _ShowCategoryProductScreenState extends State<ShowCategoryProductScreen> {
     var providerListen = Provider.of<ProductViewModel>(context);
     var provider = Provider.of<ProductViewModel>(context, listen: false);
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: false,
+        title: Text(
+          widget.categoryModel.categoryName,
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w700,
+            fontSize: 22.sp,
+          ),
+        ),
+      ),
       body: providerListen.loading
           ? const Center(
               child: CircularProgressIndicator.adaptive(),
