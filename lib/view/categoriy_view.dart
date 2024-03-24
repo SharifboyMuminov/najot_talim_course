@@ -23,7 +23,6 @@ class CategoryViewModel extends ChangeNotifier {
         .then((value) {
       categories =
           value.docs.map((e) => CategoryModel.fromJson(e.data())).toList();
-      debugPrint(categories.toString());
     });
     globalCategories = categories;
     _notefication(false);

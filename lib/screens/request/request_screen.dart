@@ -59,34 +59,41 @@ class _RequestScreenState extends State<RequestScreen> {
           ? const Center(
               child: CircularProgressIndicator.adaptive(),
             )
-          : StaggerGridMyWidget(
-              child: List.generate(
-                context.watch<RequestViewModel>().requestProduct.length,
-                (index) {
-                  ProductModel productModel =
-                      context.watch<RequestViewModel>().requestProduct[index];
+          : RefreshIndicator.adaptive(
+            onRefresh: ()async {
+              await Future.delayed(const Duration(seconds: 1), () {
+                context.read<RequestViewModel>().getProducts();
+              });
+            },
+            child: StaggerGridMyWidget(
+                child: List.generate(
+                  context.watch<RequestViewModel>().requestProduct.length,
+                  (index) {
+                    ProductModel productModel =
+                        context.watch<RequestViewModel>().requestProduct[index];
 
-                  // debugPrint("Ink");
-                  return ProductItem(
-                      onLongPress: () {
-                        showMyDialog(context, productModel: productModel);
-                      },
-                      index: index,
-                      onTab: () {
-                        globalAnimationController.reverse();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return InfoScreen(productModel: productModel);
-                            },
-                          ),
-                        );
-                      },
-                      productModel: productModel);
-                },
+                    // debugPrint("Ink");
+                    return ProductItem(
+                        onLongPress: () {
+                          showMyDialog(context, productModel: productModel);
+                        },
+                        index: index,
+                        onTab: () {
+                          globalAnimationController.reverse();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return InfoScreen(productModel: productModel);
+                              },
+                            ),
+                          );
+                        },
+                        productModel: productModel);
+                  },
+                ),
               ),
-            ),
+          ),
     );
   }
 }
