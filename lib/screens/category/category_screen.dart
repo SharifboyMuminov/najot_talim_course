@@ -42,24 +42,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 SliverAppBar(
                   backgroundColor: AppColors.c_FFFFFF,
                   pinned: true,
-                  actions: [
-                    IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return const AddCategoryScreen();
-                            },
-                          ),
-                        );
-                      },
-                      icon: Icon(
-                        Icons.add,
-                        size: 24.sp,
-                      ),
-                    ),
-                  ],
                   expandedHeight: 120.he,
                   flexibleSpace: FlexibleSpaceBar(
                     background: Padding(

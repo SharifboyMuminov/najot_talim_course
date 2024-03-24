@@ -2,7 +2,9 @@ import 'package:default_project/screens/category/category_screen.dart';
 import 'package:default_project/screens/profile/profile_screen.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
+import 'package:default_project/view/request_view.dart';
 import 'package:default_project/view/tab_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +32,11 @@ class _TabScreenState extends State<TabScreen>
 
   @override
   void initState() {
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if(user != null){
+      emailUser = user.email!;
+    }
     globalAnimationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 500));
 
@@ -41,7 +48,15 @@ class _TabScreenState extends State<TabScreen>
       setState(() {});
     });
 
+    getUser();
+
     super.initState();
+  }
+
+  getUser() {
+    Future.microtask(() {
+      context.read<RequestViewModel>().getProducts();
+    });
   }
 
   @override

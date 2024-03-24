@@ -5,6 +5,7 @@ import 'package:default_project/view/authe_view.dart';
 import 'package:default_project/view/categoriy_view.dart';
 import 'package:default_project/view/login_view.dart';
 import 'package:default_project/view/product_view.dart';
+import 'package:default_project/view/request_view.dart';
 import 'package:default_project/view/tab_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,7 @@ Future<void> main(List<String> args) async {
         ChangeNotifierProvider(create: (_) => AuthViewModel()),
         ChangeNotifierProvider(create: (_) => ProductViewModel()..getProducts()),
         ChangeNotifierProvider(create: (_) => CategoryViewModel()..getCategories()),
+        ChangeNotifierProvider(create: (_) => RequestViewModel()..getProducts()),
 
       ],
       child: const MyApp(),

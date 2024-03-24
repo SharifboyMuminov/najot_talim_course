@@ -77,75 +77,34 @@ class _ShowCategoryProductScreenState extends State<ShowCategoryProductScreen> {
                         ),
                       );
                     },
-                    onLongPress: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog.adaptive(
-                            title: Text(
-                              "Do you want to delete the reference?",
-                              style: TextStyle(
-                                fontSize: 18.sp,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10.r),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            blurRadius: 30,
+                            spreadRadius: 1,
+                            offset: const Offset(0, 17),
+                          ),
+                        ],
+                      ),
+                      height: index.isEven ? 200 : 250,
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: Hero(
+                              tag: productModel.docId,
+                              child: Image.network(
+                                productModel.imageUrl,
+                                fit: BoxFit.cover,
                               ),
                             ),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text(
-                                  "Canel",
-                                  style: TextStyle(fontSize: 16.sp),
-                                ),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  provider.deleteProduct(context,
-                                      productModel: productModel);
-                                  Navigator.pop(context);
-                                },
-                                child: Text(
-                                  "Yes",
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                    color: Colors.red,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10.r),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.4),
-                              blurRadius: 30,
-                              spreadRadius: 5,
-                            ),
-                          ],
-                        ),
-                        height: index.isEven ? 200 : 250,
-                        child: Column(
-                          children: [
-                            Expanded(
-                              child: Hero(
-                                tag: productModel.docId,
-                                child: Image.network(
-                                  productModel.imageUrl,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            Text(productModel.phoneNumber),
-                            Text(productModel.price.toString()),
-                          ],
-                        ),
+                          ),
+                          Text(productModel.phoneNumber),
+                          Text(productModel.price.toString()),
+                        ],
                       ),
                     ),
                   );

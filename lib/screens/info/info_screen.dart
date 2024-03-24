@@ -4,6 +4,7 @@ import 'package:default_project/screens/update_and_add_product/add_update_produc
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:default_project/view/product_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +32,6 @@ class _InfoScreenState extends State<InfoScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: AppColors.c_FFFFFF,
       body: context.watch<ProductViewModel>().loading
@@ -54,25 +54,6 @@ class _InfoScreenState extends State<InfoScreen> {
                     ),
                   ),
                   actions: [
-                    IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return AddAndUpdateScreen(
-                                context: context,
-                                productModel: productModel,
-                              );
-                            },
-                          ),
-                        );
-                      },
-                      icon: Icon(
-                        Icons.edit,
-                        size: 25.sp,
-                      ),
-                    ),
                     IconButton(
                       onPressed: () {},
                       icon: Icon(
@@ -118,6 +99,16 @@ class _InfoScreenState extends State<InfoScreen> {
                           children: [
                             Text(
                               productModel.nameProduct,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 22.sp,
+                              ),
+                            ),
+                            10.getH(),
+                            Text(
+                              "${productModel.price} sum",
+                              maxLines: 2,
                               style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w900,

@@ -1,3 +1,4 @@
+import 'package:default_project/data/local/local_varibalse.dart';
 import 'package:default_project/screens/login/login_screen.dart';
 import 'package:default_project/screens/tabbar.dart';
 import 'package:default_project/utils/size.dart';
@@ -48,7 +49,6 @@ class _SplashScreenState extends State<SplashScreen>
 
     User? user = FirebaseAuth.instance.currentUser;
     if (user == null) {
-
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -58,6 +58,7 @@ class _SplashScreenState extends State<SplashScreen>
         ),
       );
     } else {
+      emailUser = user.email!;
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(

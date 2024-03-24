@@ -2,6 +2,7 @@ import 'package:default_project/data/local/local_varibalse.dart';
 import 'package:default_project/data/model/product/produc_model.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:default_project/view/product_view.dart';
+import 'package:default_project/view/request_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -10,10 +11,10 @@ import '../../view/categoriy_view.dart';
 import '../widget/text_input.dart';
 
 class AddAndUpdateScreen extends StatefulWidget {
-  AddAndUpdateScreen({super.key, required this.context, this.productModel});
+  const AddAndUpdateScreen({super.key, required this.context, this.productModel});
 
   final BuildContext context;
-  ProductModel? productModel;
+  final ProductModel? productModel;
 
   @override
   State<AddAndUpdateScreen> createState() => _AddAndUpdateScreenState();
@@ -90,7 +91,7 @@ class _AddAndUpdateScreenState extends State<AddAndUpdateScreen> {
         actions: [
           IconButton(
             onPressed: () async {
-              context.read<ProductViewModel>().testInsert(context,
+              context.read<RequestViewModel>().testInsert(context,
                   description: textEditingControllerDescription.text,
                   nameProduct: textEditingControllerProductName.text,
                   genderProduct: textGender,

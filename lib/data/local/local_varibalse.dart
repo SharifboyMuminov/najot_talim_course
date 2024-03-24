@@ -5,3 +5,4 @@ import 'package:flutter/animation.dart';
 List<CategoryModel> globalCategories = [];
 List<ProductModel> globalProducts = [];
 late AnimationController globalAnimationController;
+String emailUser = "";

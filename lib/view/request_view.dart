@@ -1,0 +1,186 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:default_project/data/local/local_varibalse.dart';
+import 'package:flutter/material.dart';
+
+import '../data/model/product/produc_model.dart';
+import '../utils/app_contans.dart';
+import '../widget/show_snacbar.dart';
+
+class RequestViewModel extends ChangeNotifier {
+  List<ProductModel> requestProduct = [];
+  bool _loading = false;
+
+  get loading => _loading;
+
+  Future<void> getProducts() async {
+    _notefication(true);
+    await FirebaseFirestore.instance
+        .collection(AppConstants.productRequestTableName)
+        .where("email_request",isEqualTo: emailUser)
+        .get()
+        .then((value) {
+      requestProduct =
+          value.docs.map((e) => ProductModel.fromJson(e.data())).toList();
+    });
+    _notefication(false);
+  }
+
+  _notefication(bool v) {
+    _loading = v;
+    notifyListeners();
+  }
+
+  Future<void> insertProducts(BuildContext context,
+      {required ProductModel productModel}) async {
+    try {
+      _notefication(true);
+
+      var cf = await FirebaseFirestore.instance
+          .collection(AppConstants.productRequestTableName)
+          .add(productModel.toJson());
+
+      await FirebaseFirestore.instance
+          .collection(AppConstants.productRequestTableName)
+          .doc(cf.id)
+          .update({"doc_id": cf.id});
+      getProducts();
+      if (!context.mounted) return;
+      Navigator.pop(context);
+      _notefication(false);
+    } on FirebaseException catch (_) {
+      _notefication(false);
+
+      if (!context.mounted) return;
+      showSnackBarMy(context, "on FirebaseException catch insertCategory");
+    } catch (_) {
+      _notefication(false);
+
+      if (!context.mounted) return;
+      showSnackBarMy(context, " catch insertCategory");
+    }
+  }
+
+  Future<void> updateProduct(BuildContext context,
+      {required ProductModel productModel}) async {
+    _notefication(true);
+    try {
+      await FirebaseFirestore.instance
+          .collection(AppConstants.productTableName)
+          .doc(productModel.docId)
+          .update(productModel.toJson());
+      _notefication(false);
+      getProducts();
+
+      if (!context.mounted) return;
+
+      showSnackBarMy(context, "Malumot yangilandi :)", Colors.black26);
+    } on FirebaseException catch (_) {
+      _notefication(false);
+
+      if (!context.mounted) return;
+
+      showSnackBarMy(context, "on FirebaseException catch (_)");
+      return;
+    } catch (_) {
+      _notefication(false);
+
+      if (!context.mounted) return;
+      showSnackBarMy(context, "catch (_)");
+      return;
+    }
+  }
+
+  Future<void> testInsert(
+    BuildContext context, {
+    required String nameProduct,
+    required String genderProduct,
+    required String imageUrl,
+    required String phoneNumber,
+    required String price,
+    required String rate,
+    required String categoryId,
+    required String description,
+    ProductModel? productModelKegan,
+  }) async {
+    if (nameProduct.isEmpty ||
+        genderProduct.isEmpty ||
+        categoryId.isEmpty ||
+        imageUrl.isEmpty ||
+        phoneNumber.isEmpty ||
+        price.isEmpty ||
+        rate.isEmpty ||
+        description.isEmpty) {
+      debugPrint("ASDF");
+      return;
+    }
+    debugPrint(categoryId);
+    // if (productModelKegan != null) {
+    //   for (var i in globalCategories) {
+    //     if (i.categoryName == categoryId) {
+    //       categoryId = i.docId;
+    //     }
+    //   }
+    // }
+
+    try {
+      if (productModelKegan != null) {
+        productModelKegan = productModelKegan.copyWith(
+          description: description,
+          gender: genderProduct,
+          nameProduct: nameProduct,
+          categoryId: categoryId,
+          docId: productModelKegan.docId,
+          imageUrl: imageUrl,
+          price: num.parse(price),
+          rate: num.parse(rate),
+          phoneNumber: phoneNumber,
+        );
+        updateProduct(context, productModel: productModelKegan);
+      } else {
+        ProductModel productModel = ProductModel(
+          emailReques: emailUser,
+          description: description,
+          gender: genderProduct,
+          nameProduct: nameProduct,
+          categoryId: categoryId,
+          docId: '',
+          imageUrl: imageUrl,
+          price: num.parse(price),
+          rate: num.parse(rate),
+          phoneNumber: phoneNumber,
+        );
+        insertProducts(context, productModel: productModel);
+        return;
+      }
+    } catch (e) {
+      showSnackBarMy(context, "Error type :(");
+      return;
+    }
+  }
+
+  Future<void> deleteProduct(BuildContext context,
+      {required ProductModel productModel}) async {
+    try {
+      _notefication(true);
+      await FirebaseFirestore.instance
+          .collection(AppConstants.productRequestTableName)
+          .doc(productModel.docId)
+          .delete();
+      getProducts();
+      _notefication(false);
+      if (!context.mounted) return;
+
+      showSnackBarMy(context, "Malumot O'chirildi :)", Colors.transparent);
+    } on FirebaseException catch (_) {
+      _notefication(false);
+      if (!context.mounted) return;
+
+      showSnackBarMy(context, "Error data base :(", Colors.transparent);
+    } catch (_) {
+      _notefication(false);
+      if (!context.mounted) return;
+
+      showSnackBarMy(context, "Error connect :(", Colors.transparent);
+    }
+  }
+}
