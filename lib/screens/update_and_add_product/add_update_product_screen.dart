@@ -6,14 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import '../../data/model/messeg/message_model.dart';
 import '../../view/categoriy_view.dart';
+import '../../view/message_view.dart';
 import '../widget/text_input.dart';
 
 class AddAndUpdateScreen extends StatefulWidget {
-  AddAndUpdateScreen({super.key, required this.context, this.productModel});
+  AddAndUpdateScreen({super.key, required this.context, this.productModel,  this.request = false});
 
   final BuildContext context;
   ProductModel? productModel;
+  final bool request;
 
   @override
   State<AddAndUpdateScreen> createState() => _AddAndUpdateScreenState();
@@ -99,11 +102,23 @@ class _AddAndUpdateScreenState extends State<AddAndUpdateScreen> {
                   price: textEditingControllerProductPrice.text,
                   rate: textEditingControllerRate.text,
                   categoryId: textCategory,
+                  request:  widget.request,
                   productModelKegan: widget.productModel);
               Navigator.pop(context);
               if (widget.productModel != null) {
+                context.read<MessageViewModel>().addMessage(
+                    messageModel: MessageModel(
+                        name: "${widget.productModel!.nameProduct} Malumot Yngilandi",
+                        id: idContLocal));
+                idContLocal++;
                 globalAnimationController.forward();
                 Navigator.pop(context);
+              }else{
+                context.read<MessageViewModel>().addMessage(
+                    messageModel: MessageModel(
+                        name: "${widget.productModel!.nameProduct} Malumot Qoshidi",
+                        id: idContLocal));
+                idContLocal++;
               }
             },
             icon: Icon(

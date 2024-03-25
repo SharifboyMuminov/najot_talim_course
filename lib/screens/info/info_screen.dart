@@ -64,6 +64,7 @@ class _InfoScreenState extends State<InfoScreen> {
                               return AddAndUpdateScreen(
                                 context: context,
                                 productModel: productModel,
+                                request: widget.isRequest,
                               );
                             },
                           ),

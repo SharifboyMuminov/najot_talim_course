@@ -22,7 +22,6 @@ class _ProductScreenState extends State<ProductScreen> {
   @override
   Widget build(BuildContext context) {
     var providerListen = Provider.of<ProductViewModel>(context);
-    var provider = Provider.of<ProductViewModel>(context, listen: false);
     return Scaffold(
       backgroundColor: AppColors.c_FFFFFF,
       appBar: AppBar(
@@ -83,6 +82,7 @@ class _ProductScreenState extends State<ProductScreen> {
                           },
                           index: index,
                           onTab: () {
+
                             Navigator.push(
                               context,
                               MaterialPageRoute(

@@ -51,7 +51,7 @@ class _RequestScreenState extends State<RequestScreen> {
             );
           }
           if(snapshot.hasData){
-            return RefreshIndicator(
+            return RefreshIndicator.adaptive(
               onRefresh: () async{
                 await Future.delayed(const Duration(seconds: 1),(){
                   context.read<RequestViewModel>().getProducts();

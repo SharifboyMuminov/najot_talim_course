@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import '../../data/model/messeg/message_model.dart';
+import '../../view/message_view.dart';
 import 'widget/show_reques.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -122,6 +124,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               context,
                               categoryModel: categoryModel,
                             );
+                            context.read<MessageViewModel>().addMessage(
+                                messageModel: MessageModel(
+                                    name: 'category  Malumot o\'chirildi :)',
+                                    id: idContLocal));
+                            idContLocal++;
                           },
                           child: Container(
                             height: index.isEven ? 200 : 250,

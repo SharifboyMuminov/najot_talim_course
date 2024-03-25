@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import '../../data/local/local_varibalse.dart';
+import '../../data/model/messeg/message_model.dart';
+import '../../view/message_view.dart';
 import '../widget/text_input.dart';
 
 class AddCategoryScreen extends StatefulWidget {
@@ -40,6 +43,11 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
               context.read<CategoryViewModel>().insertTest(context,
                   nameCategory: textEditingControllerCategoryName.text,
                   imageUrl: textEditingControllerCategoryImage.text);
+              context.read<MessageViewModel>().addMessage(
+                  messageModel: MessageModel(
+                      name: "categoriy   Yngilandi Malumot qo'shildi",
+                      id: idContLocal));
+              idContLocal++;
             },
             icon: Icon(
               Icons.check,

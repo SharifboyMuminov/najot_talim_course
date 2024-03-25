@@ -4,6 +4,11 @@ import 'package:default_project/data/model/category/category_model.dart';
 import 'package:default_project/utils/app_contans.dart';
 import 'package:default_project/view/authe_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../data/model/messeg/message_model.dart';
+import '../services/local_notification_service.dart';
+import 'message_view.dart';
 
 class CategoryViewModel extends ChangeNotifier {
   List<CategoryModel> categories = [];
@@ -43,7 +48,12 @@ class CategoryViewModel extends ChangeNotifier {
           .update({"doc_id": cf.id});
       getCategories();
       _notefication(false);
+      LocalNotificationService.localNotificationService.showNotification(
+          title: 'Malumot qo\'shildi ',
+          body: "Category",
+          id: idContLocal);
       if (!context.mounted) return;
+
 
       Navigator.pop(context);
     } on FirebaseException catch (_) {
@@ -88,8 +98,12 @@ class CategoryViewModel extends ChangeNotifier {
           .doc(docId)
           .delete();
       getCategories();
-
+      LocalNotificationService.localNotificationService.showNotification(
+          title: 'Malumot o\'chirildi ',
+          body: "Category",
+          id: idContLocal);
       if (!context.mounted) return;
+
       showSnackBarMy(context, "data deleted successfully :)", Colors.grey);
     } on FirebaseException catch (_) {
       if (!context.mounted) return;

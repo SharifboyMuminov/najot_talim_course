@@ -1,9 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:default_project/data/local/local_varibalse.dart';
+import 'package:default_project/data/model/messeg/message_model.dart';
 import 'package:default_project/data/model/product/produc_model.dart';
 import 'package:default_project/utils/app_contans.dart';
 import 'package:default_project/view/authe_view.dart';
+import 'package:default_project/view/request_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../services/local_notification_service.dart';
+import 'message_view.dart';
 
 class ProductViewModel extends ChangeNotifier {
   List<ProductModel> products = [];
@@ -88,8 +95,14 @@ class ProductViewModel extends ChangeNotifier {
           .doc(cf.id)
           .update({"doc_id": cf.id});
       getProducts();
+      LocalNotificationService.localNotificationService.showNotification(
+          title: 'Malumot Qoshildi :)',
+          body: productModel.nameProduct,
+          id: idContLocal);
 
       if (!context.mounted) return;
+
+
 
       showSnackBarMy(context, "Malumot saqlandi :)", Colors.black45);
 
@@ -119,6 +132,11 @@ class ProductViewModel extends ChangeNotifier {
           .update(productModel.toJson());
       _notefication(false);
       getProducts();
+      LocalNotificationService.localNotificationService.showNotification(
+          title: 'Malumot Yngilandi',
+          body: productModel.nameProduct,
+          id: idContLocal);
+
 
       if (!context.mounted) return;
 
@@ -149,6 +167,7 @@ class ProductViewModel extends ChangeNotifier {
     required String rate,
     required String categoryId,
     required String description,
+    bool request = false,
     ProductModel? productModelKegan,
   }) async {
     if (nameProduct.isEmpty ||
@@ -166,7 +185,6 @@ class ProductViewModel extends ChangeNotifier {
     // bZh5ZkMDE0OKnQ4NlnAC
     for (var i in globalCategories) {
       // debugPrint("Hello");
-      debugPrint(i.categoryName);
 
       if (i.categoryName == categoryId) {
         categoryId = i.docId;
@@ -187,7 +205,13 @@ class ProductViewModel extends ChangeNotifier {
           rate: num.parse(rate),
           phoneNumber: phoneNumber,
         );
-        updateProduct(context, productModel: productModelKegan);
+        if (request) {
+          context
+              .read<RequestViewModel>()
+              .updateProduct(context, productModel: productModelKegan);
+        } else {
+          updateProduct(context, productModel: productModelKegan);
+        }
       } else {
         ProductModel productModel = ProductModel(
           emailReques: "",
@@ -202,7 +226,6 @@ class ProductViewModel extends ChangeNotifier {
           phoneNumber: phoneNumber,
         );
         insertProducts(context, productModel: productModel);
-        return;
       }
     } catch (e) {
       showSnackBarMy(context, "Error type :(");
@@ -220,7 +243,12 @@ class ProductViewModel extends ChangeNotifier {
           .delete();
       getProducts();
       _notefication(false);
+      LocalNotificationService.localNotificationService.showNotification(
+          title: 'Malumot o\'chirildi ',
+          body: productModel.nameProduct,
+          id: idContLocal);
       if (!context.mounted) return;
+
 
       showSnackBarMy(context, "Malumot O'chirildi :)");
     } on FirebaseException catch (_) {
