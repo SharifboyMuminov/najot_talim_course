@@ -4,6 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../../view/request_view.dart';
+import '../../data/local/local_varibalse.dart';
+import '../../data/model/messeg/message_model.dart';
+import '../../view/message_view.dart';
 
 void showMyDialogRequest(BuildContext context,{required ProductModel productModel}){
   showDialog(
@@ -28,6 +31,10 @@ void showMyDialogRequest(BuildContext context,{required ProductModel productMode
           ),
           TextButton(
             onPressed: () {
+              context.read<MessageViewModel>().addMessage(
+                  messageModel: MessageModel(
+                      name: '${productModel.nameProduct}  Malumot o\'chirildi :)',
+                      id: idContLocal));
               context.read<RequestViewModel>().deleteProduct(context,
                   productModel: productModel);
               Navigator.pop(context);

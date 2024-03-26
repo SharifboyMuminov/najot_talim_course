@@ -95,15 +95,13 @@ class RequestViewModel extends ChangeNotifier {
           title: "Malumot o'chirildi",
           body: productModel.nameProduct,
           id: idContLocal);
+      idContLocal++;
+
 
 
       idContLocal++;
       if (!context.mounted) return;
-      context.read<MessageViewModel>().addMessage(
-          messageModel: MessageModel(
-              name: '${productModel.nameProduct}  Malumot o\'chirildi :)',
-              id: idContLocal));
-      idContLocal++;
+
 
       showSnackBarMy(context, "Malumot O'chirildi :)", Colors.transparent);
     } on FirebaseException catch (_) {

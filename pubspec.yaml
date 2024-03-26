@@ -45,6 +45,8 @@ dependencies:
   flutter_staggered_grid_view: ^0.7.0
   flutter_local_notifications: ^17.0.0
   flutter_timezone: ^1.0.4
+  icons_launcher: ^2.1.7
+
 
 dev_dependencies:
   flutter_test:
@@ -70,8 +72,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/icons/
     - assets/images/
+    - assets/icons/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -98,3 +100,10 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+icons_launcher:
+  image_path: "assets/images/app_icon.png"
+  platforms:
+    android:
+      enable: true
+    ios:
+      enable: true

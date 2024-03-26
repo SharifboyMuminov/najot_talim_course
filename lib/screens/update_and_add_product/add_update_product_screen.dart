@@ -110,7 +110,6 @@ class _AddAndUpdateScreenState extends State<AddAndUpdateScreen> {
                     messageModel: MessageModel(
                         name: "${widget.productModel!.nameProduct} Malumot Yngilandi",
                         id: idContLocal));
-                idContLocal++;
                 globalAnimationController.forward();
                 Navigator.pop(context);
               }else{
@@ -118,7 +117,6 @@ class _AddAndUpdateScreenState extends State<AddAndUpdateScreen> {
                     messageModel: MessageModel(
                         name: "${widget.productModel!.nameProduct} Malumot Qoshidi",
                         id: idContLocal));
-                idContLocal++;
               }
             },
             icon: Icon(

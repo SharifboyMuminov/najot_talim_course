@@ -36,7 +36,6 @@ void showDialogProduct(BuildContext context,
                   messageModel: MessageModel(
                       name: "${productModel.nameProduct} Malumot o'chirildi",
                       id: idContLocal));
-              idContLocal++;
               context
                   .read<ProductViewModel>()
                   .deleteProduct(context, productModel: productModel);

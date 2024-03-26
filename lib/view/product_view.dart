@@ -99,6 +99,8 @@ class ProductViewModel extends ChangeNotifier {
           title: 'Malumot Qoshildi :)',
           body: productModel.nameProduct,
           id: idContLocal);
+      idContLocal++;
+
 
       if (!context.mounted) return;
 
@@ -136,6 +138,8 @@ class ProductViewModel extends ChangeNotifier {
           title: 'Malumot Yngilandi',
           body: productModel.nameProduct,
           id: idContLocal);
+      idContLocal++;
+
 
 
       if (!context.mounted) return;
@@ -247,6 +251,8 @@ class ProductViewModel extends ChangeNotifier {
           title: 'Malumot o\'chirildi ',
           body: productModel.nameProduct,
           id: idContLocal);
+      idContLocal++;
+
       if (!context.mounted) return;
 
 

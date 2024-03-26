@@ -30,9 +30,12 @@ class LocalNotificationService {
         AndroidInitializationSettings("app_icon");
 
     //IOS
-    final DarwinInitializationSettings initializationSettingsDarwin =
+    DarwinInitializationSettings initializationSettingsDarwin =
         DarwinInitializationSettings(
       onDidReceiveLocalNotification: onDidReceiveLocalNotification,
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true,
     );
 
     InitializationSettings initializationSettings = InitializationSettings(
@@ -109,12 +112,13 @@ class LocalNotificationService {
             presentAlert: true,
             presentSound: true,
             interruptionLevel: InterruptionLevel.active,
+            sound: 'default.wav',
+            presentBadge: true,
           )),
     );
   }
 
   cancelNotification(int id) {
-    debugPrint(id.toString());
     flutterLocalNotificationsPlugin.cancel(id);
   }
 
