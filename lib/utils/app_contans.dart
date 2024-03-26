@@ -7,4 +7,5 @@ class AppConstants {
   static const String userTable = "user";
   static const String productTableName = "products";
   static const String productRequestTableName = "request_products";
+  static const String messageKey = "AAAAjP4X3S4:APA91bHqICYGLH67pSf3DPpL4xHoc0TIgqf2XCWreNGXzhYLUMdpbTQdfwXPLqX47vb8IRrOLb3AhWBij7OUq2cXeRCKSsQM71zb3nZSolfE-uetHVo125IfZAX4u-CW4HmZxIA3HgYd";
 }

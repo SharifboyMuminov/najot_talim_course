@@ -1,6 +1,6 @@
 import 'package:default_project/screens/category/category_screen.dart';
-import 'package:default_project/screens/message/message_screen.dart';
 import 'package:default_project/screens/profile/profile_screen.dart';
+import 'package:default_project/screens/users/users_screen.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:default_project/view/tab_view.dart';
@@ -26,7 +26,7 @@ class _TabScreenState extends State<TabScreen>
     CategoryScreen(),
     ProductScreen(),
     RequestScreen(),
-    MessageScreen(),
+    UsersScreen(),
     ProfileScreen(),
   ];
 
@@ -99,7 +99,7 @@ class _TabScreenState extends State<TabScreen>
                     onTab: () {
                       provide.setActiveScreen(3);
                     },
-                    icon: Icons.message,
+                    icon: Icons.supervised_user_circle_sharp,
                     active: provideListen.activeScreen == 3,
                   ),
                   _getButton(

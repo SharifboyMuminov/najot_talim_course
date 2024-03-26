@@ -28,6 +28,7 @@ dependencies:
   flutter_local_notifications: ^17.0.0
   flutter_timezone: ^1.0.4
   firebase_messaging: ^14.7.21
+  http: ^1.2.1
 
 
 dev_dependencies:

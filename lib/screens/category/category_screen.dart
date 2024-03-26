@@ -2,6 +2,7 @@ import 'package:default_project/data/local/local_varibalse.dart';
 import 'package:default_project/data/model/category/category_model.dart';
 import 'package:default_project/screens/category/add_category_screen.dart';
 import 'package:default_project/screens/category/show_products_category.dart';
+import 'package:default_project/services/local_notification_service.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:default_project/view/authe_view.dart';
@@ -41,6 +42,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
     FirebaseMessaging.onMessage.listen((RemoteMessage remote) {
       if (remote.notification!.title != null) {
         debugPrint(remote.notification!.title.toString());
+        LocalNotificationService.localNotificationService.showNotification(
+          title: remote.notification!.title.toString(),
+          body: remote.notification!.body.toString(),
+          id: 0,
+        );
       }
     });
   }
