@@ -7,10 +7,12 @@ import 'package:default_project/utils/size.dart';
 import 'package:default_project/view/authe_view.dart';
 import 'package:default_project/view/categoriy_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import '../../services/local_notification_service.dart';
 import 'widget/show_reques.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -24,6 +26,27 @@ class _CategoryScreenState extends State<CategoryScreen> {
   final TextEditingController controllerEmail = TextEditingController();
   final TextEditingController controllerPassword = TextEditingController();
   bool obThorText = false;
+
+  _getMyToken() async {
+    var tok = await FirebaseMessaging.instance.getToken();
+    // debugPrint("Qonday ${tok}");
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage remote) {
+      if (remote.notification!.title != null) {
+        debugPrint(remote.notification!.title.toString());
+        LocalNotificationService.localNotificationService.showNotification(
+            title: remote.notification!.title.toString(),
+            body: remote.notification!.body.toString(),
+            id: 0);
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    _getMyToken();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

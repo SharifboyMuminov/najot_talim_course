@@ -6,4 +6,5 @@ class AppConstants {
   static const String categoryTableName = "category";
   static const String productRequestTableName = "request_products";
   static const String productTableName = "products";
+  static const String userTable = "user";
 }
