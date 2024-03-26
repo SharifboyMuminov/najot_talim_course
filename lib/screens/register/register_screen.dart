@@ -42,7 +42,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Text(
                     "LOGIN",
                     style: TextStyle(
-                      color: Color(0xFF000000),
+                      color: const Color(0xFF000000),
                       fontSize: 22.sp,
                       fontWeight: FontWeight.w600,
                     ),
