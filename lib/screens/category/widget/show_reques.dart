@@ -28,7 +28,7 @@ void showRequest(BuildContext context,{required CategoryModel categoryModel}){
           TextButton(
             onPressed: () {
               context.read<CategoryViewModel>().deleteCategory(context,
-                  docId: categoryModel.docId);
+                  categoryModel: categoryModel);
               Navigator.pop(context);
             },
             child: Text(

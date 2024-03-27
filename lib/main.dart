@@ -1,8 +1,7 @@
-import 'dart:async';
-
 import 'package:default_project/screens/splash/splash_creen.dart';
 import 'package:default_project/view/authe_view.dart';
 import 'package:default_project/view/categoriy_view.dart';
+import 'package:default_project/view/image_view.dart';
 import 'package:default_project/view/login_view.dart';
 import 'package:default_project/view/message_view.dart';
 import 'package:default_project/view/product_view.dart';
@@ -36,6 +35,7 @@ Future<void> main(List<String> args) async {
         ChangeNotifierProvider(create: (_) => AuthViewModel()),
         ChangeNotifierProvider(create: (_) => MessageViewModel()),
         ChangeNotifierProvider(create: (_) => UserViewModel()..getUsers()),
+        ChangeNotifierProvider(create: (_) => ImageViewModel()),
         ChangeNotifierProvider(
             create: (_) => ProductViewModel()..getProducts()),
         ChangeNotifierProvider(

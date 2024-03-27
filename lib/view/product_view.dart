@@ -1,16 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:default_project/data/local/local_varibalse.dart';
-import 'package:default_project/data/model/messeg/message_model.dart';
 import 'package:default_project/data/model/product/produc_model.dart';
 import 'package:default_project/utils/app_contans.dart';
 import 'package:default_project/view/authe_view.dart';
+import 'package:default_project/view/image_view.dart';
 import 'package:default_project/view/request_view.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../services/local_notification_service.dart';
-import 'message_view.dart';
 
 class ProductViewModel extends ChangeNotifier {
   List<ProductModel> products = [];
@@ -101,10 +99,7 @@ class ProductViewModel extends ChangeNotifier {
           id: idContLocal);
       idContLocal++;
 
-
       if (!context.mounted) return;
-
-
 
       showSnackBarMy(context, "Malumot saqlandi :)", Colors.black45);
 
@@ -140,8 +135,6 @@ class ProductViewModel extends ChangeNotifier {
           id: idContLocal);
       idContLocal++;
 
-
-
       if (!context.mounted) return;
 
       showSnackBarMy(context, "Malumot yangilandi :)", Colors.black26);
@@ -171,6 +164,7 @@ class ProductViewModel extends ChangeNotifier {
     required String rate,
     required String categoryId,
     required String description,
+    required String storagePath,
     bool request = false,
     ProductModel? productModelKegan,
   }) async {
@@ -181,7 +175,8 @@ class ProductViewModel extends ChangeNotifier {
         phoneNumber.isEmpty ||
         price.isEmpty ||
         rate.isEmpty ||
-        description.isEmpty) {
+        description.isEmpty ||
+        storagePath.isEmpty) {
       // debugPrint("ASDF");
       noteficationError(true);
       return;
@@ -208,6 +203,7 @@ class ProductViewModel extends ChangeNotifier {
           price: num.parse(price),
           rate: num.parse(rate),
           phoneNumber: phoneNumber,
+          storagePath: storagePath,
         );
         if (request) {
           context
@@ -228,6 +224,7 @@ class ProductViewModel extends ChangeNotifier {
           price: num.parse(price),
           rate: num.parse(rate),
           phoneNumber: phoneNumber,
+          storagePath: storagePath,
         );
         insertProducts(context, productModel: productModel);
       }
@@ -240,6 +237,9 @@ class ProductViewModel extends ChangeNotifier {
   Future<void> deleteProduct(BuildContext context,
       {required ProductModel productModel}) async {
     try {
+      context
+          .read<ImageViewModel>()
+          .deleteImage(path: productModel.storagePath);
       _notefication(true);
       await FirebaseFirestore.instance
           .collection(AppConstants.productTableName)
@@ -254,7 +254,6 @@ class ProductViewModel extends ChangeNotifier {
       idContLocal++;
 
       if (!context.mounted) return;
-
 
       showSnackBarMy(context, "Malumot O'chirildi :)");
     } on FirebaseException catch (_) {

@@ -3,12 +3,11 @@ import 'package:default_project/data/local/local_varibalse.dart';
 import 'package:default_project/data/model/category/category_model.dart';
 import 'package:default_project/utils/app_contans.dart';
 import 'package:default_project/view/authe_view.dart';
+import 'package:default_project/view/image_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../data/model/messeg/message_model.dart';
 import '../services/local_notification_service.dart';
-import 'message_view.dart';
 
 class CategoryViewModel extends ChangeNotifier {
   List<CategoryModel> categories = [];
@@ -49,11 +48,8 @@ class CategoryViewModel extends ChangeNotifier {
       getCategories();
       _notefication(false);
       LocalNotificationService.localNotificationService.showNotification(
-          title: 'Malumot qo\'shildi ',
-          body: "Category",
-          id: idContLocal);
+          title: 'Malumot qo\'shildi ', body: "Category", id: idContLocal);
       if (!context.mounted) return;
-
 
       Navigator.pop(context);
     } on FirebaseException catch (_) {
@@ -73,8 +69,9 @@ class CategoryViewModel extends ChangeNotifier {
     BuildContext context, {
     required String nameCategory,
     required String imageUrl,
+    required String storagePath,
   }) {
-    if (imageUrl.isEmpty || nameCategory.isEmpty) {
+    if (imageUrl.isEmpty || nameCategory.isEmpty || storagePath.isEmpty) {
       showSnackBarMy(context, "Empty Input :|");
       noteficationError(true);
       return;
@@ -86,22 +83,22 @@ class CategoryViewModel extends ChangeNotifier {
         categoryName: nameCategory,
         docId: "",
         imageUrl: imageUrl,
+        storagePath: storagePath,
       ),
     );
   }
 
   Future<void> deleteCategory(BuildContext context,
-      {required String docId}) async {
+      {required CategoryModel categoryModel}) async {
+    context.read<ImageViewModel>().deleteImage(path: categoryModel.storagePath);
     try {
       await FirebaseFirestore.instance
           .collection(AppConstants.categoryTableName)
-          .doc(docId)
+          .doc(categoryModel.docId)
           .delete();
       getCategories();
       LocalNotificationService.localNotificationService.showNotification(
-          title: 'Malumot o\'chirildi ',
-          body: "Category",
-          id: idContLocal);
+          title: 'Malumot o\'chirildi ', body: "Category", id: idContLocal);
       if (!context.mounted) return;
 
       showSnackBarMy(context, "data deleted successfully :)", Colors.grey);

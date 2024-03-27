@@ -39,8 +39,10 @@ class AuthViewModel extends ChangeNotifier {
         if (userCredential.user != null) {
           await FirebaseAuth.instance.currentUser!.updateDisplayName(name);
           _insertUser(email: email, name: name, password: password);
-
+          _notify(false);
         }
+        _notify(false);
+
         if (context.mounted) {
           _notify(false);
 
@@ -161,7 +163,6 @@ class AuthViewModel extends ChangeNotifier {
     );
   }
 
-
   Future<void> _insertUser({
     required String email,
     required String name,
@@ -186,7 +187,7 @@ class AuthViewModel extends ChangeNotifier {
   }
 }
 
-showSnackBarMy(BuildContext context, String text,[Color color = Colors.red]) {
+showSnackBarMy(BuildContext context, String text, [Color color = Colors.red]) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       backgroundColor: color,

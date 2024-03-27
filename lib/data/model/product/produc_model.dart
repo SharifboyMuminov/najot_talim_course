@@ -1,16 +1,18 @@
 class ProductModel {
-  String categoryId;
-  String docId;
-  String imageUrl;
-  String nameProduct;
-  num price;
-  num rate;
-  String phoneNumber;
-  String gender;
-  String description;
-  String emailReques;
+  final String categoryId;
+  final String docId;
+  final String imageUrl;
+  final String nameProduct;
+  final num price;
+  final num rate;
+  final String phoneNumber;
+  final String gender;
+  final String description;
+  final String emailReques;
+  final String storagePath;
 
   ProductModel({
+    required this.storagePath,
     required this.emailReques,
     required this.description,
     required this.gender,
@@ -35,11 +37,13 @@ class ProductModel {
       price: json['price'] as num? ?? 0,
       rate: json['rate'] as num? ?? 0,
       phoneNumber: json['phone_number'] as String? ?? "",
+      storagePath: json['storage_path'] as String? ?? "",
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
+      'storage_path': storagePath,
       "email_request": emailReques,
       "description": description,
       'category_id': categoryId,
@@ -55,6 +59,7 @@ class ProductModel {
 
   Map<String, dynamic> toJsonForUpdate() {
     return {
+      'storage_path': storagePath,
       "email_request": emailReques,
       "description": description,
       'category_id': categoryId,
@@ -80,6 +85,7 @@ class ProductModel {
       rate: 0,
       phoneNumber: "",
       emailReques: '',
+      storagePath: '',
     );
   }
 
@@ -94,6 +100,7 @@ class ProductModel {
     String? nameProduct,
     String? description,
     String? emailReques,
+    String? storagePath,
   }) {
     return ProductModel(
       emailReques: emailReques ?? this.emailReques,
@@ -106,6 +113,7 @@ class ProductModel {
       phoneNumber: phoneNumber ?? this.phoneNumber,
       nameProduct: nameProduct ?? this.nameProduct,
       gender: gender ?? this.gender,
+      storagePath: storagePath ?? this.storagePath,
     );
   }
 }

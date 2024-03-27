@@ -29,6 +29,8 @@ dependencies:
   flutter_timezone: ^1.0.4
   firebase_messaging: ^14.7.21
   http: ^1.2.1
+  image_picker: ^1.0.7
+  firebase_storage: ^11.6.11
 
 
 dev_dependencies:
