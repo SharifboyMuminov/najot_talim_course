@@ -45,8 +45,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
         LocalNotificationService.localNotificationService.showNotification(
           title: remote.notification!.title.toString(),
           body: remote.notification!.body.toString(),
-          id: 0,
+          id: idContLocal,
         );
+        idContLocal++;
       }
     });
   }
