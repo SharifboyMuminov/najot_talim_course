@@ -1,6 +1,5 @@
 import 'package:default_project/data/local/local_varibalse.dart';
 import 'package:default_project/data/model/category/category_model.dart';
-import 'package:default_project/screens/category/add_category_screen.dart';
 import 'package:default_project/screens/category/show_products_category.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
@@ -26,6 +25,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   final TextEditingController controllerEmail = TextEditingController();
   final TextEditingController controllerPassword = TextEditingController();
   bool obThorText = false;
+  int idNotfication = 1;
 
   _getMyToken() async {
     var tok = await FirebaseMessaging.instance.getToken();
@@ -37,7 +37,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
         LocalNotificationService.localNotificationService.showNotification(
             title: remote.notification!.title.toString(),
             body: remote.notification!.body.toString(),
-            id: 0);
+            id: idNotfication);
+        idNotfication++;
       }
     });
   }
