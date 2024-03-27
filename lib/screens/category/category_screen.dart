@@ -1,6 +1,5 @@
 import 'package:default_project/data/local/local_varibalse.dart';
 import 'package:default_project/data/model/category/category_model.dart';
-import 'package:default_project/screens/category/add_category_screen.dart';
 import 'package:default_project/screens/category/show_products_category.dart';
 import 'package:default_project/services/local_notification_service.dart';
 import 'package:default_project/utils/app_colors.dart';
@@ -15,6 +14,7 @@ import 'package:provider/provider.dart';
 
 import '../../data/model/messeg/message_model.dart';
 import '../../view/message_view.dart';
+import 'add_category_screen.dart';
 import 'widget/show_reques.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -36,7 +36,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   }
 
   getMyToken() async {
-    var tok = await FirebaseMessaging.instance.getToken();
+    // var tok = await FirebaseMessaging.instance.getToken();
     // debugPrint("Qonday ${tok}");
 
     FirebaseMessaging.onMessage.listen((RemoteMessage remote) {
