@@ -66,56 +66,56 @@ class _UsersScreenState extends State<UsersScreen> {
           : ListView(
               padding: EdgeInsets.symmetric(horizontal: 20.we, vertical: 20.he),
               children: [
-                DropdownMenu<UserModel>(
-                  selectedTrailingIcon: Icon(Icons.category),
-                  label: Text(
-                    "Category",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  width: width - 50,
-                  initialSelection: context.watch<UserViewModel>().users.first,
-                  onSelected: (UserModel? value) {
-                    // This is called when the user selects an item.
-                    setState(() {
-                      userModel = value!;
-                    });
-                  },
-                  dropdownMenuEntries: context
-                      .watch<UserViewModel>()
-                      .users
-                      .map<DropdownMenuEntry<UserModel>>((UserModel value) {
-                    return DropdownMenuEntry<UserModel>(
-                        value: value, label: value.email);
-                  }).toList(),
-                ),
-                // ...List.generate(
-                //   context.watch<UserViewModel>().users.length,
-                //   (index) {
-                //     UserModel userModel =
-                //         context.watch<UserViewModel>().users[index];
-                //     return ListTile(
-                //       title: Text(userModel.email),
-                //       subtitle: Text(userModel.password),
-                //       trailing: IconButton(
-                //         onPressed: () {
-                //           Navigator.push(
-                //             context,
-                //             MaterialPageRoute(
-                //               builder: (context) {
-                //                 return SendMessageScreen(userModel: userModel);
-                //               },
-                //             ),
-                //           );
-                //         },
-                //         icon: const Icon(Icons.chat),
-                //       ),
-                //     );
+                // DropdownMenu<UserModel>(
+                //   selectedTrailingIcon: Icon(Icons.category),
+                //   label: Text(
+                //     "Category",
+                //     style: TextStyle(
+                //       color: Colors.black,
+                //       fontSize: 16.sp,
+                //       fontWeight: FontWeight.w600,
+                //     ),
+                //   ),
+                //   width: width - 50,
+                //   initialSelection: context.watch<UserViewModel>().users.first,
+                //   onSelected: (UserModel? value) {
+                //     // This is called when the user selects an item.
+                //     setState(() {
+                //       userModel = value!;
+                //     });
                 //   },
+                //   dropdownMenuEntries: context
+                //       .watch<UserViewModel>()
+                //       .users
+                //       .map<DropdownMenuEntry<UserModel>>((UserModel value) {
+                //     return DropdownMenuEntry<UserModel>(
+                //         value: value, label: value.email);
+                //   }).toList(),
                 // ),
+                ...List.generate(
+                  context.watch<UserViewModel>().users.length,
+                  (index) {
+                    UserModel userModel =
+                        context.watch<UserViewModel>().users[index];
+                    return ListTile(
+                      title: Text(userModel.email),
+                      subtitle: Text(userModel.password),
+                      trailing: IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return SendMessageScreen(userModel: userModel);
+                              },
+                            ),
+                          );
+                        },
+                        icon: const Icon(Icons.chat),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
     );
