@@ -84,7 +84,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                 _showBottomSheet();
               },
             ),
-            if (!context.watch<ImageViewModel>().loading && xFile != null)
+            if (!context.watch<ImageViewModel>().loading && xFile != null && imageUrl.isNotEmpty)
               Image.network(imageUrl),
             if (context.watch<ImageViewModel>().loading)
               const CircularProgressIndicator.adaptive(),

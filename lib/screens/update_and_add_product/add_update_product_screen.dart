@@ -245,7 +245,9 @@ class _AddAndUpdateScreenState extends State<AddAndUpdateScreen> {
                   ),
                   if (context.watch<ImageViewModel>().loading)
                     const Center(child: CircularProgressIndicator.adaptive()),
-                  if (!context.watch<ImageViewModel>().loading && xFile != null)
+                  if (!context.watch<ImageViewModel>().loading &&
+                      xFile != null &&
+                      imageUrl.isNotEmpty)
                     Image.network(imageUrl)
                 ],
               ),
