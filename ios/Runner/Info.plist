@@ -43,6 +43,10 @@
 	</array>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	    <key>NSLocationAlwaysUsageDescription</key>
+        <string>Your location is required for Qonday benefits for you</string>
+        <key>NSLocationWhenInUseUsageDescription</key>
+        <string>Your location is required for Qonday benefits for you</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 </dict>
