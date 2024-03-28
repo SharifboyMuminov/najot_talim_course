@@ -1,19 +1,19 @@
 import 'package:default_project/screens/splash/splash_screen.dart';
 import 'package:default_project/view_models/location.dart';
+import 'package:default_project/view_models/maps_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
-import 'screens/home_screen/home_screen.dart';
 
 void main(List<String> args) {
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-            create: (_) => LocationViewModel()..getUserLocation())
+            create: (_) => LocationViewModel()..getUserLocation()),
+        ChangeNotifierProvider(create: (_) => MapsViewModel()),
       ],
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }

@@ -1,42 +1,56 @@
-import 'package:default_project/view_models/location.dart';
+import 'package:default_project/screens/googl_maps/widget/set_type_google.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
-class GoogleMapsScreen extends StatefulWidget {
-  const GoogleMapsScreen({super.key});
+import '../../view_models/maps_view_model.dart';
 
-  @override
-  State<GoogleMapsScreen> createState() => _GoogleMapsScreenState();
-}
+class GoogleMapsScreen extends StatelessWidget {
+  const GoogleMapsScreen({super.key, required this.latLng});
 
-class _GoogleMapsScreenState extends State<GoogleMapsScreen> {
-  CameraPosition? cameraPosition;
-
-  @override
-  void initState() {
-    _init();
-    super.initState();
-  }
-
-  _init() async {
-    Future.microtask(() {
-      LatLng? latLng = context.read<LocationViewModel>().latLng;
-      if (latLng != null) {
-        cameraPosition = CameraPosition(target: latLng);
-      }
-      setState(() {});
-    });
-  }
+  final LatLng latLng;
 
   @override
   Widget build(BuildContext context) {
+    var mapsViewModel = Provider.of<MapsViewModel>(context, listen: false);
+    mapsViewModel.init(latLng);
+
     return Scaffold(
-      body: cameraPosition != null
-          ? GoogleMap(initialCameraPosition: cameraPosition!)
-          : const Center(
+      body: Consumer<MapsViewModel>(
+        builder:
+            (BuildContext context, MapsViewModel mapsViewModel, Widget? child) {
+          if (mapsViewModel.cameraPosition == null) {
+            return const Center(
               child: CircularProgressIndicator.adaptive(),
-            ),
+            );
+          }
+          return Stack(
+            children: [
+              GoogleMap(
+
+                mapType: mapsViewModel.mapType,
+                initialCameraPosition: mapsViewModel.cameraPosition!,
+                onMapCreated: (v) {
+                  mapsViewModel.googleController.complete(v);
+                },
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Image.asset(
+                  "assets/images/location.png",
+                  width: 50,
+                  height: 50,
+                ),
+              ),
+              const SetTypeGoogleShow(),
+            ],
+          );
+        },
+      ),
     );
   }
 }

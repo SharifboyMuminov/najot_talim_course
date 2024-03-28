@@ -1,5 +1,6 @@
 import 'package:default_project/screens/widgets/my_navigator.dart';
 import 'package:default_project/view_models/location.dart';
+import 'package:default_project/view_models/maps_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
@@ -20,10 +21,15 @@ class _HomeScreenState extends State<HomeScreen> {
         body: Center(
       child: TextButton(
         onPressed: () {
-          myNavigatorPush(
-            context,
-            widget: GoogleMapsScreen(),
-          );
+          LatLng? latLng = context.read<LocationViewModel>().latLng;
+          if (latLng != null) {
+            myNavigatorPush(
+              context,
+              widget: GoogleMapsScreen(
+                latLng: latLng,
+              ),
+            );
+          }
         },
         child: Text("asdfaf"),
       ),

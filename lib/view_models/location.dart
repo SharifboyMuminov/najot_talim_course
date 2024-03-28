@@ -40,17 +40,17 @@ class LocationViewModel extends ChangeNotifier {
     debugPrint("SPEED:${locationData.speed}");
     debugPrint("ALTITUDE:${locationData.altitude}");
 
-    listenCurrentLocation();
+    // listenCurrentLocation();
 
     location.enableBackgroundMode(enable: true);
   }
 
-  void listenCurrentLocation() {
-    location.onLocationChanged.listen((LocationData locationData) {
-      debugPrint("LONGITUDE FROM STREAM:${locationData.longitude}");
-      debugPrint("LATITUDE FROM STREAM:${locationData.latitude}");
-      debugPrint("SPEED FROM STREAM:${locationData.speed}");
-      debugPrint("ALTITUDE FROM STREAM:${locationData.altitude}");
-    });
-  }
+  // void listenCurrentLocation() {
+  //   location.onLocationChanged.listen((LocationData locationData) {
+  //     debugPrint("LONGITUDE FROM STREAM:${locationData.longitude}");
+  //     debugPrint("LATITUDE FROM STREAM:${locationData.latitude}");
+  //     debugPrint("SPEED FROM STREAM:${locationData.speed}");
+  //     debugPrint("ALTITUDE FROM STREAM:${locationData.altitude}");
+  //   });
+  // }
 }
