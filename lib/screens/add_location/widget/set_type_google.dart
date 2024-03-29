@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -7,18 +8,17 @@ import '../../../view_models/maps_view_model.dart';
 class SetTypeGoogleShow extends StatelessWidget {
   const SetTypeGoogleShow({super.key});
 
+
   @override
   Widget build(BuildContext context) {
-    return  Align(
+    return Align(
       alignment: Alignment.centerRight,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           FloatingActionButton(
             onPressed: () {
-              context
-                  .read<MapsViewModel>()
-                  .oToTheLake();
+              context.read<MapsViewModel>().oToTheLake();
             },
             child: const Icon(Icons.gps_fixed),
           ),
@@ -64,6 +64,7 @@ class SetTypeGoogleShow extends StatelessWidget {
               },
             ),
           ),
+          SizedBox(height: 15.h),
         ],
       ),
     );
