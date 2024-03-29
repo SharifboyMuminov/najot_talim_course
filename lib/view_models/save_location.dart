@@ -17,4 +17,8 @@ class SaveLocation extends ChangeNotifier{
     placeModels.add(placeMod);
     notifyListeners();
   }
+
+  Future<List<PlaceModel>> getSaveLocation()async{
+    return await LocalDatabase.getAllDebtors();
+  }
 }

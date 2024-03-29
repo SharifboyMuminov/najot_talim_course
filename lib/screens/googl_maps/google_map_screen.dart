@@ -1,4 +1,6 @@
+import 'package:default_project/data/models/place.dart';
 import 'package:default_project/utils/size.dart';
+import 'package:default_project/view_models/save_location.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -17,6 +19,16 @@ class _GoogleMapsScreenState extends State<GoogleMapsScreen> {
   String pngPath = "assets/images/work.png";
 
   @override
+  void initState() {
+    Future.microtask(() async {
+      final List<PlaceModel> pl =
+          await context.read<SaveLocation>().getSaveLocation();
+      context.read<MapsViewModel>().useSqliMark(placeModels: pl);
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var mapsView = Provider.of<MapsViewModel>(context, listen: false);
 
@@ -24,8 +36,8 @@ class _GoogleMapsScreenState extends State<GoogleMapsScreen> {
       body: Stack(
         children: [
           Consumer<MapsViewModel>(
-            builder:
-                (BuildContext context, MapsViewModel mapsViewModel, Widget? child) {
+            builder: (BuildContext context, MapsViewModel mapsViewModel,
+                Widget? child) {
               if (mapsViewModel.cameraPosition == null) {
                 return const Center(
                   child: CircularProgressIndicator.adaptive(),

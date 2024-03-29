@@ -59,7 +59,10 @@ class MapsViewModel extends ChangeNotifier {
   }
 
   useSqliMark({required List<PlaceModel> placeModels}) async {
+    debugPrint("useSqliMark ga keldi :)");
+
     for (PlaceModel placeModel in placeModels) {
+      debugPrint("Qonday");
       Uint8List markerImage = await getBytesFromAsset(
         placeModel.imagePath,
         100,
@@ -70,11 +73,11 @@ class MapsViewModel extends ChangeNotifier {
           infoWindow:
               InfoWindow(title: placeModel.title, snippet: placeModel.category),
           icon: BitmapDescriptor.fromBytes(markerImage),
-          markerId: MarkerId(placeModel.id.toString()),
+          markerId: MarkerId(DateTime.now().toString()),
         ),
       );
-      notifyListeners();
     }
+    notifyListeners();
   }
 
   static Future<Uint8List> getBytesFromAsset(String path, int width) async {
@@ -115,5 +118,23 @@ class MapsViewModel extends ChangeNotifier {
     locationData = await location.getLocation();
     latLng = LatLng(locationData.latitude!, locationData.longitude!);
     init();
+  }
+
+  Future<Set<Marker>> getMarker({required PlaceModel placeModel}) async {
+    Uint8List markerImage = await getBytesFromAsset(
+      placeModel.imagePath,
+      100,
+    );
+    LatLng myLatLong = LatLng(placeModel.lat, placeModel.long);
+
+    return {
+      Marker(
+        position: myLatLong,
+        infoWindow:
+            InfoWindow(title: placeModel.title, snippet: placeModel.category),
+        icon: BitmapDescriptor.fromBytes(markerImage),
+        markerId: MarkerId(DateTime.now().toString()),
+      ),
+    };
   }
 }
