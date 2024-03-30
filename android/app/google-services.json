@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "605558398254",
+    "project_id": "ancient-yeti-415509",
+    "storage_bucket": "ancient-yeti-415509.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:605558398254:android:952278382c0d0b1af8aebf",
+        "android_client_info": {
+          "package_name": "com.example.default_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7OtQVowTz6dZ0sqIGa4PLY6kdQfyJIcs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:605558398254:android:c637220d79a78ebff8aebf",
+        "android_client_info": {
+          "package_name": "com.example.fire_base"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7OtQVowTz6dZ0sqIGa4PLY6kdQfyJIcs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

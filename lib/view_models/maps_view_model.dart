@@ -59,26 +59,28 @@ class MapsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  useSqliMark({required List<PlaceModel> placeModels}) async {
-    // debugPrint("useSqliMark ga keldi :)");
-
-    for (PlaceModel placeModel in placeModels) {
-      // debugPrint("Qonday");
+  useFireBaseMark({required List<PlaceModel> placeModels}) async {
+    debugPrint("useSqliMark ga keldi :)");
+    for (int i = 0; i < placeModels.length; i++) {
+      debugPrint("Qonday");
       Uint8List markerImage = await getBytesFromAsset(
-        placeModel.imagePath,
+        placeModels[i].imagePath,
         100,
       );
       markers.add(
         Marker(
-          position: LatLng(placeModel.lat, placeModel.long),
-          infoWindow:
-              InfoWindow(title: placeModel.title, snippet: placeModel.category),
+          position: placeModels[i].latLng,
+          infoWindow: InfoWindow(
+              title: placeModels[i].title, snippet: placeModels[i].category),
           icon: BitmapDescriptor.fromBytes(markerImage),
-          markerId: MarkerId(DateTime.now().toString()),
+          markerId: MarkerId(i.toString()),
         ),
       );
+      notifyListeners();
+
     }
-    notifyListeners();
+    debugPrint("Lengthe Markers:  ${markers.length}");
+
   }
 
   static Future<Uint8List> getBytesFromAsset(String path, int width) async {
@@ -126,7 +128,7 @@ class MapsViewModel extends ChangeNotifier {
       placeModel.imagePath,
       100,
     );
-    LatLng myLatLong = LatLng(placeModel.lat, placeModel.long);
+    LatLng myLatLong = placeModel.latLng;
 
     return {
       Marker(
@@ -140,9 +142,7 @@ class MapsViewModel extends ChangeNotifier {
   }
 
   void removeMarket({required PlaceModel placeModel}) {
-    markers.removeWhere((element) =>
-        element.position.longitude == placeModel.long &&
-        element.position.latitude == placeModel.lat);
+    markers.removeWhere((element) => element.position == placeModel.latLng);
     notifyListeners();
   }
 }

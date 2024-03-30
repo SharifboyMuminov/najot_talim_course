@@ -1,6 +1,5 @@
-import 'package:default_project/data/models/place.dart';
 import 'package:default_project/utils/size.dart';
-import 'package:default_project/view_models/save_location.dart';
+import 'package:default_project/view_models/save_location_on_firebase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -18,15 +17,7 @@ class GoogleMapsScreen extends StatefulWidget {
 class _GoogleMapsScreenState extends State<GoogleMapsScreen> {
   String pngPath = "assets/images/work.png";
 
-  @override
-  void initState() {
-    Future.microtask(() async {
-      final List<PlaceModel> pl =
-          await context.read<SaveLocation>().getSaveLocation();
-      context.read<MapsViewModel>().useSqliMark(placeModels: pl);
-    });
-    super.initState();
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -38,18 +29,20 @@ class _GoogleMapsScreenState extends State<GoogleMapsScreen> {
           Consumer<MapsViewModel>(
             builder: (BuildContext context, MapsViewModel mapsViewModel,
                 Widget? child) {
-              if (mapsViewModel.cameraPosition == null) {
+              if (mapsViewModel.cameraPosition == null ||
+                  context.watch<SaveLocationOnFireBase>().loading) {
                 return const Center(
                   child: CircularProgressIndicator.adaptive(),
                 );
               }
               return GoogleMap(
+
                 markers: mapsViewModel.markers,
                 mapType: mapsViewModel.mapType,
                 initialCameraPosition: mapsViewModel.cameraPosition!,
-                // onMapCreated: (v) {
-                //   mapsViewModel.googleController.complete(v);
-                // },
+                onMapCreated: (v) {
+                  mapsViewModel.googleController.complete(v);
+                },
               );
             },
           ),

@@ -2,6 +2,7 @@ import 'package:default_project/data/models/place.dart';
 import 'package:default_project/screens/googl_maps/widget/text_input.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 showCurrentAddressDialog({
   required BuildContext context,
@@ -44,11 +45,10 @@ showCurrentAddressDialog({
                         if (textEditingControllerTitle.text.isNotEmpty &&
                             textEditingControllerSubTitle.text.isNotEmpty) {
                           PlaceModel place = PlaceModel(
-                            lat: 0,
-                            long: 0,
                             title: textEditingControllerTitle.text,
                             category: textEditingControllerSubTitle.text,
                             imagePath: "",
+                            latLng: LatLng(0,0), id: '',
                           );
                           placeModel.call(place);
 

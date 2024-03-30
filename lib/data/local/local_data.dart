@@ -52,7 +52,7 @@ class LocalDatabase {
 
     int savedTaskID = await db.insert(AppCon.placeTable, placeModel.toJson());
 
-    return placeModel.copyWith(id: savedTaskID);
+    return placeModel.copyWith(id: "savedTaskID");
   }
 
   static Future<List<PlaceModel>> getAllDebtors() async {

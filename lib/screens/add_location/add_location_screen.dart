@@ -1,5 +1,6 @@
 import 'package:default_project/utils/size.dart';
 import 'package:default_project/view_models/save_location.dart';
+import 'package:default_project/view_models/save_location_on_firebase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -24,16 +25,12 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
   CameraPosition? cameraPosition;
   PlaceModel? placeModelMy;
 
-
-
   @override
   void initState() {
     placeModelMy = widget.placeModel;
 
     super.initState();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -64,15 +61,13 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                 onCameraMove: (v) {
                   cameraPosition = v;
                 },
-                markers: widget.mar != null ? widget.mar! : mapsViewModel.markers,
+                markers:
+                    widget.mar != null ? widget.mar! : mapsViewModel.markers,
                 mapType: mapsViewModel.mapType,
                 initialCameraPosition: placeModelMy == null
                     ? mapsViewModel.cameraPosition!
                     : CameraPosition(
-                        target: LatLng(
-                          placeModelMy!.lat,
-                          placeModelMy!.long,
-                        ),
+                        target: placeModelMy!.latLng,
                         zoom: 15,
                       ),
                 // onMapCreated: (v) {
@@ -138,15 +133,21 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                             ),
                             onPressed: () {
                               if (cameraPosition != null) {
+                                // showCurrentAddressDialog(context: context, placeModel: (vale){
+                                //   vale = vale.copyWith(
+                                //     lat: cameraPosition!.target.latitude,
+                                //     long: cameraPosition!.target.longitude
+                                //   );
+                                // });
                                 String category =
                                     pngPath.replaceAll("assets/images/", "");
                                 category = category.replaceAll(".png", "");
                                 PlaceModel place = PlaceModel(
-                                  lat: cameraPosition!.target.latitude,
-                                  long: cameraPosition!.target.longitude,
+                                  latLng: cameraPosition!.target,
                                   title: "asdfasdf",
                                   category: category,
                                   imagePath: pngPath,
+                                  id: '',
                                 );
                                 context
                                     .read<MapsViewModel>()
@@ -154,9 +155,10 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                                         placeModel: place,
                                         cameraPosition: cameraPosition!);
                                 context
-                                    .read<SaveLocation>()
-                                    .insertLocation(place);
-
+                                    .read<SaveLocationOnFireBase>()
+                                    .insertLocation(placeModel: place);
+                                debugPrint(place.latLng.longitude.toString());
+                                debugPrint(place.latLng.latitude.toString());
                                 Navigator.pop(context);
                               }
                             },

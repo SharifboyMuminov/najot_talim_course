@@ -1,10 +1,7 @@
 import 'package:default_project/data/models/place.dart';
 import 'package:default_project/utils/size.dart';
-import 'package:default_project/view_models/maps_view_model.dart';
-import 'package:default_project/view_models/save_location.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 
 import '../tab_box.dart';
 
@@ -21,8 +18,6 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(
       const Duration(seconds: 2),
       () {
-        final List<PlaceModel> pl = context.read<SaveLocation>().placeModels;
-        context.read<MapsViewModel>().useSqliMark(placeModels: pl);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
