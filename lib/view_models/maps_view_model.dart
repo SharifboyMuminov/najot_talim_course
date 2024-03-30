@@ -24,6 +24,7 @@ class MapsViewModel extends ChangeNotifier {
         zoom: 15,
       );
     }
+
     notifyListeners();
   }
 
@@ -59,10 +60,10 @@ class MapsViewModel extends ChangeNotifier {
   }
 
   useSqliMark({required List<PlaceModel> placeModels}) async {
-    debugPrint("useSqliMark ga keldi :)");
+    // debugPrint("useSqliMark ga keldi :)");
 
     for (PlaceModel placeModel in placeModels) {
-      debugPrint("Qonday");
+      // debugPrint("Qonday");
       Uint8List markerImage = await getBytesFromAsset(
         placeModel.imagePath,
         100,
@@ -136,5 +137,12 @@ class MapsViewModel extends ChangeNotifier {
         markerId: MarkerId(DateTime.now().toString()),
       ),
     };
+  }
+
+  void removeMarket({required PlaceModel placeModel}) {
+    markers.removeWhere((element) =>
+        element.position.longitude == placeModel.long &&
+        element.position.latitude == placeModel.lat);
+    notifyListeners();
   }
 }
