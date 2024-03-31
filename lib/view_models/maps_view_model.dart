@@ -17,7 +17,7 @@ class MapsViewModel extends ChangeNotifier {
   Set<Marker> markers = {};
   LatLng? latLng;
 
-  init() async {
+  Future<void> init() async {
     if (latLng != null) {
       cameraPosition = CameraPosition(
         target: latLng!,
@@ -40,7 +40,7 @@ class MapsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  newCurrentPosition(
+  Future<void> newCurrentPosition(
       {required PlaceModel placeModel,
       required CameraPosition cameraPosition}) async {
     Uint8List markerImage = await getBytesFromAsset(
@@ -59,28 +59,26 @@ class MapsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  useFireBaseMark({required List<PlaceModel> placeModels}) async {
+  Future<void> useFireBaseMark({required List<PlaceModel> placeModels}) async {
     debugPrint("useSqliMark ga keldi :)");
-    for (int i = 0; i < placeModels.length; i++) {
+    for (var placeModel in placeModels) {
       debugPrint("Qonday");
       Uint8List markerImage = await getBytesFromAsset(
-        placeModels[i].imagePath,
+        placeModel.imagePath,
         100,
       );
       markers.add(
         Marker(
-          position: placeModels[i].latLng,
-          infoWindow: InfoWindow(
-              title: placeModels[i].title, snippet: placeModels[i].category),
+          position: placeModel.latLng,
+          infoWindow:
+              InfoWindow(title: placeModel.title, snippet: placeModel.category),
           icon: BitmapDescriptor.fromBytes(markerImage),
-          markerId: MarkerId(i.toString()),
+          markerId: MarkerId(DateTime.now().toString()),
         ),
       );
-      notifyListeners();
-
     }
     debugPrint("Lengthe Markers:  ${markers.length}");
-
+    notifyListeners();
   }
 
   static Future<Uint8List> getBytesFromAsset(String path, int width) async {

@@ -25,8 +25,6 @@ class _GoogleMapsScreenState extends State<GoogleMapsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var mapsView = Provider.of<MapsViewModel>(context, listen: false);
-
     return Scaffold(
       body: Stack(
         children: [
@@ -41,7 +39,7 @@ class _GoogleMapsScreenState extends State<GoogleMapsScreen> {
               }
 
               return GoogleMap(
-                markers: mapsViewModel.markers,
+                markers: context.watch<MapsViewModel>().markers,
                 mapType: mapsViewModel.mapType,
                 initialCameraPosition: mapsViewModel.cameraPosition!,
                 onMapCreated: (v) {
@@ -76,7 +74,8 @@ class _GoogleMapsScreenState extends State<GoogleMapsScreen> {
                 : Container(
                     margin: EdgeInsets.symmetric(
                         horizontal: 20.we, vertical: 25.he),
-                    padding: EdgeInsets.symmetric(horizontal: 10.we,vertical: 10.he),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 10.we, vertical: 10.he),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10.r),

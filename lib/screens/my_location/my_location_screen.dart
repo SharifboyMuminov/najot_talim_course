@@ -81,10 +81,13 @@ class _MyLocationScreenState extends State<MyLocationScreen> {
                               child: Text("Canel"),
                             ),
                             TextButton(
-                              onPressed: () async {
-                                myNavigatorPush(context,
-                                    widget: AddLocationScreen(
-                                        placeModel: placeModel));
+                              onPressed: () {
+                                Future.microtask(() {
+                                  myNavigatorPush(context,
+                                      widget: AddLocationScreen(
+                                          placeModel: placeModel));
+                                });
+                                Navigator.pop(context);
                               },
                               child: Text("Ok"),
                             ),
