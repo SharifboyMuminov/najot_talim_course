@@ -1,5 +1,6 @@
 import 'package:default_project/screens/splash/splash_screen.dart';
 import 'package:default_project/server/firebase_options.dart';
+import 'package:default_project/view_models/get_location_text.dart';
 import 'package:default_project/view_models/maps_view_model.dart';
 import 'package:default_project/view_models/save_location_on_firebase.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -19,6 +20,7 @@ Future<void> main(List<String> args) async {
             create: (_) => MapsViewModel()..getUserLocation()),
         ChangeNotifierProvider(
             create: (_) => SaveLocationOnFireBase()..callLocation()),
+        ChangeNotifierProvider(create: (_) => GetLocationText()),
       ],
       child: const MyApp(),
     ),

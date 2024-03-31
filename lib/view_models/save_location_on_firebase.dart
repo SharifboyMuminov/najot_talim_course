@@ -19,6 +19,7 @@ class SaveLocationOnFireBase extends ChangeNotifier {
         placeModels =
             value.docs.map((e) => PlaceModel.fromJson(e.data())).toList();
       });
+      mapsView.markers = {};
       mapsView.useFireBaseMark(placeModels: placeModels);
 
       _notefication(false);
@@ -56,6 +57,27 @@ class SaveLocationOnFireBase extends ChangeNotifier {
       _notefication(false);
 
       debugPrint("My Error insertLocation $err");
+    }
+  }
+
+  Future<void> updateLocation({required PlaceModel placeModel}) async {
+    try {
+      _notefication(true);
+      await FirebaseFirestore.instance
+          .collection(AppCon.placeTable)
+          .doc(placeModel.id)
+          .update(placeModel.toJson());
+      mapsView.removeMarket(placeModel: placeModel);
+      callLocation();
+      _notefication(false);
+    } on FirebaseException catch (err) {
+      _notefication(false);
+
+      debugPrint("My Error deleteLocation FirebaseException $err");
+    } catch (err) {
+      _notefication(false);
+
+      debugPrint("My Error deleteLocation $err");
     }
   }
 

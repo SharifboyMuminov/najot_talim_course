@@ -42,11 +42,9 @@ class _MyLocationScreenState extends State<MyLocationScreen> {
 
           return ListView.builder(
             padding: EdgeInsets.symmetric(vertical: 20.he),
-            itemCount:
-                saveView.placeModels.length,
+            itemCount: saveView.placeModels.length,
             itemBuilder: (BuildContext context, int index) {
-              PlaceModel placeModel =
-              saveView.placeModels[index];
+              PlaceModel placeModel = saveView.placeModels[index];
               return Container(
                 margin:
                     EdgeInsets.symmetric(horizontal: 20.we, vertical: 20.he),
@@ -62,6 +60,39 @@ class _MyLocationScreenState extends State<MyLocationScreen> {
                   ],
                 ),
                 child: ListTile(
+                  onLongPress: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog.adaptive(
+                          title: Text(
+                            "Do you want to change the information?",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18.sp,
+                            ),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text("Canel"),
+                            ),
+                            TextButton(
+                              onPressed: () async {
+                                myNavigatorPush(context,
+                                    widget: AddLocationScreen(
+                                        placeModel: placeModel));
+                              },
+                              child: Text("Ok"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
                   onTap: () async {
                     var mar = await context
                         .read<MapsViewModel>()

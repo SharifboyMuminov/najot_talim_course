@@ -1,11 +1,11 @@
 import 'package:default_project/utils/size.dart';
-import 'package:default_project/view_models/save_location.dart';
 import 'package:default_project/view_models/save_location_on_firebase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import '../../data/models/place.dart';
+import '../../view_models/get_location_text.dart';
 import '../../view_models/maps_view_model.dart';
 import 'widget/set_type_google.dart';
 import 'widget/category_item.dart';
@@ -21,21 +21,31 @@ class AddLocationScreen extends StatefulWidget {
 }
 
 class _AddLocationScreenState extends State<AddLocationScreen> {
-  String pngPath = "assets/images/work.png";
+  String pngPath = "assets/images/local.png";
   CameraPosition? cameraPosition;
   PlaceModel? placeModelMy;
 
   @override
   void initState() {
     placeModelMy = widget.placeModel;
+    if (placeModelMy != null && widget.mar == null) {
+      pngPath = placeModelMy!.imagePath;
+    }
+    Future.microtask(
+      () {
+        if (placeModelMy != null) {
+          context
+              .read<GetLocationText>()
+              .getLocationText(latLng: placeModelMy!.latLng);
+        }
+      },
+    );
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    var mapsView = Provider.of<MapsViewModel>(context, listen: false);
-    // getMar(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -58,6 +68,16 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
           return Stack(
             children: [
               GoogleMap(
+                onCameraIdle: () {
+                  if (placeModelMy == null && cameraPosition != null ||
+                      placeModelMy != null &&
+                          cameraPosition != null &&
+                          widget.mar == null) {
+                    context
+                        .read<GetLocationText>()
+                        .getLocationText(latLng: cameraPosition!.target);
+                  }
+                },
                 onCameraMove: (v) {
                   cameraPosition = v;
                 },
@@ -74,18 +94,55 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                 //   mapsViewModel.googleController.complete(v);
                 // },
               ),
-              if (placeModelMy == null)
+              Align(
+                alignment: Alignment.topCenter,
+                child: context.watch<GetLocationText>().loading
+                    ? const CircularProgressIndicator.adaptive()
+                    : Container(
+                        margin: EdgeInsets.symmetric(
+                            horizontal: 20.we, vertical: 25.he),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 10.we, vertical: 10.he),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10.r),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.3),
+                              blurRadius: 30,
+                              offset: const Offset(0, 0),
+                            ),
+                          ],
+                        ),
+                        child: Text(
+                          context.watch<GetLocationText>().textLocation,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.w600,
+                            shadows: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                blurRadius: 30,
+                                offset: const Offset(0, 0),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+              ),
+              if (placeModelMy != null && widget.mar == null ||
+                  placeModelMy == null && widget.mar == null)
                 Align(
                   alignment: Alignment.center,
                   child: Image.asset(
-                    placeModelMy != null
-                        ? placeModelMy!.imagePath
-                        : "assets/images/local.png",
+                    pngPath,
                     width: 50,
                     height: 50,
                   ),
                 ),
-              if (placeModelMy == null)
+              if (placeModelMy == null && widget.mar == null ||
+                  placeModelMy != null && widget.mar == null)
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Container(
@@ -142,23 +199,36 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                                 String category =
                                     pngPath.replaceAll("assets/images/", "");
                                 category = category.replaceAll(".png", "");
-                                PlaceModel place = PlaceModel(
-                                  latLng: cameraPosition!.target,
-                                  title: "asdfasdf",
-                                  category: category,
-                                  imagePath: pngPath,
-                                  id: '',
-                                );
-                                context
-                                    .read<MapsViewModel>()
-                                    .newCurrentPosition(
-                                        placeModel: place,
-                                        cameraPosition: cameraPosition!);
-                                context
-                                    .read<SaveLocationOnFireBase>()
-                                    .insertLocation(placeModel: place);
-                                debugPrint(place.latLng.longitude.toString());
-                                debugPrint(place.latLng.latitude.toString());
+                                if (placeModelMy != null) {
+                                  placeModelMy = placeModelMy!.copyWith(
+                                    imagePath: pngPath,
+                                    title: "My $category",
+                                    latLng: cameraPosition!.target,
+                                    category: category,
+                                  );
+                                  context
+                                      .read<SaveLocationOnFireBase>()
+                                      .updateLocation(
+                                          placeModel: placeModelMy!);
+                                } else {
+                                  PlaceModel place = PlaceModel(
+                                    latLng: cameraPosition!.target,
+                                    title: "My $category",
+                                    category: category,
+                                    imagePath: pngPath,
+                                    id: '',
+                                  );
+                                  context
+                                      .read<MapsViewModel>()
+                                      .newCurrentPosition(
+                                          placeModel: place,
+                                          cameraPosition: cameraPosition!);
+                                  context
+                                      .read<SaveLocationOnFireBase>()
+                                      .insertLocation(placeModel: place);
+                                  // debugPrint(place.latLng.longitude.toString());
+                                  // debugPrint(place.latLng.latitude.toString());
+                                }
                                 Navigator.pop(context);
                               }
                             },
