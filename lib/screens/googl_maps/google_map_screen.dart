@@ -1,3 +1,7 @@
+import 'package:default_project/screens/add_location/add_location_screen.dart';
+import 'package:default_project/screens/googl_maps/widget/location_button.dart';
+import 'package:default_project/screens/my_location/my_location_screen.dart';
+import 'package:default_project/screens/widgets/my_navigator.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:default_project/view_models/save_location_on_firebase.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +21,6 @@ class GoogleMapsScreen extends StatefulWidget {
 class _GoogleMapsScreenState extends State<GoogleMapsScreen> {
   String pngPath = "assets/images/work.png";
 
-
-
   @override
   Widget build(BuildContext context) {
     var mapsView = Provider.of<MapsViewModel>(context, listen: false);
@@ -36,7 +38,6 @@ class _GoogleMapsScreenState extends State<GoogleMapsScreen> {
                 );
               }
               return GoogleMap(
-
                 markers: mapsViewModel.markers,
                 mapType: mapsViewModel.mapType,
                 initialCameraPosition: mapsViewModel.cameraPosition!,
@@ -46,41 +47,28 @@ class _GoogleMapsScreenState extends State<GoogleMapsScreen> {
               );
             },
           ),
-          Align(
-            alignment: Alignment.center,
-            child: Image.asset(
-              "assets/images/local.png",
-              width: 50,
-              height: 50,
+          if (!context.watch<SaveLocationOnFireBase>().loading)
+            Align(
+              alignment: Alignment.center,
+              child: Image.asset(
+                "assets/images/local.png",
+                width: 50,
+                height: 50,
+              ),
             ),
-          ),
           Align(
             alignment: Alignment.centerRight,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                  margin: EdgeInsets.only(right: 10.we),
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      padding: EdgeInsets.all(15),
-                      backgroundColor: Colors.blue,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.r)),
-                    ),
-                    onPressed: () {
-                      context.read<MapsViewModel>().oToTheLake();
-                    },
-                    child: const Icon(
-                      Icons.gps_fixed,
-                      color: Colors.white,
-                      size: 30,
-                    ),
-                  ),
+                LocationButton(
+                  onTab: () {
+                    context.read<MapsViewModel>().oToTheLake();
+                  },
+                  icon: Icons.gps_fixed,
                 ),
-                20.getH(),
                 Container(
-                  margin: EdgeInsets.only(right: 10.we),
+                  margin: EdgeInsets.only(right: 10.we, bottom: 20.he),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.r),
                     color: Colors.blue,
@@ -120,6 +108,18 @@ class _GoogleMapsScreenState extends State<GoogleMapsScreen> {
                       ];
                     },
                   ),
+                ),
+                LocationButton(
+                  onTab: () {
+                    myNavigatorPush(context, widget: const AddLocationScreen());
+                  },
+                  icon: Icons.add,
+                ),
+                LocationButton(
+                  onTab: () {
+                    myNavigatorPush(context, widget: const MyLocationScreen());
+                  },
+                  icon: Icons.save,
                 ),
               ],
             ),

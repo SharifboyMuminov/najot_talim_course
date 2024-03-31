@@ -1,14 +1,11 @@
 import 'package:default_project/screens/splash/splash_screen.dart';
 import 'package:default_project/server/firebase_options.dart';
-import 'package:default_project/view_models/index_screen.dart';
 import 'package:default_project/view_models/maps_view_model.dart';
 import 'package:default_project/view_models/save_location_on_firebase.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
-import 'view_models/save_location.dart';
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +17,6 @@ Future<void> main(List<String> args) async {
       providers: [
         ChangeNotifierProvider(
             create: (_) => MapsViewModel()..getUserLocation()),
-        ChangeNotifierProvider(create: (_) => ActiveIndexScreen()),
         ChangeNotifierProvider(
             create: (_) => SaveLocationOnFireBase()..callLocation()),
       ],

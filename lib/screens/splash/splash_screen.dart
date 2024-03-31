@@ -1,9 +1,7 @@
-import 'package:default_project/data/models/place.dart';
+import 'package:default_project/screens/googl_maps/google_map_screen.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../tab_box.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -22,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
           context,
           MaterialPageRoute(
             builder: (context) {
-              return const TabBoxScreen();
+              return const GoogleMapsScreen();
             },
           ),
         );
