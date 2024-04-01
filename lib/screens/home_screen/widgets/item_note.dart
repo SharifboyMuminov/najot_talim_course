@@ -29,6 +29,7 @@ class ItemNoteButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(10.r),
       ),
       child: TextButton(
+
         style: TextButton.styleFrom(
           padding: EdgeInsets.symmetric(horizontal: 30.we, vertical: 27.he),
           shape: RoundedRectangleBorder(

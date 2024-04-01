@@ -52,6 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 24.we),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       "Notes",
@@ -61,7 +62,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    const Spacer(),
                     ButtonTop(
                         icon: AppImages.searcheSvg,
                         onTab: () {
@@ -69,82 +69,77 @@ class _HomeScreenState extends State<HomeScreen> {
                             showSearche = true;
                           });
                         }),
-                    21.getW(),
-                    ButtonTop(icon: AppImages.undovSvg, onTab: () {}),
                   ],
                 ),
               ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: 24.we),
-                child: Column(
-                  children: [
-                    showSearche ? 88.getH() : const SizedBox(),
-                    if (showSearche)
-                      SearcheTextFild(
-                        onChge: (String value) {},
-                        onTabXmark: () {},
-                      ),
-                    15.getH(),
-                    Consumer<ConnectSql>(
-                      builder: (BuildContext context, ConnectSql sqlView,
-                          Widget? child) {
-                        if (sqlView.loading) {
-                          return const Center(
-                              child: CircularProgressIndicator.adaptive());
-                        }
-                        return Column(
-                          children: [
-                            ...List.generate(
-                              sqlView.notes.length,
-                              (index) {
-                                return ItemNoteButton(
-                                  isActivRemove: sqlView.notes[index].isRemove,
-                                  onTab: () async {
-                                    if (sqlView.notes[index].isRemove &&
-                                        sqlView.notes[index].id != null) {
-                                      context.read<ConnectSql>().deleteNote(
-                                          noteModel: sqlView.notes[index]);
-                                    } else {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) {
-                                            return AddScreen(
-                                              isInfo: true,
-                                              personModul: sqlView.notes[index],
-                                            );
-                                          },
-                                        ),
-                                      );
-                                    }
-                                  },
-                                  onLongPress: () {
-                                    setState(
-                                      () {
-                                        sqlView.notes[index].isRemove =
-                                            !sqlView.notes[index].isRemove;
-                                      },
+            showSearche ? 65.getH() : const SizedBox(),
+            if (showSearche)
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.we),
+                child: SearcheTextFild(
+                  onChge: context.read<ConnectSql>().searchNotes,
+                  onTabXmark: () {
+                    showSearche = false;
+                    context.read<ConnectSql>().getAllNote();
+                  },
+                ),
+              ),
+            15.getH(),
+            if (context.watch<ConnectSql>().notes.isNotEmpty)
+              Expanded(
+                child: Consumer<ConnectSql>(
+                  builder: (BuildContext context, ConnectSql sqlView,
+                      Widget? child) {
+                    if (sqlView.loading) {
+                      return const Center(
+                          child: CircularProgressIndicator.adaptive());
+                    }
+                    return ListView.builder(
+                      padding: EdgeInsets.symmetric(horizontal: 24.we),
+                      itemCount: sqlView.notes.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ItemNoteButton(
+                          isActivRemove: sqlView.notes[index].isRemove,
+                          onTab: () async {
+                            if (sqlView.notes[index].isRemove &&
+                                sqlView.notes[index].id != null) {
+                              context
+                                  .read<ConnectSql>()
+                                  .deleteNote(noteModel: sqlView.notes[index]);
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return AddScreen(
+                                      isInfo: true,
+                                      personModul: sqlView.notes[index],
                                     );
                                   },
-                                  item: sqlView.notes[index],
-                                );
+                                ),
+                              );
+                            }
+                          },
+                          onLongPress: () {
+                            setState(
+                              () {
+                                sqlView.notes[index].isRemove =
+                                    !sqlView.notes[index].isRemove;
                               },
-                            ),
-                          ],
+                            );
+                          },
+                          item: sqlView.notes[index],
                         );
                       },
-                    ),
-                    if (context.watch<ConnectSql>().notes.isEmpty) 182.getH(),
-                    if (context.watch<ConnectSql>().notes.isEmpty)
-                      ShowEmptyImage(
-                        isSearhe: showSearche,
-                      ),
-                  ],
+                    );
+                  },
                 ),
               ),
-            ),
+            if (context.watch<ConnectSql>().notes.isEmpty) 182.getH(),
+            if (context.watch<ConnectSql>().notes.isEmpty)
+              ShowEmptyImage(
+                isSearhe: showSearche,
+              ),
           ],
         ),
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,

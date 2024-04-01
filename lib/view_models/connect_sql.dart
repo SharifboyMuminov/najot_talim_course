@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 
 class ConnectSql extends ChangeNotifier {
   List<NoteModel> notes = [];
+  List<NoteModel> myData = [];
 
   bool _loading = false;
 
@@ -12,6 +13,7 @@ class ConnectSql extends ChangeNotifier {
   Future<void> getAllNote() async {
     _notfire(true);
     notes = await LocalDatabase.getAllDebtors();
+    myData = notes;
     _notfire(false);
   }
 
@@ -35,6 +37,18 @@ class ConnectSql extends ChangeNotifier {
     _notfire(true);
     await LocalDatabase.updateNote(noteModel: noteModel);
     getAllNote();
+    _notfire(false);
+  }
+
+  searchNotes(String fullname) {
+    _notfire(true);
+
+    if (fullname.isNotEmpty) {
+      notes =
+          myData.where((element) => element.fullname.contains(fullname)).toList();
+    } else {
+      notes = myData;
+    }
     _notfire(false);
   }
 

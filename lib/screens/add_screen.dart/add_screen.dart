@@ -1,13 +1,9 @@
-import 'dart:ui';
-
-import 'package:default_project/data/local/local_database/local_databas.dart';
 import 'package:default_project/data/moduls/note.dart';
 import 'package:default_project/screens/widget/top_button.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/app_images.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:default_project/view_models/connect_sql.dart';
-import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
