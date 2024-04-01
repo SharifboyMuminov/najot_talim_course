@@ -38,6 +38,15 @@ class PasswordCubit extends Cubit<PasswordState> {
     }
   }
 
+  remove() {
+    if (state.password.isNotEmpty) {
+      emit(state.copyWithe(
+          password: state.password.substring(0, state.password.length - 1)));
+    } else {
+      emit(state.copyWithe(isTruePassword: false));
+    }
+  }
+
   _isTruePassword(BuildContext context) {
     if (state.passwordState == PasswordStatus.error) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -46,6 +55,7 @@ class PasswordCubit extends Cubit<PasswordState> {
           content: Text("Invalid password :("),
         ),
       );
+      emit(state.copyWithe(isTruePassword: true));
     } else if (state.passwordState == PasswordStatus.ok) {
       Navigator.pushReplacement(
         context,
@@ -63,13 +73,6 @@ class PasswordCubit extends Cubit<PasswordState> {
               "Your entered code has been saved, please return the code :)"),
         ),
       );
-    }
-  }
-
-  remove() {
-    if (state.password.isNotEmpty) {
-      emit(state.copyWithe(
-          password: state.password.substring(0, state.password.length - 1)));
     }
   }
 }

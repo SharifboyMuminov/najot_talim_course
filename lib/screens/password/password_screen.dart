@@ -57,7 +57,6 @@ class PasswordScreen extends StatelessWidget {
                         ...List.generate(
                           4,
                           (index) {
-                            // debugPrint("asdfasdf");
                             return Container(
                               margin:
                                   const EdgeInsets.symmetric(horizontal: 30),
@@ -65,7 +64,9 @@ class PasswordScreen extends StatelessWidget {
                               height: 15,
                               decoration: BoxDecoration(
                                 color: index < state.password.length
-                                    ? Colors.green
+                                    ? state.isTruePassword
+                                        ? Colors.red
+                                        : Colors.green
                                     : Colors.white10,
                                 shape: BoxShape.circle,
                               ),
@@ -184,7 +185,6 @@ class PasswordScreen extends StatelessWidget {
       ),
     );
   }
-
 
   Widget _getButtons(
       {required List<String> titles, required List<VoidCallback> callBacks}) {
