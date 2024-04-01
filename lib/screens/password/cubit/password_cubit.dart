@@ -8,7 +8,7 @@ class PasswordCubit extends Cubit<PasswordState> {
   PasswordCubit()
       : super(PasswordState(
           password: "",
-          passwordState: PasswordStatus.loading,
+          passwordState: PasswordStatus.newPassword,
         ));
 
   Future<void> insertValue(BuildContext context, String v) async {

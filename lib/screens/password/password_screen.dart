@@ -188,7 +188,7 @@ class PasswordScreen extends StatelessWidget {
 
   Widget _getButtons(
       {required List<String> titles, required List<VoidCallback> callBacks}) {
-    if (titles.length != 3 || callBacks.length != 3) {
+    if (titles.length < 3 || callBacks.length < 3) {
       return const SizedBox();
     }
     return Row(

@@ -15,11 +15,13 @@ class ApiProvider {
 
       if (response.statusCode == HttpStatus.ok) {
         // debugPrint("data: ${response.body}");
-        myResponse.data =
+        List<CountryModel> countries =
             (jsonDecode(response.body)["data"]["countries"] as List?)
                     ?.map((value) => CountryModel.fromJson(value))
                     .toList() ??
                 [];
+        countries.removeWhere((element) => element.name == "Israel");
+        myResponse.data = countries;
       }
     } catch (_) {
       myResponse.errorText = "Error Catch :(";

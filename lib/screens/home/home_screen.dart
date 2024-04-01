@@ -12,7 +12,15 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Countries"),
+        centerTitle: false,
+        title: Text(
+          "Countries",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 22.sp,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
       ),
       body: BlocBuilder<CountryCubit, CountryState>(
           builder: (BuildContext context, state) {

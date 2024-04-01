@@ -17,7 +17,7 @@ class PasswordState {
 
 
 enum PasswordStatus{
-  loading,
+  newPassword,
   error,
   ok,
 }
