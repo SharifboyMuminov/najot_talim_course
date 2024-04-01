@@ -1,4 +1,3 @@
-import 'package:default_project/data/local/local_database/local_databas.dart';
 import 'package:default_project/screens/add_screen.dart/add_screen.dart';
 import 'package:default_project/screens/widget/top_button.dart';
 import 'package:default_project/screens/home_screen/widgets/empty_show.dart';
@@ -13,8 +12,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-import '../../data/local/local_list/local.dart';
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -24,12 +21,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool showSearche = false;
-  String changeTextFild = "";
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -147,21 +138,22 @@ class _HomeScreenState extends State<HomeScreen> {
           height: 70.we,
           width: 70.we,
           child: FloatingActionButton(
-              backgroundColor: AppColors.c_3B3B3B,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return AddScreen();
-                    },
-                  ),
-                );
-              },
-              child: Icon(
-                Icons.add,
-                size: 35.we,
-              )),
+            backgroundColor: AppColors.c_3B3B3B,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return AddScreen();
+                  },
+                ),
+              );
+            },
+            child: Icon(
+              Icons.add,
+              size: 35.we,
+            ),
+          ),
         ),
       ),
     );
