@@ -1,9 +1,11 @@
-import 'package:default_project/data/moduls/data_repo.dart';
+import 'package:default_project/data/local/local_database/local_databas.dart';
 import 'package:default_project/screens/home_screen/home_screen.dart';
 import 'package:default_project/utils/app_colors.dart';
+import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
+
 
 class SplashCreen extends StatefulWidget {
   const SplashCreen({super.key});
@@ -15,7 +17,7 @@ class SplashCreen extends StatefulWidget {
 class _SplashCreenState extends State<SplashCreen> {
   @override
   void initState() {
-    DataRepository.instanse.connectJson();
+    LocalDatabase.databaseInstance;
     Future.delayed(
       const Duration(milliseconds: 2500),
       () {
@@ -34,6 +36,8 @@ class _SplashCreenState extends State<SplashCreen> {
 
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
     return AnnotatedRegion(
       value: const SystemUiOverlayStyle(
         systemNavigationBarColor: AppColors.c_252525,

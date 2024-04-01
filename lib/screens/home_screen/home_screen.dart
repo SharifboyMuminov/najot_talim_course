@@ -7,9 +7,11 @@ import 'package:default_project/screens/home_screen/widgets/text_fild.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/app_images.dart';
 import 'package:default_project/utils/size.dart';
+import 'package:default_project/view_models/connect_sql.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 import '../../data/local/local_list/local.dart';
 
@@ -26,13 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    _getAllData();
     super.initState();
-  }
-
-  _getAllData() async {
-    personDebtes = await LocalDatabase.getAllDebtors();
-    setState(() {});
   }
 
   @override
@@ -91,49 +87,57 @@ class _HomeScreenState extends State<HomeScreen> {
                         onTabXmark: () {},
                       ),
                     15.getH(),
-                    if (personDebtes.isNotEmpty)
-                      ...List.generate(
-                        personDebtes.length,
-                        (index) {
-                          return ItemNoteButton(
-                            isActivRemove: personDebtes[index].isRemove,
-                            onTab: () async {
-                              if (personDebtes[index].isRemove &&
-                                  personDebtes[index].id != null) {
-                                await LocalDatabase.deleteDebtors(
-                                    personDebtes[index].id!);
-                                _getAllData();
-                              } else {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return AddScreen(
-                                        onSchange: () {
-                                          _getAllData();
-                                        },
-                                        isInfo: true,
-                                        personModul: personDebtes[index],
+                    Consumer<ConnectSql>(
+                      builder: (BuildContext context, ConnectSql sqlView,
+                          Widget? child) {
+                        if (sqlView.loading) {
+                          return const Center(
+                              child: CircularProgressIndicator.adaptive());
+                        }
+                        return Column(
+                          children: [
+                            ...List.generate(
+                              sqlView.notes.length,
+                              (index) {
+                                return ItemNoteButton(
+                                  isActivRemove: sqlView.notes[index].isRemove,
+                                  onTab: () async {
+                                    if (sqlView.notes[index].isRemove &&
+                                        sqlView.notes[index].id != null) {
+                                      context.read<ConnectSql>().deleteNote(
+                                          noteModel: sqlView.notes[index]);
+                                    } else {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) {
+                                            return AddScreen(
+                                              isInfo: true,
+                                              personModul: sqlView.notes[index],
+                                            );
+                                          },
+                                        ),
                                       );
-                                    },
-                                  ),
+                                    }
+                                  },
+                                  onLongPress: () {
+                                    setState(
+                                      () {
+                                        sqlView.notes[index].isRemove =
+                                            !sqlView.notes[index].isRemove;
+                                      },
+                                    );
+                                  },
+                                  item: sqlView.notes[index],
                                 );
-                              }
-                            },
-                            onLongPress: () {
-                              setState(
-                                () {
-                                  personDebtes[index].isRemove =
-                                      !personDebtes[index].isRemove;
-                                },
-                              );
-                            },
-                            item: personDebtes[index],
-                          );
-                        },
-                      ),
-                    if (personDebtes.isEmpty) 182.getH(),
-                    if (personDebtes.isEmpty)
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                    if (context.watch<ConnectSql>().notes.isEmpty) 182.getH(),
+                    if (context.watch<ConnectSql>().notes.isEmpty)
                       ShowEmptyImage(
                         isSearhe: showSearche,
                       ),
@@ -154,9 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return AddScreen(onSchange: () {
-                        _getAllData();
-                      });
+                      return AddScreen();
                     },
                   ),
                 );

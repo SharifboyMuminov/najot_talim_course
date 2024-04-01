@@ -1,4 +1,4 @@
-import 'package:default_project/data/moduls/persons.dart';
+import 'package:default_project/data/moduls/note.dart';
 import 'package:default_project/utils/app_images.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ class ItemNoteButton extends StatelessWidget {
     required this.item,
   });
 
-  final PersonModul item;
+  final NoteModel item;
   final bool isActivRemove;
   final VoidCallback onTab;
   final VoidCallback onLongPress;

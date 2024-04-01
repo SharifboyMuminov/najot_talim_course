@@ -1,32 +1,37 @@
+import 'dart:ui';
+
 import 'package:default_project/data/local/local_database/local_databas.dart';
-import 'package:default_project/data/moduls/persons.dart';
+import 'package:default_project/data/moduls/note.dart';
 import 'package:default_project/screens/widget/top_button.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/app_images.dart';
 import 'package:default_project/utils/size.dart';
+import 'package:default_project/view_models/connect_sql.dart';
+import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
+import 'widget/my_snacbar.dart';
 import 'widget/show_dialog.dart';
 
 class AddScreen extends StatefulWidget {
   const AddScreen({
     super.key,
-    required this.onSchange,
     this.personModul,
     this.isInfo = false,
   });
-  final Function onSchange;
+
   final bool isInfo;
-  final PersonModul? personModul;
+  final NoteModel? personModul;
 
   @override
   State<AddScreen> createState() => _AddScreenState();
 }
 
 class _AddScreenState extends State<AddScreen> {
-  PersonModul personModul = PersonModul.defoultModul();
+  NoteModel noteModul = NoteModel.defoultModul();
 
   bool isSvae = true;
   bool isPop = false;
@@ -38,18 +43,15 @@ class _AddScreenState extends State<AddScreen> {
   @override
   void initState() {
     if (widget.personModul != null) {
-      personModul = widget.personModul!;
-      controllerTitle.text = personModul.fullname;
-      controllerSubTitle.text = personModul.text;
+      noteModul = widget.personModul!;
+      controllerTitle.text = noteModul.fullname;
+      controllerSubTitle.text = noteModul.text;
     }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    width = MediaQuery.of(context).size.width;
-    height = MediaQuery.of(context).size.height;
-
     return AnnotatedRegion(
       value: const SystemUiOverlayStyle(
         systemNavigationBarColor: AppColors.c_252525,
@@ -68,51 +70,44 @@ class _AddScreenState extends State<AddScreen> {
                 children: [
                   ButtonTop(
                     icon: AppImages.arrowBack,
-                    onTab: () {
-                      if (controllerSubTitle.text.isNotEmpty &&
-                          controllerSubTitle.text.isNotEmpty) {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertView(
-                              onTabSave: () async {
-                                await _saveData();
-                                widget.onSchange.call();
-                              },
-                              onTabDiscard: () {
-                                Navigator.pop(context);
-                                Navigator.pop(context);
-                              },
-                            );
-                          },
-                        );
-                      } else {
-                        Navigator.pop(context);
-                      }
-                    },
+                    onTab: _testMetodArrow,
                   ),
                   const Spacer(),
                   ButtonTop(
-                    icon: AppImages.look,
-                    onTab: () {},
-                  ),
-                  21.getW(),
-                  ButtonTop(
                     icon: AppImages.save,
                     onTab: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertView(
-                            onTabSave: () async {
-                              await _saveData();
-                            },
-                            onTabDiscard: () {
-                              Navigator.pop(context);
-                            },
-                          );
-                        },
-                      );
+                      if (widget.personModul != null) {
+                        _myShowDialog(
+                          onTabSave: () {
+                            String title = controllerTitle.text;
+                            String subTitle = controllerSubTitle.text;
+                            noteModul.copyWith(
+                              id: widget.personModul!.id,
+                              fullname: title,
+                              text: subTitle,
+                            );
+                            context
+                                .read<ConnectSql>()
+                                .updateNote(noteModel: noteModul);
+                            muySnackBar(context, text: "Malumot ynagilandi :)");
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                            context.read<ConnectSql>().updateNote(
+                                  noteModel: noteModul,
+                                );
+                          },
+                          title: "Do you want to update the information?",
+                        );
+                      } else {
+                        _myShowDialog(onTabSave: () {
+                          context
+                              .read<ConnectSql>()
+                              .insertNote(noteModel: noteModul);
+                          muySnackBar(context, text: "Malumot saqlandi :)");
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        });
+                      }
                     },
                   ),
                 ],
@@ -120,8 +115,8 @@ class _AddScreenState extends State<AddScreen> {
             ),
             Expanded(
               child: SingleChildScrollView(
-                padding: EdgeInsets.symmetric(
-                    horizontal: 15.we, vertical: 30.he),
+                padding:
+                    EdgeInsets.symmetric(horizontal: 15.we, vertical: 30.he),
                 child: Column(
                   children: [
                     TextField(
@@ -189,29 +184,60 @@ class _AddScreenState extends State<AddScreen> {
     );
   }
 
-  _saveData() async {
-    if (controllerTitle.text.isNotEmpty && controllerSubTitle.text.isNotEmpty) {
-      personModul = personModul.copyWith(
-          fullName: controllerTitle.text, descreption: controllerSubTitle.text);
-      await LocalDatabase.insertDebtors(personModul);
-      isSvae = false;
-      isPop = true;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Save ^_^"),
-        ),
+  _myShowDialog(
+      {required VoidCallback onTabSave,
+      String title = "Do you want to save the information?"}) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertView(
+          onTabSave: onTabSave,
+          onTabDiscard: () {
+            Navigator.pop(context);
+            Navigator.pop(context);
+          },
+          title: title,
+        );
+      },
+    );
+  }
+
+  _testMetodArrow() {
+    String title = controllerTitle.text;
+    String subTitle = controllerSubTitle.text;
+    if (title.isNotEmpty && subTitle.isNotEmpty) {
+      noteModul = noteModul.copyWith(
+        fullname: controllerTitle.text,
+        text: controllerSubTitle.text,
+        date: DateTime.now().toString(),
       );
-      widget.onSchange.call();
-      Navigator.pop(context);
-      Navigator.pop(context);
+
+      if (widget.personModul != null) {
+        if (title == widget.personModul!.fullname &&
+            subTitle == widget.personModul!.text) {
+          Navigator.pop(context);
+        } else {
+          _myShowDialog(onTabSave: () {
+            noteModul.copyWith(
+              id: widget.personModul!.id,
+              fullname: title,
+              text: subTitle,
+            );
+            context.read<ConnectSql>().updateNote(noteModel: noteModul);
+            muySnackBar(context, text: "Malumot ynagilandi :)");
+            Navigator.pop(context);
+            Navigator.pop(context);
+          });
+        }
+      } else {
+        _myShowDialog(onTabSave: () {
+          context.read<ConnectSql>().insertNote(noteModel: noteModul);
+          muySnackBar(context);
+          Navigator.pop(context);
+          Navigator.pop(context);
+        });
+      }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          duration: Duration(seconds: 2),
-          content: Text("Error empty text :("),
-          backgroundColor: Colors.red,
-        ),
-      );
       Navigator.pop(context);
     }
   }

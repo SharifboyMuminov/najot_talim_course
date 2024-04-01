@@ -1,4 +1,3 @@
-import '../../moduls/persons.dart';
+import '../../moduls/note.dart';
 
-List<PersonModul> personDebtes = [];
-List<PersonModul> personMyDebtes = [];
+List<NoteModel> personMyDebtes = [];

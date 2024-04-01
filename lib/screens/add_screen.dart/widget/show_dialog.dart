@@ -8,17 +8,22 @@ import 'package:flutter_svg/svg.dart';
 
 class AlertView extends StatelessWidget {
   const AlertView(
-      {super.key, required this.onTabSave, required this.onTabDiscard});
+      {super.key,
+      required this.onTabSave,
+      required this.onTabDiscard,
+      required this.title});
+
   final VoidCallback onTabSave;
   final VoidCallback onTabDiscard;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       iconPadding: EdgeInsets.symmetric(vertical: 20.he),
       backgroundColor: AppColors.c_252525,
-      title: const Text(
-        "Save changes ?",
+      title: Text(
+        title,
         style: TextStyle(
           color: AppColors.c_CFCFCF,
         ),
