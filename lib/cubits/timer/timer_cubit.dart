@@ -64,9 +64,10 @@ class TimerCubit extends Cubit<TamerState> {
             ),
           );
           if (!state.stop) {
-            break;
+            return;
           }
         }
+        emit(state.copyWithe(stop: !state.stop));
       }
     }
   }

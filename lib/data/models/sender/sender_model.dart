@@ -16,6 +16,4 @@ class Sender {
       location: json['location'] as String? ?? "",
     );
   }
-
-
 }
