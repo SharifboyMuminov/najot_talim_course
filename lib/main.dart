@@ -1,13 +1,26 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'cubits/timer/timer_cubit.dart';
 import 'screens/home_screen/home_screen.dart';
 
-void main(List<String> args) {
-  runApp(MyApp());
+Future<void> main(List<String> args) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(create: (_) => TimerCubit()),
+    ],
+    child: MyApp(),
+  ));
 }
-
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -20,7 +33,7 @@ class MyApp extends StatelessWidget {
         ScreenUtil.init(context);
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: ThemeData(useMaterial3: false),
+          theme: ThemeData(useMaterial3: true),
           home: child,
         );
       },
