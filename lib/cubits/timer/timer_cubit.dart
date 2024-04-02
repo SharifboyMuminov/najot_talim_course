@@ -12,12 +12,10 @@ class TimerCubit extends Cubit<TamerState> {
           ),
         );
 
-  valueChangHour(String v) {
-    emit(state.copyWithe(hour: state.hour + v));
-  }
-
-  valueChangMinute(String v) {
-    emit(state.copyWithe(minute: state.minute + v));
+  setHourAndMinute(String hour, String minute) {
+    emit(state.copyWithe(
+        hour: hour.length == 1 ? "0$hour" : hour,
+        minute: minute.length == 1 ? "0$minute" : minute));
   }
 
   startOrStop(bool v) {
@@ -39,9 +37,7 @@ class TimerCubit extends Cubit<TamerState> {
         if (state.hour == "00") {
           minu = int.parse(state.minute);
         } else {
-          if (state.hour == "01") {
-            hour--;
-          }
+          hour--;
           minu = 59;
         }
         // debugPrint("hour: ${state.hour}");

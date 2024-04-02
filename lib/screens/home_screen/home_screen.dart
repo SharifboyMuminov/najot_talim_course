@@ -1,5 +1,8 @@
+import 'package:default_project/cubits/paln/plan_cubit.dart';
+import 'package:default_project/cubits/paln/plan_state.dart';
 import 'package:default_project/cubits/timer/timer_cubit.dart';
 import 'package:default_project/cubits/timer/timer_state.dart';
+import 'package:default_project/screens/set_info/set_info.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,44 +17,102 @@ class HomeScreen extends StatelessWidget {
     height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Timer"),
-      ),
-      body: BlocBuilder<TimerCubit, TamerState>(
-        builder: (BuildContext context, TamerState state) {
-          return Column(
-            children: [
-              Text(
-                "${state.hour} : ${state.minute}",
-                style: TextStyle(
-                  fontSize: 25.sp,
+        centerTitle: false,
+        title: Text(
+          "Timer",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 22.sp,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return SetInfo();
+                  },
                 ),
-              ),
-              20.getH(),
-              TextButton(
-                onPressed: () {
-                  context.read<TimerCubit>().startOrStop(true);
-                },
-                child: Text("Stop"),
-              ),
-              TextButton(
-                onPressed: () {
-                  context.read<TimerCubit>().startOrStop(false);
-                },
-                child: Text("Start"),
-              ),
-              TextButton(
-                onPressed: () {
-                  context.read<TimerCubit>().startOrStop(false);
+              );
+            },
+            icon: Icon(
+              Icons.settings,
+              size: 24.sp,
+            ),
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            BlocBuilder<TimerCubit, TamerState>(
+              builder: (BuildContext context, TamerState state) {
+                return Column(
+                  children: [
+                    Text(
+                      "${state.hour} : ${state.minute}",
+                      style: TextStyle(
+                        fontSize: 45.sp,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    20.getH(),
 
-                  Future.microtask(() {
-                    context.read<TimerCubit>().startTime();
-                  });
-                },
-                child: Text(state.stop ? "Stop" : "Start"),
-              ),
-            ],
-          );
-        },
+                    Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.symmetric(horizontal: 24.we, vertical: 20.he),
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                            padding: EdgeInsets.symmetric(vertical: 13.he),
+                            backgroundColor: Colors.green),
+                        onPressed: () {
+                          context.read<TimerCubit>().startOrStop(false);
+
+                          Future.microtask(() {
+                            context.read<TimerCubit>().startTime();
+                          });
+                        },
+                        child: Text(
+                          state.stop ? "Stop" : "Start",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.sp,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+            BlocBuilder<PlanCubit, PlanState>(
+              builder: (BuildContext context, PlanState state) {
+                return Column(
+                  children: [
+                    ...List.generate(
+                      state.plans.length,
+                      (index) {
+                        return ListTile(
+                          title: Text("Tag"),
+                          subtitle: Text(
+                            state.plans[index],
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 25.sp,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

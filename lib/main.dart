@@ -1,5 +1,4 @@
-import 'dart:async';
-
+import 'package:default_project/cubits/paln/plan_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +16,7 @@ Future<void> main(List<String> args) async {
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider(create: (_) => TimerCubit()),
+      BlocProvider(create: (_) => PlanCubit()),
     ],
     child: MyApp(),
   ));
