@@ -15,7 +15,10 @@ class PasswordCubit extends Cubit<PasswordState> {
     if (state.password.length < 3) {
       emit(state.copyWithe(password: state.password + v));
     } else {
-      emit(state.copyWithe(password: state.password + v));
+      if(state.password.length < 4){
+        emit(state.copyWithe(password: state.password + v));
+
+      }
 
       if (StorageRepository.getBool(key: "is_password")) {
         emit(
