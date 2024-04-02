@@ -222,6 +222,7 @@ class _PasswordScreenState extends State<PasswordScreen>
                           },
                           iconData: Icons.backspace_sharp,
                         ),
+                        SizedBox(width: 6),
                       ],
                     ),
                   ],
