@@ -36,9 +36,11 @@ class TimerCubit extends Cubit<TamerState> {
 
         if (state.hour == "00") {
           minu = int.parse(state.minute);
-        } else {
+        } else if (state.hour != "00" && state.minute == "00") {
           hour--;
           minu = 59;
+        } else {
+          minu = int.parse(state.minute);
         }
         // debugPrint("hour: ${state.hour}");
         // debugPrint("minute: ${state.minute}");

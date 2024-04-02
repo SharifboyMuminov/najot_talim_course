@@ -2,6 +2,7 @@ import 'package:default_project/cubits/paln/plan_cubit.dart';
 import 'package:default_project/cubits/paln/plan_state.dart';
 import 'package:default_project/cubits/timer/timer_cubit.dart';
 import 'package:default_project/cubits/timer/timer_state.dart';
+import 'package:default_project/screens/banc/banc_screen.dart';
 import 'package:default_project/screens/set_info/set_info.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
@@ -33,13 +34,29 @@ class HomeScreen extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return SetInfo();
+                    return const SetInfo();
                   },
                 ),
               );
             },
             icon: Icon(
               Icons.settings,
+              size: 24.sp,
+            ),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return const BankScreen();
+                  },
+                ),
+              );
+            },
+            icon: Icon(
+              Icons.exit_to_app,
               size: 24.sp,
             ),
           ),
@@ -60,10 +77,10 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     20.getH(),
-
                     Container(
                       width: double.infinity,
-                      margin: EdgeInsets.symmetric(horizontal: 24.we, vertical: 20.he),
+                      margin: EdgeInsets.symmetric(
+                          horizontal: 24.we, vertical: 20.he),
                       child: TextButton(
                         style: TextButton.styleFrom(
                             padding: EdgeInsets.symmetric(vertical: 13.he),

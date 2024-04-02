@@ -62,12 +62,21 @@ class _SetInfoState extends State<SetInfo> {
                           state.plans.length,
                           (index) {
                             return ListTile(
-                              title: Text("Tag"),
+                              title: const Text("Tag"),
                               subtitle: Text(
                                 state.plans[index],
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 25.sp,
+                                ),
+                              ),
+                              trailing: IconButton(
+                                onPressed: () {
+                                  context.read<PlanCubit>().deletePlan(state.plans[index]);
+                                },
+                                icon: Icon(
+                                  Icons.dangerous_outlined,
+                                  size: 22.sp,
                                 ),
                               ),
                             );
@@ -90,8 +99,10 @@ class _SetInfoState extends State<SetInfo> {
                     padding: EdgeInsets.symmetric(vertical: 13.he),
                     backgroundColor: Colors.green),
                 onPressed: () {
-                  if(hourText.isNotEmpty && minuteText.isNotEmpty){
-                    context.read<TimerCubit>().setHourAndMinute(hourText, minuteText);
+                  if (hourText.isNotEmpty && minuteText.isNotEmpty) {
+                    context
+                        .read<TimerCubit>()
+                        .setHourAndMinute(hourText, minuteText);
                     Navigator.pop(context);
                   }
                 },
@@ -182,8 +193,6 @@ myShowBottomSheet(BuildContext context) {
 class TimeMyWidget extends StatelessWidget {
   const TimeMyWidget({super.key});
 
-
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -195,13 +204,13 @@ class TimeMyWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Enter time"),
+          const Text("Enter time"),
           10.getH(),
           Row(
             children: [
               Expanded(
                 child: TextFormField(
-                  onChanged: (v){
+                  onChanged: (v) {
                     hourText = v;
                   },
                   controller: TextEditingController(text: "01"),
@@ -252,7 +261,7 @@ class TimeMyWidget extends StatelessWidget {
               SizedBox(width: 15.we),
               Expanded(
                 child: TextFormField(
-                  onChanged: (v){
+                  onChanged: (v) {
                     minuteText = v;
                   },
                   controller: TextEditingController(text: "00"),
@@ -281,9 +290,9 @@ class TimeMyWidget extends StatelessWidget {
           ),
           Row(
             children: [
-              Text("Hour"),
+              const Text("Hour"),
               SizedBox(width: 140.we),
-              Text("Minute"),
+              const Text("Minute"),
             ],
           ),
         ],
