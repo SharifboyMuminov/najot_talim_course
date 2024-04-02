@@ -1,3 +1,4 @@
+import 'package:default_project/data/local/local_varibals.dart';
 import 'package:default_project/data/local/storage_repository.dart';
 import 'package:default_project/screens/home/home_screen.dart';
 import 'package:default_project/screens/password/cubit/password_state.dart';
@@ -15,9 +16,8 @@ class PasswordCubit extends Cubit<PasswordState> {
     if (state.password.length < 3) {
       emit(state.copyWithe(password: state.password + v));
     } else {
-      if(state.password.length < 4){
+      if (state.password.length < 4) {
         emit(state.copyWithe(password: state.password + v));
-
       }
 
       if (StorageRepository.getBool(key: "is_password")) {
@@ -58,6 +58,13 @@ class PasswordCubit extends Cubit<PasswordState> {
           content: Text("Invalid password :("),
         ),
       );
+      if (animationTrue) {
+        globalAnimationController.forward();
+        animationTrue = false;
+      }else{
+        globalAnimationController.reverse();
+        animationTrue = true;
+      }
       emit(state.copyWithe(isTruePassword: true));
     } else if (state.passwordState == PasswordStatus.ok) {
       Navigator.pushReplacement(

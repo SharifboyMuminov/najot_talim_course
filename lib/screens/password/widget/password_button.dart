@@ -7,18 +7,20 @@ class PasswordButton extends StatelessWidget {
     super.key,
     required this.title,
     required this.onTab,
+    this.padding,
     this.iconData,
   });
 
   final String title;
   final VoidCallback onTab;
   final IconData? iconData;
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
       style: TextButton.styleFrom(
-        padding: EdgeInsets.symmetric(
+        padding: padding ?? EdgeInsets.symmetric(
           horizontal: 33.we,
           vertical: 22.he,
         ),

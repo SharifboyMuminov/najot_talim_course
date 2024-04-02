@@ -1,4 +1,4 @@
-import 'package:default_project/screens/home/home_screen.dart';
+import 'package:default_project/data/local/local_varibals.dart';
 import 'package:default_project/screens/password/cubit/password_cubit.dart';
 import 'package:default_project/screens/password/cubit/password_state.dart';
 import 'package:default_project/utils/size.dart';
@@ -9,8 +9,41 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'widget/password_button.dart';
 
-class PasswordScreen extends StatelessWidget {
+class PasswordScreen extends StatefulWidget {
   const PasswordScreen({super.key});
+
+  @override
+  State<PasswordScreen> createState() => _PasswordScreenState();
+}
+
+class _PasswordScreenState extends State<PasswordScreen>
+    with SingleTickerProviderStateMixin {
+  late Animation<Alignment> animationAlign;
+
+  @override
+  void initState() {
+    globalAnimationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
+
+    animationAlign = TweenSequence<Alignment>([
+      TweenSequenceItem<Alignment>(
+          tween: Tween(begin: Alignment.center, end: Alignment.centerLeft),
+          weight: 40),
+      TweenSequenceItem<Alignment>(
+          tween: Tween(begin: Alignment.centerLeft, end: Alignment.center),
+          weight: 40),
+      TweenSequenceItem<Alignment>(
+          tween: Tween(begin: Alignment.centerRight, end: Alignment.center),
+          weight: 40),
+    ]).animate(CurvedAnimation(
+        parent: globalAnimationController, curve: Curves.decelerate));
+
+    globalAnimationController.addListener(() {
+      setState(() {});
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,29 +84,40 @@ class PasswordScreen extends StatelessWidget {
                       ),
                     ),
                     50.getH(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ...List.generate(
-                          4,
-                          (index) {
-                            return Container(
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 30),
-                              width: 15,
-                              height: 15,
-                              decoration: BoxDecoration(
-                                color: index < state.password.length
-                                    ? state.isTruePassword
-                                        ? Colors.red
-                                        : Colors.green
-                                    : Colors.white10,
-                                shape: BoxShape.circle,
-                              ),
-                            );
-                          },
-                        ),
-                      ],
+                    Container(
+                      width: double.infinity,
+                      child: Stack(
+                        children: [
+                          Align(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                ...List.generate(
+                                  4,
+                                  (index) {
+                                    return Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 30),
+                                      width: 15,
+                                      height: 15,
+                                      decoration: BoxDecoration(
+                                        color: index < state.password.length
+                                            ? state.isTruePassword
+                                                ? Colors.red
+                                                : Colors.green
+                                            : Colors.white10,
+                                        shape: BoxShape.circle,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                            alignment: animationAlign.value,
+                          ),
+                        ],
+                      ),
                     ),
                     60.getH(),
                     _getButtons(
@@ -168,6 +212,10 @@ class PasswordScreen extends StatelessWidget {
                         ),
                         SizedBox(width: 40.we),
                         PasswordButton(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 30.we,
+                            vertical: 30.he,
+                          ),
                           title: "",
                           onTab: () {
                             context.read<PasswordCubit>().remove();
