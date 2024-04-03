@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:default_project/data/models/bank/bank_model.dart';
 import 'package:default_project/screens/banc/banks_cubit/banc_cubit.dart';
 import 'package:default_project/screens/banc/banks_cubit/banc_state.dart';
@@ -13,10 +14,6 @@ class BankScreen extends StatefulWidget {
 }
 
 class _BankScreenState extends State<BankScreen> {
-
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +60,13 @@ class _BankScreenState extends State<BankScreen> {
                         fontSize: 20.sp),
                   ),
                   subtitle: Text(bankModel.sender.location),
-                  leading: Image.network(bankModel.sender.brandImage),
+                  leading: CachedNetworkImage(
+                    imageUrl: bankModel.sender.brandImage,
+                    placeholder: (context, url) =>
+                        const CircularProgressIndicator.adaptive(),
+                    errorWidget: (context, url, error) => Image.network(
+                        "https://api.logobank.uz/media/logos_png/Najot_Talim-01.png"),
+                  ),
                 );
               }),
             );

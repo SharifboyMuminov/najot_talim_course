@@ -56,7 +56,7 @@ class TimerCubit extends Cubit<TamerState> {
             hour--;
           }
 
-          await Future.delayed(const Duration(milliseconds: 200));
+          await Future.delayed(const Duration(minutes: 1));
           emit(
             state.copyWithe(
               hour: hourStr.length == 1 ? "0$hourStr" : hourStr,
