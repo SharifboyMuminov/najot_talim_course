@@ -42,7 +42,8 @@ class LocalDatabase {
       ${NotesConstanse.date} $textType,
       ${NotesConstanse.creatDate} $textType,
       ${NotesConstanse.descreption} $textType,
-      ${NotesConstanse.name} $textType
+      ${NotesConstanse.name} $textType,
+      ${NotesConstanse.color} $textType
     )''');
   }
 

@@ -1,5 +1,6 @@
 import 'package:default_project/blocs/notes/notes_bloc.dart';
 import 'package:default_project/blocs/notes/notes_event.dart';
+import 'package:default_project/data/local/local_list/local.dart';
 import 'package:default_project/data/moduls/notes/note.dart';
 import 'package:default_project/screens/widget/top_button.dart';
 import 'package:default_project/utils/app_colors.dart';
@@ -73,39 +74,6 @@ class _AddScreenState extends State<AddScreen> {
                   ButtonTop(
                     icon: AppImages.save,
                     onTab: _testMetodArrow,
-                    // onTab: () {
-                    //   if (widget.personModul != null) {
-                    //     _myShowDialog(
-                    //       onTabSave: () {
-                    //         String title = controllerTitle.text;
-                    //         String subTitle = controllerSubTitle.text;
-                    //         noteModul.copyWith(
-                    //           id: widget.personModul!.id,
-                    //           fullname: title,
-                    //           text: subTitle,
-                    //         );
-                    //         context
-                    //             .read<NotesBloc>()
-                    //             .add(NotesUpdateEvent(noteModel: noteModul));
-                    //         muySnackBar(context, text: "Malumot ynagilandi :)");
-                    //         Navigator.pop(context);
-                    //         Navigator.pop(context);
-                    //       },
-                    //       title: "Do you want to update the information?",
-                    //     );
-                    //   } else {
-                    //     _myShowDialog(
-                    //       onTabSave: () {
-                    //         context
-                    //             .read<NotesBloc>()
-                    //             .add(NotesInsertEvent(noteModel: noteModul));
-                    //         muySnackBar(context, text: "Malumot saqlandi :)");
-                    //         Navigator.pop(context);
-                    //         Navigator.pop(context);
-                    //       },
-                    //     );
-                    //   }
-                    // },
                   ),
                 ],
               ),
@@ -230,7 +198,9 @@ class _AddScreenState extends State<AddScreen> {
         }
       } else {
         _myShowDialog(onTabSave: () {
-          context.read<NotesBloc>().add(NotesInsertEvent(noteModel: noteModul));
+          myColors.shuffle();
+          context.read<NotesBloc>().add(NotesInsertEvent(
+              noteModel: noteModul.copyWith(color: myColors.first)));
 
           muySnackBar(context);
           Navigator.pop(context);

@@ -28,7 +28,8 @@ class NoteModel {
       text: json[NotesConstanse.descreption] as String? ?? "Null",
       date: json[NotesConstanse.date] as String? ?? "",
       createDate: json[NotesConstanse.creatDate] as String? ?? "",
-      color: myColors.first,
+      color: Color(
+          int.parse(json[NotesConstanse.color] as String? ?? "0xFFFFFFFF")),
     );
   }
 
@@ -38,6 +39,7 @@ class NoteModel {
       NotesConstanse.date: date,
       NotesConstanse.descreption: text,
       NotesConstanse.name: fullname,
+      NotesConstanse.color: color.value.toString(),
     };
   }
 
@@ -48,6 +50,7 @@ class NoteModel {
       NotesConstanse.date: date,
       NotesConstanse.descreption: text,
       NotesConstanse.name: fullname,
+      NotesConstanse.color: color.value.toString(),
     };
   }
 

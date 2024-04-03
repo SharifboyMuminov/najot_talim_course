@@ -19,7 +19,7 @@ class _SplashCreenState extends State<SplashCreen> {
   void initState() {
     LocalDatabase.databaseInstance;
     Future.delayed(
-      const Duration(milliseconds: 2500),
+      const Duration(seconds: 2),
       () {
         Navigator.pushReplacement(
           context,

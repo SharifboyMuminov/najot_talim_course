@@ -58,12 +58,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     ButtonTop(
-                        icon: AppImages.searcheSvg,
-                        onTab: () {
-                          setState(() {
+                      icon: AppImages.searcheSvg,
+                      onTab: () {
+                        setState(
+                          () {
                             showSearche = true;
-                          });
-                        }),
+                          },
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -77,12 +80,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   onTabXmark: () {
                     showSearche = false;
-                    context.read<NotesBloc>().add(NotesCallEvent());
+                    setState(() {});
                   },
                 ),
               ),
             15.getH(),
             BlocBuilder<NotesBloc, NotesState>(
+              buildWhen: (previous, current) {
+                return previous != current;
+              },
               builder: (BuildContext context, NotesState state) {
                 if (state is LoadingState) {
                   return const Center(
@@ -112,6 +118,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   state.notesData[index].id != null) {
                                 context.read<NotesBloc>().add(NotesDeleteEvent(
                                     noteModel: state.notesData[index]));
+
+                                showSearche = false;
+                                setState(() {});
                               } else {
                                 Navigator.push(
                                   context,
