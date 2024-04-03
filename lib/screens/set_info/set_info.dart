@@ -1,6 +1,8 @@
 import 'package:default_project/cubits/paln/plan_cubit.dart';
 import 'package:default_project/cubits/paln/plan_state.dart';
 import 'package:default_project/cubits/timer/timer_cubit.dart';
+import 'package:default_project/data/models/time/time_model.dart';
+import 'package:default_project/screens/start_time.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 String hourText = "01";
 String minuteText = "00";
+String planText = "";
 
 class SetInfo extends StatefulWidget {
   const SetInfo({super.key});
@@ -46,7 +49,10 @@ class _SetInfoState extends State<SetInfo> {
                   alignment: Alignment.centerRight,
                   child: IconButton(
                     onPressed: () {
-                      myShowBottomSheet(context);
+                      myShowBottomSheet(context, () {
+                        // context.read<PlanCubit>().addPlan(planText);
+                        Navigator.pop(context);
+                      });
                     },
                     icon: Icon(
                       Icons.add,
@@ -62,9 +68,10 @@ class _SetInfoState extends State<SetInfo> {
                           state.plans.length,
                           (index) {
                             return ListTile(
-                              title: const Text("Tag"),
+                              title: Text(
+                                  "Tag  ${state.plans[index].hour} : ${state.plans[index].minute} :"),
                               subtitle: Text(
-                                state.plans[index],
+                                state.plans[index].title,
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 25.sp,
@@ -72,7 +79,9 @@ class _SetInfoState extends State<SetInfo> {
                               ),
                               trailing: IconButton(
                                 onPressed: () {
-                                  context.read<PlanCubit>().deletePlan(state.plans[index]);
+                                  context
+                                      .read<PlanCubit>()
+                                      .deletePlan(state.plans[index]);
                                 },
                                 icon: Icon(
                                   Icons.dangerous_outlined,
@@ -100,6 +109,12 @@ class _SetInfoState extends State<SetInfo> {
                     backgroundColor: Colors.green),
                 onPressed: () {
                   if (hourText.isNotEmpty && minuteText.isNotEmpty) {
+                    TaskModel timeModel = TaskModel(
+                      minute: minuteText,
+                      hour: hourText,
+                      title: planText,
+                    );
+                    context.read<PlanCubit>().addPlan(timeModel);
                     context
                         .read<TimerCubit>()
                         .setHourAndMinute(hourText, minuteText);
@@ -122,8 +137,7 @@ class _SetInfoState extends State<SetInfo> {
   }
 }
 
-myShowBottomSheet(BuildContext context) {
-  String planText = "";
+myShowBottomSheet(BuildContext context, VoidCallback onTab) {
   showModalBottomSheet(
     context: context,
     builder: (newContext) {
@@ -169,10 +183,7 @@ myShowBottomSheet(BuildContext context) {
                   style: TextButton.styleFrom(
                       padding: EdgeInsets.symmetric(vertical: 13.he),
                       backgroundColor: Colors.green),
-                  onPressed: () {
-                    context.read<PlanCubit>().addPlan(planText);
-                    Navigator.pop(context);
-                  },
+                  onPressed: onTab,
                   child: Text(
                     "Save Plan",
                     style: TextStyle(

@@ -5,6 +5,7 @@ import 'package:default_project/cubits/timer/timer_state.dart';
 import 'package:default_project/data/api_provider/api_provider.dart';
 import 'package:default_project/screens/banc/banc_screen.dart';
 import 'package:default_project/screens/set_info/set_info.dart';
+import 'package:default_project/screens/start_time.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -119,12 +120,43 @@ class _HomeScreenState extends State<HomeScreen> {
                       state.plans.length,
                       (index) {
                         return ListTile(
-                          title: Text("Tag"),
+                          onTap: () {
+                            context.read<TimerCubit>().setHourAndMinute(
+                                  state.plans[index].hour,
+                                  state.plans[index].minute,
+                                );
+                            Future.microtask(
+                              () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return StartTaskScreen(
+                                          taskModel: state.plans[index]);
+                                    },
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          title: Text(
+                              "Tag  ${state.plans[index].hour} : ${state.plans[index].minute} :"),
                           subtitle: Text(
-                            state.plans[index],
+                            state.plans[index].title,
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 25.sp,
+                            ),
+                          ),
+                          trailing: IconButton(
+                            onPressed: () {
+                              context
+                                  .read<PlanCubit>()
+                                  .deletePlan(state.plans[index]);
+                            },
+                            icon: Icon(
+                              Icons.dangerous_outlined,
+                              size: 22.sp,
                             ),
                           ),
                         );
