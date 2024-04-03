@@ -18,7 +18,7 @@ dependencies:
   flutter_svg: ^2.0.9
   lottie: ^3.0.0
   sqflite: ^2.3.2
-  provider: ^6.1.2
+  flutter_bloc: ^8.1.5
 
 dev_dependencies:
   flutter_test:

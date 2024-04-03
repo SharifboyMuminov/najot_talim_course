@@ -1,4 +1,4 @@
-import 'package:default_project/data/moduls/note.dart';
+import 'package:default_project/data/moduls/notes/note.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -37,46 +37,58 @@ class LocalDatabase {
     const idType = "INTEGER PRIMARY KEY AUTOINCREMENT";
     const textType = "TEXT NOT NULL";
 
-    await db.execute('''CREATE TABLE ${PersonContans.tableName} (
-      ${PersonContans.id} $idType,
-      ${PersonContans.date} $textType,
-      ${PersonContans.creatDate} $textType,
-      ${PersonContans.descreption} $textType,
-      ${PersonContans.name} $textType
+    await db.execute('''CREATE TABLE ${NotesConstanse.tableName} (
+      ${NotesConstanse.id} $idType,
+      ${NotesConstanse.date} $textType,
+      ${NotesConstanse.creatDate} $textType,
+      ${NotesConstanse.descreption} $textType,
+      ${NotesConstanse.name} $textType
     )''');
   }
 
-  static Future<NoteModel> insertDebtors(NoteModel personModul) async {
+  static Future<NoteModel> insertNotes(NoteModel personModel) async {
     final db = await databaseInstance.database;
 
     int savedTaskID =
-        await db.insert(PersonContans.tableName, personModul.toJson());
+        await db.insert(NotesConstanse.tableName, personModel.toJson());
 
-    return personModul.copyWith(id: savedTaskID);
+    return personModel.copyWith(id: savedTaskID);
   }
 
-  static Future<List<NoteModel>> getAllDebtors() async {
+  static Future<List<NoteModel>> getAllNotes() async {
     final db = await databaseInstance.database;
-    String orderBy = "${PersonContans.id} DESC";
-    List json = await db.query(PersonContans.tableName, orderBy: orderBy);
+    String orderBy = "${NotesConstanse.id} DESC";
+    List json = await db.query(NotesConstanse.tableName, orderBy: orderBy);
     return json.map((e) => NoteModel.fromJson(e)).toList();
   }
 
-  static Future<int> deleteDebtors(int id) async {
+  static Future<int> deleteNotes(NoteModel noteModel) async {
     final db = await databaseInstance.database;
     int deletedId = await db.delete(
-      PersonContans.tableName,
-      where: "${PersonContans.id} = ?",
-      whereArgs: [id],
+      NotesConstanse.tableName,
+      where: "${NotesConstanse.id} = ?",
+      whereArgs: [noteModel.id],
     );
     return deletedId;
   }
 
-  static updateNote({required NoteModel noteModel}) async {
+  static Future<int> updateNotes({required NoteModel noteModel}) async {
     final db = await databaseInstance.database;
     // debugPrint(noteModel.id.toString());
 
-    await db.update(PersonContans.tableName, noteModel.toJsonForUpdate(),
-        where: "${PersonContans.id} = ?", whereArgs: [noteModel.id]);
+    int a = await db.update(
+        NotesConstanse.tableName, noteModel.toJsonForUpdate(),
+        where: "${NotesConstanse.id} = ?", whereArgs: [noteModel.id]);
+
+    return a;
+  }
+
+  static Future<List<NoteModel>> searchNotes(String query) async {
+    final db = await databaseInstance.database;
+
+    var json = await db.query(NotesConstanse.tableName,
+        where: "${NotesConstanse.name} LIKE ?", whereArgs: ["$query%"]);
+
+    return json.map((e) => NoteModel.fromJson(e)).toList();
   }
 }

@@ -1,3 +1,15 @@
-import '../../moduls/note.dart';
+import 'package:flutter/material.dart';
 
-List<NoteModel> personMyDebtes = [];
+List<Color> myColors = [
+  Colors.white10,
+  Colors.black45,
+  Colors.blueGrey,
+  Colors.lightBlue,
+  Colors.yellowAccent,
+  Colors.indigo,
+  Colors.deepOrangeAccent,
+  Colors.brown,
+  Colors.deepPurpleAccent,
+  Colors.purpleAccent,
+  Colors.orange,
+];

@@ -1,9 +1,10 @@
-import 'package:default_project/data/moduls/note.dart';
+import 'package:default_project/blocs/notes/notes_bloc.dart';
+import 'package:default_project/blocs/notes/notes_event.dart';
+import 'package:default_project/data/moduls/notes/note.dart';
 import 'package:default_project/screens/widget/top_button.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/app_images.dart';
 import 'package:default_project/utils/size.dart';
-import 'package:default_project/view_models/connect_sql.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -71,40 +72,40 @@ class _AddScreenState extends State<AddScreen> {
                   const Spacer(),
                   ButtonTop(
                     icon: AppImages.save,
-                    onTab: () {
-                      if (widget.personModul != null) {
-                        _myShowDialog(
-                          onTabSave: () {
-                            String title = controllerTitle.text;
-                            String subTitle = controllerSubTitle.text;
-                            noteModul.copyWith(
-                              id: widget.personModul!.id,
-                              fullname: title,
-                              text: subTitle,
-                            );
-                            context
-                                .read<ConnectSql>()
-                                .updateNote(noteModel: noteModul);
-                            muySnackBar(context, text: "Malumot ynagilandi :)");
-                            Navigator.pop(context);
-                            Navigator.pop(context);
-                            context.read<ConnectSql>().updateNote(
-                                  noteModel: noteModul,
-                                );
-                          },
-                          title: "Do you want to update the information?",
-                        );
-                      } else {
-                        _myShowDialog(onTabSave: () {
-                          context
-                              .read<ConnectSql>()
-                              .insertNote(noteModel: noteModul);
-                          muySnackBar(context, text: "Malumot saqlandi :)");
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                        });
-                      }
-                    },
+                    onTab: _testMetodArrow,
+                    // onTab: () {
+                    //   if (widget.personModul != null) {
+                    //     _myShowDialog(
+                    //       onTabSave: () {
+                    //         String title = controllerTitle.text;
+                    //         String subTitle = controllerSubTitle.text;
+                    //         noteModul.copyWith(
+                    //           id: widget.personModul!.id,
+                    //           fullname: title,
+                    //           text: subTitle,
+                    //         );
+                    //         context
+                    //             .read<NotesBloc>()
+                    //             .add(NotesUpdateEvent(noteModel: noteModul));
+                    //         muySnackBar(context, text: "Malumot ynagilandi :)");
+                    //         Navigator.pop(context);
+                    //         Navigator.pop(context);
+                    //       },
+                    //       title: "Do you want to update the information?",
+                    //     );
+                    //   } else {
+                    //     _myShowDialog(
+                    //       onTabSave: () {
+                    //         context
+                    //             .read<NotesBloc>()
+                    //             .add(NotesInsertEvent(noteModel: noteModul));
+                    //         muySnackBar(context, text: "Malumot saqlandi :)");
+                    //         Navigator.pop(context);
+                    //         Navigator.pop(context);
+                    //       },
+                    //     );
+                    //   }
+                    // },
                   ),
                 ],
               ),
@@ -219,7 +220,9 @@ class _AddScreenState extends State<AddScreen> {
               fullname: title,
               text: subTitle,
             );
-            context.read<ConnectSql>().updateNote(noteModel: noteModul);
+            context
+                .read<NotesBloc>()
+                .add(NotesUpdateEvent(noteModel: noteModul));
             muySnackBar(context, text: "Malumot ynagilandi :)");
             Navigator.pop(context);
             Navigator.pop(context);
@@ -227,7 +230,8 @@ class _AddScreenState extends State<AddScreen> {
         }
       } else {
         _myShowDialog(onTabSave: () {
-          context.read<ConnectSql>().insertNote(noteModel: noteModul);
+          context.read<NotesBloc>().add(NotesInsertEvent(noteModel: noteModul));
+
           muySnackBar(context);
           Navigator.pop(context);
           Navigator.pop(context);

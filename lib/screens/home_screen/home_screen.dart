@@ -1,3 +1,6 @@
+import 'package:default_project/blocs/notes/notes_bloc.dart';
+import 'package:default_project/blocs/notes/notes_event.dart';
+import 'package:default_project/blocs/notes/notes_state.dart';
 import 'package:default_project/screens/add_screen.dart/add_screen.dart';
 import 'package:default_project/screens/widget/top_button.dart';
 import 'package:default_project/screens/home_screen/widgets/empty_show.dart';
@@ -9,6 +12,7 @@ import 'package:default_project/utils/size.dart';
 import 'package:default_project/view_models/connect_sql.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
@@ -68,69 +72,79 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.we),
                 child: SearcheTextFild(
-                  onChge: context.read<ConnectSql>().searchNotes,
+                  onChge: (v) {
+                    context.read<NotesBloc>().add(NotesSearchEvent(title: v));
+                  },
                   onTabXmark: () {
                     showSearche = false;
-                    context.read<ConnectSql>().getAllNote();
+                    context.read<NotesBloc>().add(NotesCallEvent());
                   },
                 ),
               ),
             15.getH(),
-            if (context.watch<ConnectSql>().notes.isNotEmpty)
-              Expanded(
-                child: Consumer<ConnectSql>(
-                  builder: (BuildContext context, ConnectSql sqlView,
-                      Widget? child) {
-                    if (sqlView.loading) {
-                      return const Center(
-                          child: CircularProgressIndicator.adaptive());
-                    }
-                    return ListView.builder(
-                      padding: EdgeInsets.symmetric(horizontal: 24.we),
-                      itemCount: sqlView.notes.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return ItemNoteButton(
-                          isActivRemove: sqlView.notes[index].isRemove,
-                          onTab: () async {
-                            if (sqlView.notes[index].isRemove &&
-                                sqlView.notes[index].id != null) {
-                              context
-                                  .read<ConnectSql>()
-                                  .deleteNote(noteModel: sqlView.notes[index]);
-                            } else {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return AddScreen(
-                                      isInfo: true,
-                                      personModul: sqlView.notes[index],
-                                    );
-                                  },
-                                ),
-                              );
-                            }
-                          },
-                          onLongPress: () {
-                            setState(
-                              () {
-                                sqlView.notes[index].isRemove =
-                                    !sqlView.notes[index].isRemove;
-                              },
-                            );
-                          },
-                          item: sqlView.notes[index],
-                        );
-                      },
+            BlocBuilder<NotesBloc, NotesState>(
+              builder: (BuildContext context, NotesState state) {
+                if (state is LoadingState) {
+                  return const Center(
+                      child: CircularProgressIndicator.adaptive());
+                }
+
+                if (state is SuccessState) {
+                  if (state.notesData.isEmpty) {
+                    return Column(
+                      children: [
+                        182.getH(),
+                        ShowEmptyImage(
+                          isSearhe: showSearche,
+                        ),
+                      ],
                     );
-                  },
-                ),
-              ),
-            if (context.watch<ConnectSql>().notes.isEmpty) 182.getH(),
-            if (context.watch<ConnectSql>().notes.isEmpty)
-              ShowEmptyImage(
-                isSearhe: showSearche,
-              ),
+                  } else {
+                    return Expanded(
+                      child: ListView.builder(
+                        padding: EdgeInsets.symmetric(horizontal: 24.we),
+                        itemCount: state.notesData.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ItemNoteButton(
+                            isActiveRemove: state.notesData[index].isRemove,
+                            onTab: () async {
+                              if (state.notesData[index].isRemove &&
+                                  state.notesData[index].id != null) {
+                                context.read<NotesBloc>().add(NotesDeleteEvent(
+                                    noteModel: state.notesData[index]));
+                              } else {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return AddScreen(
+                                        isInfo: true,
+                                        personModul: state.notesData[index],
+                                      );
+                                    },
+                                  ),
+                                );
+                              }
+                            },
+                            onLongPress: () {
+                              setState(
+                                () {
+                                  state.notesData[index].isRemove =
+                                      !state.notesData[index].isRemove;
+                                },
+                              );
+                            },
+                            item: state.notesData[index],
+                            backgroundColor: state.notesData[index].color,
+                          );
+                        },
+                      ),
+                    );
+                  }
+                }
+                return const SizedBox();
+              },
+            ),
           ],
         ),
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
