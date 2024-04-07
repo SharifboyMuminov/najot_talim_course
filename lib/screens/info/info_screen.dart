@@ -1,6 +1,7 @@
 import 'package:default_project/data/models/product/product_model.dart';
 import 'package:default_project/screens/edit/edit_screen.dart';
 import 'package:default_project/utils/size.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -64,9 +65,12 @@ class InfoScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10.r),
-              child: Image.network(productModul.imageUrl),
+            Hero(
+              tag: productModul.prodictId,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10.r),
+                child: Image.network(productModul.imageUrl),
+              ),
             ),
             50.getH(),
             _getRichText("Model:   ", productModul.prodctName),

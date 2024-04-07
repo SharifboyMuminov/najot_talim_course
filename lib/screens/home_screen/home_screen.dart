@@ -1,9 +1,13 @@
-import 'package:default_project/data/models/product/product_model.dart';
-import 'package:default_project/data/network/api_provider.dart';
+import 'package:default_project/blocs/product/product_bloc.dart';
+import 'package:default_project/blocs/product/product_event.dart';
+import 'package:default_project/blocs/product/product_state.dart';
+import 'package:default_project/data/api_provider/api_provider.dart';
 import 'package:default_project/screens/add/add_screen.dart';
 import 'package:default_project/screens/info/info_screen.dart';
 import 'package:default_project/utils/size.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,10 +23,6 @@ class _HomeScreenState extends State<HomeScreen> {
   double elevetion = 0;
   bool isShowtitle = false;
 
-  change() {
-    setState(() {});
-  }
-
   @override
   void initState() {
     scrollController.addListener(() {
@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
       } else {
         elevetion = 0;
       }
-      setState(() {});
+      // setState(() {});
     });
     super.initState();
   }
@@ -75,20 +75,25 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: elevetion,
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: isShowtitle ? Text(
-          "Apple Shoping",
-          style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 22.sp,
-              color: Colors.black),
-        ) : null,
+        title: isShowtitle
+            ? Text(
+                "Apple Shoping",
+                style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 22.sp,
+                    color: Colors.black),
+              )
+            : null,
       ),
-      body: FutureBuilder(
-        future: apiProvider.getAllProduct(),
-        builder: (context, snapshop) {
-          if (snapshop.hasData) {
-            List<ProductModul> products =
-                snapshop.data!.data as List<ProductModul>;
+      body: BlocBuilder<ProductBloc, ProductState>(
+        builder: (BuildContext context, ProductState state) {
+          if (state is Loading) {
+            return Center(child: CircularProgressIndicator.adaptive());
+          }
+          if (state is Error) {
+            return Center(child: Text(state.errorText));
+          }
+          if (state is QueryOk) {
             return ListView(
               controller: scrollController,
               padding: EdgeInsets.symmetric(horizontal: 8.he),
@@ -102,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 20.getH(),
                 ...List.generate(
-                  products.length,
+                  state.products.length,
                   (index) {
                     return Container(
                       margin: EdgeInsets.symmetric(
@@ -123,10 +128,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: const Text("Canel"),
                                   ),
                                   TextButton(
-                                    onPressed: () async {
-                                      await apiProvider.deleteProduct(
-                                          products[index].prodictId);
-                                      change();
+                                    onPressed: () {
+                                      context.read<ProductBloc>().add(
+                                          DeleteProduct(
+                                              productModel:
+                                                  state.products[index]));
+
                                       if (context.mounted) {
                                         Navigator.pop(context);
                                       }
@@ -150,10 +157,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             MaterialPageRoute(
                               builder: (context) {
                                 return InfoScreen(
-                                  productModul: products[index],
-                                  onSet: () {
-                                    setState(() {});
-                                  },
+                                  productModul: state.products[index],
+                                  onSet: () {},
                                 );
                               },
                             ),
@@ -161,9 +166,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                         child: Column(
                           children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(15.r),
-                              child: Image.network(products[index].imageUrl),
+                            Hero(
+                              tag: state.products[index].prodictId,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(15.r),
+                                child:
+                                    Image.network(state.products[index].imageUrl),
+                              ),
                             ),
                             10.getH(),
                             Padding(
@@ -173,14 +182,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    products[index].prodctName,
+                                    state.products[index].prodctName,
                                     style: TextStyle(
                                       fontSize: 18.sp,
                                       color: Colors.black,
                                     ),
                                   ),
                                   Text(
-                                    products[index].price.toString(),
+                                    state.products[index].price.toString(),
                                     style: TextStyle(
                                         fontSize: 22.sp, color: Colors.black),
                                   ),
@@ -196,14 +205,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             );
           }
-          if (snapshop.hasError) {
-            return Center(
-              child: Text(snapshop.data!.errorText),
-            );
-          }
-          return const Center(
-            child: CircularProgressIndicator.adaptive(),
-          );
+
+          return SizedBox();
         },
       ),
     );

@@ -1,13 +1,21 @@
+import 'package:default_project/blocs/product/product_bloc.dart';
+import 'package:default_project/blocs/product/product_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'screens/home_screen/home_screen.dart';
 
 void main(List<String> args) {
-  runApp(MyApp());
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => ProductBloc()..add(CallProduct()))
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
-
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

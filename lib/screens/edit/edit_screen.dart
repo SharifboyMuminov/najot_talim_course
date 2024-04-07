@@ -1,7 +1,10 @@
+import 'package:default_project/blocs/product/product_bloc.dart';
+import 'package:default_project/blocs/product/product_event.dart';
 import 'package:default_project/data/models/product/product_model.dart';
-import 'package:default_project/data/network/api_provider.dart';
+import 'package:default_project/data/api_provider/api_provider.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../widgets/text_fild.dart';
@@ -11,6 +14,7 @@ import '../widgets/text_fild.dart';
 class EditScreen extends StatefulWidget {
   const EditScreen(
       {super.key, required this.productModul, required this.onSet});
+
   final ProductModul productModul;
   final VoidCallback onSet;
 
@@ -24,6 +28,7 @@ class _EditScreenState extends State<EditScreen> {
   TextEditingController controllerModul = TextEditingController();
   TextEditingController controllerPrice = TextEditingController();
   TextEditingController controllerDescription = TextEditingController();
+
   @override
   void initState() {
     productModul = widget.productModul;
@@ -103,7 +108,7 @@ class _EditScreenState extends State<EditScreen> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5.r)),
                     backgroundColor: Colors.blue),
-                onPressed: () async {
+                onPressed: ()  {
                   if (controllerDescription.text.isNotEmpty &&
                       controllerModul.text.isNotEmpty &&
                       controllerPrice.text.isNotEmpty) {
@@ -113,12 +118,11 @@ class _EditScreenState extends State<EditScreen> {
                         price: double.parse(controllerPrice.text),
                         decoretion: controllerDescription.text,
                       );
-                      await apiProvider.updateProduct(productModul!);
-                      widget.onSet.call();
-                      if (context.mounted) {
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                      }
+                      context
+                          .read<ProductBloc>()
+                          .add(UpdateProduct(productModl: productModul!));
+                      Navigator.pop(context);
+                      Navigator.pop(context);
                     }
                   }
                 },

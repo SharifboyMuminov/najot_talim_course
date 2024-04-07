@@ -1,7 +1,10 @@
+import 'package:default_project/blocs/product/product_bloc.dart';
+import 'package:default_project/blocs/product/product_event.dart';
 import 'package:default_project/data/models/product/product_model.dart';
-import 'package:default_project/data/network/api_provider.dart';
+import 'package:default_project/data/api_provider/api_provider.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../widgets/text_fild.dart';
@@ -9,6 +12,7 @@ import '../widgets/text_fild.dart';
 
 class AddScreen extends StatefulWidget {
   const AddScreen({super.key, required this.onSet});
+
   final VoidCallback onSet;
 
   @override
@@ -106,7 +110,7 @@ class _AddScreenState extends State<AddScreen> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5.r)),
                     backgroundColor: Colors.blue),
-                onPressed: () async {
+                onPressed: () {
                   if (controllerDescreption.text.isNotEmpty &&
                       controllerImageUrl.text.isNotEmpty &&
                       controllerName.text.isNotEmpty &&
@@ -117,9 +121,9 @@ class _AddScreenState extends State<AddScreen> {
                       prodctName: controllerName.text,
                       imageUrl: controllerImageUrl.text,
                     );
-
-                    await apiProvider.addProduct(productModul);
-                    widget.onSet.call();
+                    context
+                        .read<ProductBloc>()
+                        .add(InsertProduct(productModel: productModul));
                     Navigator.pop(context);
                   }
                 },
