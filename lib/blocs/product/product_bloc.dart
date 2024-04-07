@@ -2,6 +2,7 @@ import 'package:default_project/blocs/product/product_event.dart';
 import 'package:default_project/blocs/product/product_state.dart';
 import 'package:default_project/data/models/network_response.dart';
 import 'package:default_project/data/api_provider/api_provider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
@@ -16,6 +17,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
   _callProducts(CallProduct callProduct, Emitter<ProductState> emit) async {
     emit(Loading());
+    debugPrint("asdfasdf");
     NetworkResponse networkResponse = await apiProvider.getAllProduct();
     if (networkResponse.errorText.isNotEmpty) {
       emit(Error(errorText: "Error"));

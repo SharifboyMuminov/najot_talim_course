@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
 import '../models/network_response.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 
 class ApiProvider {
   Future<NetworkResponse> getAllProduct() async {
@@ -37,8 +37,6 @@ class ApiProvider {
                 ?.map((e) => ProductModul.fromJson(e))
                 .toList() ??
             [];
-
-        return networkResponse;
       }
     } catch (error) {
       debugPrint(error.toString());
@@ -121,7 +119,9 @@ class ApiProvider {
     try {
       Response response = await dio.delete(
         "https://crudapi.co.uk/api/v1/products",
-        data: jsonEncode([{"_uuid": productUUID}]),
+        data: jsonEncode([
+          {"_uuid": productUUID}
+        ]),
         options: Options(
           headers: {
             "Authorization": "Bearer ${AppContans.token}",

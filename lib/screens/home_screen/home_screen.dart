@@ -5,7 +5,6 @@ import 'package:default_project/data/api_provider/api_provider.dart';
 import 'package:default_project/screens/add/add_screen.dart';
 import 'package:default_project/screens/info/info_screen.dart';
 import 'package:default_project/utils/size.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
       } else {
         elevetion = 0;
       }
-      // setState(() {});
+      setState(() {});
     });
     super.initState();
   }
