@@ -42,7 +42,8 @@ class _AddScreenState extends State<AddScreen> {
   void initState() {
     if (widget.personModul != null) {
       noteModul = widget.personModul!;
-      controllerTitle.text = noteModul.fullname;
+      controllerTitle.text = noteModul.fullnam
+        
       controllerSubTitle.text = noteModul.text;
     }
     super.initState();
