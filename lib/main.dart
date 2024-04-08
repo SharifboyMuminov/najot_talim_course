@@ -1,13 +1,26 @@
+import 'package:default_project/bloc/card_bloc.dart';
+import 'package:default_project/bloc/card_event.dart';
+import 'package:default_project/data/api_provider/api_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'screens/home_screen/home_screen.dart';
 
 void main(List<String> args) {
-  runApp(MyApp());
+  ApiProvider apiProvider = ApiProvider();
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) =>
+              CardBloc(apiProvider: apiProvider)..add(CallCardEvent()),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
-
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
