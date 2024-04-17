@@ -1,7 +1,7 @@
 class QuizModel {
   final String request;
   final String countText;
-  final String alphabet;
+  List<String> alphabet;
   final String trueAnswer;
 
   QuizModel({
