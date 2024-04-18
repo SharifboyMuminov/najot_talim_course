@@ -116,6 +116,8 @@ class PuzzleView extends ChangeNotifier {
       for (int j = 0; j < trueNumbers[i].length; j++) {
         if (trueNumbers[i][j] == puzzleNumbers[i][j]) {
           trueCount++;
+        } else {
+          break;
         }
       }
     }
