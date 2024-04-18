@@ -3,7 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PuzzleView extends ChangeNotifier {
   PuzzleView() {
-    shuffleNumbers();
+    while (true) {
+      shuffleNumbers();
+      if (!isWin()) {
+        break;
+      }
+    }
   }
 
   List<List<int>> puzzleNumbers = [];
