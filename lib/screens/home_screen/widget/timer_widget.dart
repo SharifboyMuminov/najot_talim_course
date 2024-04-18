@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:default_project/data/local/varibals.dart';
+import 'package:default_project/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class TimerWidget extends StatefulWidget {
@@ -23,21 +25,20 @@ class TimerWidget extends StatefulWidget {
 
 class _TimerWidgetState extends State<TimerWidget> {
   late Timer _timer;
-  int _start = 0;
 
   void startTimer() {
     _timer = Timer.periodic(
       const Duration(seconds: 1),
       (Timer timer) {
         if (widget.start) {
-          setState(() => _start++);
+          setState(() => puzzleSecond++);
         }
       },
     );
   }
 
   String printDuration() {
-    var duration = Duration(seconds: _start);
+    var duration = Duration(seconds: puzzleSecond);
     String twoDigits(int n) => n.toString().padLeft(2, "0");
     String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
     String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));

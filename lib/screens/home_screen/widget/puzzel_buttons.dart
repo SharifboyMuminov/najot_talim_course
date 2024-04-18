@@ -48,7 +48,9 @@ class PuzzleButtons extends StatelessWidget {
                           horizontal: 5.we, vertical: 5.he),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.r),
-                        color: Colors.deepPurple.withOpacity(0.6),
+                        color: context.watch<PuzzleView>().isStart
+                            ? Colors.deepPurple.withOpacity(0.6)
+                            : Colors.grey,
                       ),
                       child: Text(
                         context

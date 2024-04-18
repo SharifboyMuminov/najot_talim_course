@@ -37,10 +37,14 @@ class PuzzleView extends ChangeNotifier {
     _isStart = !_isStart;
     notifyListeners();
   }
+  void changeValueStart(bool value){
+    _isStart = value;
+    notifyListeners();
+  }
 
   void changeNumbers(BuildContext context,
       {required int index, required int indexTwo}) {
-    if(isStart){
+    if (isStart) {
       if (index - 1 >= 0 && puzzleNumbers[index - 1][indexTwo] == 0) {
         puzzleNumbers[index - 1][indexTwo] = puzzleNumbers[index][indexTwo];
         puzzleNumbers[index][indexTwo] = 0;

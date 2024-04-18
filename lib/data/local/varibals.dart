@@ -1,0 +1,1 @@
+int puzzleSecond = 0;

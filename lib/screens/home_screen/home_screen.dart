@@ -1,3 +1,4 @@
+import 'package:default_project/data/local/varibals.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:default_project/view_models/puzzle/puzzle_view_model.dart';
 import 'package:default_project/screens/home_screen/widget/timer_widget.dart';
@@ -5,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-import 'widget/puzzel_button.dart';
+import 'widget/puzzel_buttons.dart';
 import 'widget/start_button.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -33,12 +34,15 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             onPressed: () {
+              puzzleSecond = 0;
+              context.read<PuzzleView>().changeValueStart(false);
+
               context.read<PuzzleView>().shuffleNumbers();
             },
             icon: Icon(
               Icons.restart_alt,
               size: 25.sp,
-              color:  Colors.deepPurple,
+              color: Colors.deepPurple,
             ),
           ),
         ],
@@ -50,7 +54,9 @@ class _HomeScreenState extends State<HomeScreen> {
             width: 200,
             height: 100,
             fontSize: 22.sp,
-            color: Colors.deepPurple,
+            color: context.watch<PuzzleView>().isStart
+                ? Colors.deepPurple
+                : Colors.grey,
             start: context.watch<PuzzleView>().isStart,
           ),
           SizedBox(height: 50.he),
