@@ -3,8 +3,10 @@ import 'package:default_project/cobits/game/game_cubit.dart';
 import 'package:default_project/screens/home_screen/widget/show_image.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -86,17 +88,41 @@ class _HomeScreenState extends State<HomeScreen>
                     ),
                     Row(
                       children: [
-                        CachedNetworkImage(
-                          imageUrl:
-                           state.games[state.currentIndex].imageUrls[0],
-                          placeholder: (context, url) => Container(
-                            width: width,
-                            height: height,
-                            color: Colors.grey,
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 10.we, vertical: 10.he),
+
+                            child: CachedNetworkImage(
+                              imageUrl:
+                                  state.games[state.currentIndex].imageUrls[0],
+                              placeholder: (context, url) => Container(
+                                width: width,
+                                height: height,
+                                color: Colors.grey,
+                              ),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
+                              fit: BoxFit.cover,
+                              height: 140.he,
+                            ),
                           ),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
-                          fit: BoxFit.cover,
+                        ),
+                        Expanded(
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                state.games[state.currentIndex].imageUrls[1],
+                            placeholder: (context, url) => Container(
+                              width: width,
+                              height: height,
+                              color: Colors.grey,
+                            ),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                            fit: BoxFit.cover,
+                            height: 130.he,
+                          ),
                         ),
                       ],
                     ),
