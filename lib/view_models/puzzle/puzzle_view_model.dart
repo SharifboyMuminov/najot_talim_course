@@ -7,7 +7,7 @@ class PuzzleView extends ChangeNotifier {
   }
 
   List<List<int>> puzzleNumbers = [];
-  List<int> randomNumbers = List.generate(15, (index) => index + 1);
+  List<int> randomNumbers = List.generate(16, (index) => index);
   bool _isStart = false;
 
   void shuffleNumbers() {
@@ -20,8 +20,6 @@ class PuzzleView extends ChangeNotifier {
       for (int j = start; j < start + 4; j++) {
         if (j < randomNumbers.length) {
           lst.add(randomNumbers[j]);
-        } else {
-          lst.add(0);
         }
       }
       start += 4;
@@ -37,7 +35,8 @@ class PuzzleView extends ChangeNotifier {
     _isStart = !_isStart;
     notifyListeners();
   }
-  void changeValueStart(bool value){
+
+  void changeValueStart(bool value) {
     _isStart = value;
     notifyListeners();
   }
