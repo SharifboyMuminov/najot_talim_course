@@ -1,12 +1,12 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:default_project/cobits/game/game_cubit.dart';
+import 'package:default_project/cobits/game/game_state.dart';
+import 'package:default_project/screens/home_screen/widget/bottom.dart';
+import 'package:default_project/screens/home_screen/widget/input_item.dart';
 import 'package:default_project/screens/home_screen/widget/show_bacground_image.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -51,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
+    // var provideListen = Provider.of<TabViewModel>(context, listen: true);
     return AnnotatedRegion(
       value: const SystemUiOverlayStyle(
         systemNavigationBarColor: AppColors.c_252525,
@@ -65,6 +66,7 @@ class _HomeScreenState extends State<HomeScreen>
             BlocBuilder<GameCubit, GameSingle>(
               builder: (BuildContext context, GameSingle state) {
                 return SingleChildScrollView(
+                  padding: EdgeInsets.only(bottom: 20.he),
                   child: Column(
                     children: [
                       SizedBox(height: 50.he, width: width),
@@ -118,34 +120,14 @@ class _HomeScreenState extends State<HomeScreen>
                           children: List.generate(
                             state.games[state.currentIndex].trueAnswer.length,
                             (index) {
-                              if (state.inoputText.length > index) {
-                                return Container(
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: 5.we, vertical: 5.he),
-                                  child: TextButton(
-                                      style: TextButton.styleFrom(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 20.we, vertical: 15.we),
-                                        backgroundColor:
-                                            Colors.blue.withOpacity(0.5),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(5.r),
-                                        ),
-                                        side: BorderSide(
-                                            color: Colors.blueAccent,
-                                            width: 2.we),
-                                      ),
-                                      onPressed: () {},
-                                      child: Text(
-                                        state.inoputText[index],
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 22.sp,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      )),
-                                );
+                              if (state.inputText.length > index) {
+                                return InputAndAlphabetsButtons(
+                                    onTab: () {
+                                      context
+                                          .read<GameCubit>()
+                                          .removeInput(state.inputText[index]);
+                                    },
+                                    title: state.inputText[index]);
                               }
                               return Container(
                                 width: 55.we,
@@ -153,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen>
                                 margin: EdgeInsets.symmetric(
                                     horizontal: 5.we, vertical: 5.he),
                                 decoration: BoxDecoration(
-                                  color: Colors.blue.withOpacity(0.5),
+                                  color: Colors.white,
                                   border: Border.all(
                                       color: Colors.blueAccent, width: 2.we),
                                   borderRadius: BorderRadius.circular(5.r),
@@ -163,41 +145,8 @@ class _HomeScreenState extends State<HomeScreen>
                           ),
                         ),
                       ),
-                      SizedBox(height: 20.he),
-                      Wrap(
-                        direction: Axis.horizontal,
-                        children: List.generate(
-                          state.games[state.currentIndex].alphabets.length,
-                          (index) {
-                            return Container(
-                              margin: EdgeInsets.symmetric(
-                                  horizontal: 5.we, vertical: 5.he),
-                              child: TextButton(
-                                style: TextButton.styleFrom(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 20.we, vertical: 15.we),
-                                  backgroundColor: Colors.blue.withOpacity(0.5),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5.r),
-                                  ),
-                                  side: BorderSide(
-                                      color: Colors.blueAccent, width: 2.we),
-                                ),
-                                onPressed: () {},
-                                child: Text(
-                                  state.games[state.currentIndex]
-                                      .alphabets[index],
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 22.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
+                      SizedBox(height: 40.he),
+                      const BottomItem(),
                     ],
                   ),
                 );

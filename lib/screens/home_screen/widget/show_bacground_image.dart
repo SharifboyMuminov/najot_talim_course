@@ -10,11 +10,7 @@ class ShowBacgroundImage extends StatelessWidget {
     return CachedNetworkImage(
       imageUrl:
           "https://w0.peakpx.com/wallpaper/728/790/HD-wallpaper-nature-animation-amoled-anime-landscape-thumbnail.jpg",
-      placeholder: (context, url) => Container(
-        width: width,
-        height: height,
-        color: Colors.grey,
-      ),
+      placeholder: (context, url) => const CircularProgressIndicator.adaptive(),
       errorWidget: (context, url, error) => const Icon(Icons.error),
       height: height,
       width: width,

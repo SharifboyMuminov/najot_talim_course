@@ -1,43 +1,55 @@
+import 'package:default_project/cobits/game/game_state.dart';
+import 'package:default_project/cobits/widget/show_dialog_end.dart';
 import 'package:default_project/data/local/local_varibals.dart';
-import 'package:default_project/data/models/game/game_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GameCubit extends Cubit<GameSingle> {
   GameCubit()
-      : super(
-    GameSingle(
-      currentIndex: 0,
-      games: gameModels,
-      inoputText: [],
-    ),
-  );
+      : super(GameSingle(
+          currentIndex: 0,
+          games: gameModels,
+          inputText: [],
+        ));
 
-  void input(String value) {
+  void input(BuildContext context,String value) {
+    state.inputText.add(value);
+    state.games[state.currentIndex].alphabets.remove(value);
+    if (state.inputText.length ==
+        state.games[state.currentIndex].trueAnswer.length) {
+      if (state.inputText.join("") ==
+          state.games[state.currentIndex].trueAnswer) {
+        state.currentIndex++;
+        if (state.currentIndex == state.games.length) {
+          state.games[state.currentIndex - 1].alphabets
+              .addAll(state.inputText);
+          emit(state.copyWith(currentIndex: 0, inoputText: [], gameOver: true));
+          showDialogEng(context);
+        } else {
+          state.games[state.currentIndex - 1].alphabets
+              .addAll(state.inputText);
+          emit(state.copyWith(
+            currentIndex: state.currentIndex,
+            inoputText: [],
+          ));
+        }
+      }
+    }
+
     emit(state.copyWith(
-      inoputText: state.inoputText,
+      inoputText: state.inputText,
+      games: state.games,
+      gameOver: false,
     ));
   }
-}
 
-class GameSingle {
-  List<GameModel> games;
-  int currentIndex;
-  List<String> inoputText;
+  void removeInput(String value) {
+    state.inputText.remove(value);
+    state.games[state.currentIndex].alphabets.add(value);
 
-  GameSingle({
-    required this.currentIndex,
-    required this.games,
-    required this.inoputText,
-  });
-
-  GameSingle copyWith({
-    List<GameModel>? games,
-    int? currentIndex,
-    List<String>? inoputText,
-  }) {
-    return GameSingle(
-        currentIndex: currentIndex ?? this.currentIndex,
-        games: games ?? this.games,
-        inoputText: inoputText ?? this.inoputText);
+    emit(state.copyWith(
+      inoputText: state.inputText,
+      games: state.games,
+    ));
   }
 }
