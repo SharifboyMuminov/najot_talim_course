@@ -20,20 +20,26 @@ class BottomItem extends StatelessWidget {
             .length,
         (index) {
           return InputAndAlphabetsButtons(
-              onTab: () {
-                context.read<GameCubit>().input(
-                    context,
-                    context
-                        .read<GameCubit>()
-                        .state
-                        .games[context.read<GameCubit>().state.currentIndex]
-                        .alphabets[index]);
-              },
-              title: context
-                  .watch<GameCubit>()
-                  .state
-                  .games[context.watch<GameCubit>().state.currentIndex]
-                  .alphabets[index]);
+            onTab: () {
+              context.read<GameCubit>().input(
+                  context,
+                  context
+                      .read<GameCubit>()
+                      .state
+                      .games[context.read<GameCubit>().state.currentIndex]
+                      .alphabets[index]);
+            },
+            title: context
+                .watch<GameCubit>()
+                .state
+                .games[context.watch<GameCubit>().state.currentIndex]
+                .alphabets[index],
+            key2: Key(context
+                .watch<GameCubit>()
+                .state
+                .games[context.watch<GameCubit>().state.currentIndex]
+                .alphabets[index]),
+          );
         },
       ),
     );

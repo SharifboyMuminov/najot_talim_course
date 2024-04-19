@@ -4,16 +4,21 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class InputAndAlphabetsButtons extends StatelessWidget {
   const InputAndAlphabetsButtons(
-      {super.key, required this.onTab, required this.title});
+      {super.key,
+      required this.onTab,
+      required this.title,
+      required this.key2});
 
   final VoidCallback onTab;
   final String title;
+  final Key key2;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 5.we, vertical: 5.he),
       child: TextButton(
+          key: key2,
           style: TextButton.styleFrom(
             padding: EdgeInsets.symmetric(horizontal: 20.we, vertical: 15.we),
             backgroundColor: Colors.blue.withOpacity(0.5),

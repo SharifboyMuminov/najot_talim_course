@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen>
                           ),
                         ),
                       ),
-                      SizedBox(height: 10.he),
+                      SizedBox(key: Key("1"), height: 10.he),
                       Row(
                         children: [
                           ShowImage(
@@ -117,6 +117,7 @@ class _HomeScreenState extends State<HomeScreen>
                         alignment: Alignment.center,
                         child: Wrap(
                           direction: Axis.horizontal,
+                          alignment: WrapAlignment.center,
                           children: List.generate(
                             state.games[state.currentIndex].trueAnswer.length,
                             (index) {
@@ -127,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen>
                                           .read<GameCubit>()
                                           .removeInput(state.inputText[index]);
                                     },
-                                    title: state.inputText[index]);
+                                    title: state.inputText[index], key2: Key(""),);
                               }
                               return Container(
                                 width: 55.we,

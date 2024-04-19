@@ -13,34 +13,36 @@ class GameCubit extends Cubit<GameSingle> {
         ));
 
   void input(BuildContext context,String value) {
-    state.inputText.add(value);
-    state.games[state.currentIndex].alphabets.remove(value);
-    if (state.inputText.length ==
-        state.games[state.currentIndex].trueAnswer.length) {
-      if (state.inputText.join("") ==
-          state.games[state.currentIndex].trueAnswer) {
-        state.currentIndex++;
-        if (state.currentIndex == state.games.length) {
-          state.games[state.currentIndex - 1].alphabets
-              .addAll(state.inputText);
-          emit(state.copyWith(currentIndex: 0, inoputText: [], gameOver: true));
-          showDialogEng(context);
-        } else {
-          state.games[state.currentIndex - 1].alphabets
-              .addAll(state.inputText);
-          emit(state.copyWith(
-            currentIndex: state.currentIndex,
-            inoputText: [],
-          ));
+    if(state.inputText.length < state.games[state.currentIndex].trueAnswer.length){
+      state.inputText.add(value);
+      state.games[state.currentIndex].alphabets.remove(value);
+      if (state.inputText.length ==
+          state.games[state.currentIndex].trueAnswer.length) {
+        if (state.inputText.join("") ==
+            state.games[state.currentIndex].trueAnswer) {
+          state.currentIndex++;
+          if (state.currentIndex == state.games.length) {
+            state.games[state.currentIndex - 1].alphabets
+                .addAll(state.inputText);
+            emit(state.copyWith(currentIndex: 0, inoputText: [], gameOver: true));
+            showDialogEng(context);
+          } else {
+            state.games[state.currentIndex - 1].alphabets
+                .addAll(state.inputText);
+            emit(state.copyWith(
+              currentIndex: state.currentIndex,
+              inoputText: [],
+            ));
+          }
         }
       }
-    }
 
-    emit(state.copyWith(
-      inoputText: state.inputText,
-      games: state.games,
-      gameOver: false,
-    ));
+      emit(state.copyWith(
+        inoputText: state.inputText,
+        games: state.games,
+        gameOver: false,
+      ));
+    }
   }
 
   void removeInput(String value) {

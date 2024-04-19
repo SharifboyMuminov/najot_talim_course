@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:default_project/cobits/game/game_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,7 +7,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'screens/home_screen/home_screen.dart';
 
-void main(List<String> args) {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(
     MultiBlocProvider(
       providers: [
