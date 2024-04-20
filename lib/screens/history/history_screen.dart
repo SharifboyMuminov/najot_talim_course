@@ -56,7 +56,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 ),
               );
             }
-            debugPrint(state.qrModels.length.toString());
+            // debugPrint(state.qrModels.length.toString());
             return ListView.builder(
               padding: EdgeInsets.only(top: 10.he, bottom: 80.he),
               itemCount: state.qrModels.length,

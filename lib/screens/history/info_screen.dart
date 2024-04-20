@@ -6,6 +6,8 @@ import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:url_launcher/link.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InfoScreen extends StatefulWidget {
   const InfoScreen({super.key, required this.qrScannerModel});
@@ -17,7 +19,7 @@ class InfoScreen extends StatefulWidget {
 }
 
 class _InfoScreenState extends State<InfoScreen> {
-  final GlobalKey _globalKey = GlobalKey();
+  final GlobalKey _globalKey = GlobalKey(debugLabel: "sharifjon");
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +62,10 @@ class _InfoScreenState extends State<InfoScreen> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.we),
             child: ListTile(
-              onTap: () {},
+              onTap: () async {
+                // debugPrint(widget.qrScannerModel.qrCode);
+
+              },
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(6.r)),
               tileColor: AppColors.c_333333,
@@ -137,5 +142,18 @@ class _InfoScreenState extends State<InfoScreen> {
         ],
       ),
     );
+  }
+
+  Future<void> openUrl(String url) async {
+    final _url = Uri.parse(url);
+    Link(
+      uri: _url,
+      builder: (BuildContext context, Future<void> Function()? followLink) =>
+          TextButton(onPressed: () {}, child: Text("sdaf")),
+      target: LinkTarget.defaultTarget,
+    );
+    if (!await launchUrl(_url, mode: LaunchMode.externalApplication)) {
+      throw Exception('Could not launch $_url');
+    }
   }
 }

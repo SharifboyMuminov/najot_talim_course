@@ -5,6 +5,7 @@ import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../utils/app_images.dart';
 import '../dialog/request_dialog_remov.dart';
@@ -34,9 +35,7 @@ class HistoryItem extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) {
-                return InfoScreen(
-                  qrScannerModel:qrScannerModel
-                );
+                return InfoScreen(qrScannerModel: qrScannerModel);
               },
             ),
           );
