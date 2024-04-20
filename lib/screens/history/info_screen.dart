@@ -64,7 +64,8 @@ class _InfoScreenState extends State<InfoScreen> {
             child: ListTile(
               onTap: () async {
                 // debugPrint(widget.qrScannerModel.qrCode);
-
+                Uri url = Uri.parse(widget.qrScannerModel.qrCode);
+                launchUrl(url);
               },
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(6.r)),

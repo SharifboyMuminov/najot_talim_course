@@ -93,7 +93,11 @@ class _TabBoxScreenState extends State<TabBoxScreen> {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return const ScannerScreen();
+                        return ScannerScreen(
+                          onSet: () {
+                            setState(() {});
+                          },
+                        );
                       },
                     ),
                   );
