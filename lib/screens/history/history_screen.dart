@@ -71,26 +71,26 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   valueColor: AlwaysStoppedAnimation<Color>(Colors.black38)));
         },
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) {
-                return InfoScreen(
-                  qrScannerModel: QrScannerModel(
-                    date: DateTime.now().toString(),
-                    qrCode: '1234566',
-                    name: 'asdfadsf ',
-                  ),
-                );
-              },
-            ),
-          );
-        },
-        child: Icon(Icons.info),
-      ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //         builder: (context) {
+      //           return InfoScreen(
+      //             qrScannerModel: QrScannerModel(
+      //               date: DateTime.now().toString(),
+      //               qrCode: '1234566',
+      //               name: 'asdfadsf ',
+      //             ),
+      //           );
+      //         },
+      //       ),
+      //     );
+      //   },
+      //   child: Icon(Icons.info),
+      // ),
     );
   }
 }

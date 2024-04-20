@@ -17,7 +17,7 @@ class InfoScreen extends StatefulWidget {
 }
 
 class _InfoScreenState extends State<InfoScreen> {
-  GlobalKey _globalKey = GlobalKey();
+  final GlobalKey _globalKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -83,10 +83,10 @@ class _InfoScreenState extends State<InfoScreen> {
             ),
           ),
           SizedBox(height: 55.he),
-          Align(
-            alignment: Alignment.center,
-            child: RepaintBoundary(
-              key: _globalKey,
+          RepaintBoundary(
+            key: _globalKey,
+            child: Align(
+              alignment: Alignment.center,
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(4.r),
@@ -111,13 +111,21 @@ class _InfoScreenState extends State<InfoScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              InfoButton(onTab: () {}, title: "Share"),
+              InfoButton(
+                  onTab: () {
+                    WidgetSaverService.openWidgetAsImage(
+                      context: context,
+                      widgetKey: _globalKey,
+                      fileId: widget.qrScannerModel.qrCode,
+                    );
+                  },
+                  title: "Share"),
               SizedBox(width: 20.we),
               InfoButton(
                 onTab: () {
                   WidgetSaverService.saveWidgetToGallery(
                     context: context,
-                    widgetKey:_globalKey,
+                    widgetKey: _globalKey,
                     fileId: widget.qrScannerModel.qrCode,
                   );
                 },
