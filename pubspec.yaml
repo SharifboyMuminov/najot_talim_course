@@ -37,6 +37,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_screenutil: ^5.9.0
   shared_preferences: ^2.2.2
+  open_filex: ^4.4.0
+  path_provider: ^2.1.2
+  permission_handler: ^11.3.0
+  flutter_svg: ^2.0.9
+  gallery_saver: ^2.3.2
 
 dev_dependencies:
   flutter_test:
