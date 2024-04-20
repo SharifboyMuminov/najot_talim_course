@@ -1,0 +1,1 @@
+int globalActiveScreen = 0;

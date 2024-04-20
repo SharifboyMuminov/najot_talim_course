@@ -42,6 +42,10 @@ dependencies:
   permission_handler: ^11.3.0
   flutter_svg: ^2.0.9
   gallery_saver: ^2.3.2
+  qr_code_scanner: ^1.0.1
+  sqflite: ^2.3.3
+  flutter_bloc: ^8.1.5
+  qr_flutter: ^4.1.0
 
 dev_dependencies:
   flutter_test:
