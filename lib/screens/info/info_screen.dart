@@ -3,15 +3,16 @@ import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:default_project/utils/text_style.dart';
 import 'package:default_project/views/book_view_model/book_view_model.dart';
+import 'package:default_project/views/dowload_file/download_file_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import 'widget/arrow_button.dart';
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 class InfoScreen extends StatefulWidget {
   const InfoScreen({super.key, required this.indexBook});
+
   final int indexBook;
 
   @override
@@ -33,7 +34,7 @@ class _InfoScreenState extends State<InfoScreen> {
       body: Stack(
         children: [
           Image.network(
-            context.watch<BookViewModel>().activeList[index].imageUrl,
+            context.read<BookViewModel>().activeList[index].imageUrl,
             fit: BoxFit.cover,
             width: width,
             height: height,
@@ -106,7 +107,10 @@ class _InfoScreenState extends State<InfoScreen> {
                     ],
                   ),
                   child: Hero(
-                    tag: context.watch<BookViewModel>().activeList[index].imageUrl,
+                    tag: context
+                        .watch<BookViewModel>()
+                        .activeList[index]
+                        .imageUrl,
                     child: Image.network(
                       context.watch<BookViewModel>().activeList[index].imageUrl,
                       fit: BoxFit.cover,
@@ -203,6 +207,30 @@ class _InfoScreenState extends State<InfoScreen> {
             ),
           ),
           Positioned(
+            right: 60,
+            top: 55,
+            child: IconButton(
+              onPressed: () {
+                context.read<DownloadFileView>().downloadFile(
+                    bookModel: context.read<BookViewModel>().activeList[index]);
+              },
+              icon: Container(
+                padding: const EdgeInsets.all(3),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: AppColors.c_000000,
+                    width: 0.5,
+                  ),
+                ),
+                child: Icon(
+                  Icons.downloading,
+                  size: 16.sp,
+                ),
+              ),
+            ),
+          ),
+          Positioned(
             right: 20,
             top: 55,
             child: IconButton(
@@ -212,14 +240,15 @@ class _InfoScreenState extends State<InfoScreen> {
                   MaterialPageRoute(
                     builder: (context) {
                       return EditScreen(
-                        bookModel: context.watch<BookViewModel>().activeList[index],
+                        bookModel:
+                            context.watch<BookViewModel>().activeList[index],
                       );
                     },
                   ),
                 );
               },
               icon: Container(
-                padding: EdgeInsets.all(3),
+                padding: const EdgeInsets.all(3),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
@@ -234,6 +263,11 @@ class _InfoScreenState extends State<InfoScreen> {
               ),
             ),
           ),
+          // Container(
+          //   width: width,
+          //   height: height,
+          //   color: Colors.white,
+          // ),
         ],
       ),
     );

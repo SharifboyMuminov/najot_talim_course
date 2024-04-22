@@ -9,6 +9,7 @@ import '../widgets/text_filed.dart';
 
 class EditScreen extends StatefulWidget {
   const EditScreen({super.key, required this.bookModel});
+
   final BookModel bookModel;
 
   @override
@@ -22,6 +23,7 @@ class _EditScreenState extends State<EditScreen> {
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerCategory = TextEditingController();
   TextEditingController controllerRate = TextEditingController();
+  TextEditingController controllerUrlDownload = TextEditingController();
 
   @override
   void initState() {
@@ -31,6 +33,7 @@ class _EditScreenState extends State<EditScreen> {
     controllerCategory.text = widget.bookModel.category.id.toString();
     controllerPrice.text = widget.bookModel.price.toString();
     controllerRate.text = widget.bookModel.rate.toString();
+    controllerUrlDownload.text = widget.bookModel.urlDownload.toString();
 
     super.initState();
   }
@@ -40,6 +43,15 @@ class _EditScreenState extends State<EditScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.black,
+          ),
+        ),
         automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: Colors.white,
@@ -72,6 +84,12 @@ class _EditScreenState extends State<EditScreen> {
               controller: controllerPrice,
               hintText: '  Price: ',
               keyboardType: TextInputType.number,
+            ),
+            25.getH(),
+            TextfiedMyWidget(
+              controller: controllerUrlDownload,
+              hintText: '  Url download: ',
+              keyboardType: TextInputType.name,
             ),
             25.getH(),
             TextfiedMyWidget(

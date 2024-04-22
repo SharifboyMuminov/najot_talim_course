@@ -1,5 +1,6 @@
 import 'package:default_project/data/reposotory/book_repository/book_repository.dart';
 import 'package:default_project/views/book_view_model/book_view_model.dart';
+import 'package:default_project/views/dowload_file/download_file_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,7 @@ void main(List<String> args) {
             bookRepository: bookRepository,
           ),
         ),
+        ChangeNotifierProvider(create: (_) => DownloadFileView()),
       ],
       child: const MyApp(),
     ),
