@@ -22,12 +22,22 @@ class _AddScreenState extends State<AddScreen> {
   TextEditingController controllerCategory = TextEditingController();
   TextEditingController controllerRate = TextEditingController();
   TextEditingController controllerImageUrl = TextEditingController();
+  TextEditingController controllerUrlDownload = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.black,
+          ),
+        ),
         automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: Colors.white,
@@ -59,6 +69,12 @@ class _AddScreenState extends State<AddScreen> {
             TextfiedMyWidget(
               controller: controllerImageUrl,
               hintText: '  Iamge Url: ',
+              keyboardType: TextInputType.name,
+            ),
+            25.getH(),
+            TextfiedMyWidget(
+              controller: controllerUrlDownload,
+              hintText: '  Url download: ',
               keyboardType: TextInputType.name,
             ),
             25.getH(),
@@ -123,7 +139,8 @@ class _AddScreenState extends State<AddScreen> {
                       controllerName.text.isNotEmpty &&
                       controllerPrice.text.isNotEmpty &&
                       controllerRate.text.isNotEmpty &&
-                      controllerImageUrl.text.isNotEmpty) {
+                      controllerImageUrl.text.isNotEmpty &&
+                      controllerUrlDownload.text.isNotEmpty) {
                     BookModel bookModel = BookModel(
                       mualif: controllerModul.text,
                       color: "B5C0D0",
@@ -133,6 +150,7 @@ class _AddScreenState extends State<AddScreen> {
                       imageUrl: controllerImageUrl.text,
                       name: controllerName.text,
                       price: int.parse(controllerPrice.text),
+                      urlDownload: controllerUrlDownload.text,
                     );
 
                     await context

@@ -6,6 +6,7 @@ class BookModel {
   final CategoryModel category;
   final String description;
   final String imageUrl;
+  final String urlDownload;
   final String mualif;
   final String name;
   final int price;
@@ -15,6 +16,7 @@ class BookModel {
   BookModel({
     this.uuid,
     required this.mualif,
+    required this.urlDownload,
     required this.color,
     required this.rate,
     required this.category,
@@ -35,6 +37,7 @@ class BookModel {
       color: json["color"] as String? ?? "CCD3CA",
       rate: json["rate"] as num? ?? 0,
       mualif: json["mualif"] as String? ?? "Palonchi Palonchiyev",
+      urlDownload: json["url_download"] as String? ?? "",
     );
   }
 
@@ -43,6 +46,7 @@ class BookModel {
       "_uuid": uuid,
       'categoriy': category.id,
       'descreption': description,
+      'url_download': urlDownload,
       'image_url': imageUrl,
       'name': name,
       'price': price,
@@ -56,6 +60,7 @@ class BookModel {
     return {
       'categoriy': category.id,
       'descreption': description,
+      'url_download': urlDownload,
       'image_url': imageUrl,
       'name': name,
       'price': price,
@@ -75,6 +80,7 @@ class BookModel {
     String? color,
     double? rate,
     String? mualif,
+    String? urlDownload,
   }) {
     return BookModel(
       color: color ?? this.color,
@@ -86,6 +92,7 @@ class BookModel {
       name: name ?? this.name,
       price: price ?? this.price,
       mualif: mualif ?? this.mualif,
+      urlDownload: urlDownload ?? this.urlDownload,
     );
   }
 }
