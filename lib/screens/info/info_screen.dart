@@ -263,11 +263,12 @@ class _InfoScreenState extends State<InfoScreen> {
               ),
             ),
           ),
-          // Container(
-          //   width: width,
-          //   height: height,
-          //   color: Colors.white,
-          // ),
+          if (context.watch<DownloadFileView>().loading)
+            Container(
+              width: width,
+              height: height,
+              color: Colors.white,
+            ),
         ],
       ),
     );
