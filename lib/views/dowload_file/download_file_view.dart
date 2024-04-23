@@ -13,6 +13,7 @@ class DownloadFileView extends ChangeNotifier {
   Future<void> downloadFile({required BookModel bookModel}) async {
     Dio dio = Dio();
     loading = true;
+    notifyListeners();
 
     FileStatusModel fileStatusModel =
         await FileManagerService().checkFile(bookModel);
@@ -21,7 +22,8 @@ class DownloadFileView extends ChangeNotifier {
       OpenFilex.open(fileStatusModel.newFileLocation);
     } else {
       await dio.download(bookModel.urlDownload, fileStatusModel.newFileLocation,
-          onReceiveProgress: (count, total) {
+          onReceiveProgress: (count, total) async {
+        await Future.delayed(const Duration(milliseconds: 3000));
         progress = (count / total);
         notifyListeners();
       });
@@ -29,6 +31,7 @@ class DownloadFileView extends ChangeNotifier {
 
       progress = 1.0;
       loading = false;
+      notifyListeners();
     }
   }
 }

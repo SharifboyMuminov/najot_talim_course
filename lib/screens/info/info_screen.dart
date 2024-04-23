@@ -264,11 +264,21 @@ class _InfoScreenState extends State<InfoScreen> {
             ),
           ),
           if (context.watch<DownloadFileView>().loading)
-            Container(
-              width: width,
-              height: height,
-              color: Colors.white,
+          Container(
+            alignment: Alignment.center,
+            width: width,
+            height: height,
+            color: Colors.white,
+            child: SizedBox(
+              width: 80.we,
+              height: 80.we,
+              child: CircularProgressIndicator(
+                color: Colors.blue,
+                backgroundColor: Colors.grey,
+                value: context.watch<DownloadFileView>().progress,
+              ),
             ),
+          ),
         ],
       ),
     );
