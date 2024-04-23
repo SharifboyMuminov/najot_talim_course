@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:default_project/data/models/book/book_model.dart';
 import 'package:default_project/data/models/file_status/file_status_model.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -23,7 +24,12 @@ class FileManagerService {
   }
 
   Future<bool> _requestWritePermission() async {
-    await Permission.storage.request();
+    final info = await DeviceInfoPlugin().androidInfo;
+    if (Platform.isAndroid && info.version.sdkInt > 29) {
+      await Permission.manageExternalStorage.request();
+    } else {
+      await Permission.storage.request();
+    }
     return await Permission.storage.request().isGranted;
   }
 
