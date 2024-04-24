@@ -4,6 +4,8 @@ import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactScreen extends StatefulWidget {
   const ContactScreen({super.key});
@@ -38,7 +40,14 @@ class _ContactScreenState extends State<ContactScreen> {
             ContactButton(
               iconsPath: AppImages.callSvg,
               title: "+998 91 366 26 37",
-              onTab: () {},
+              onTab: () async {
+                // debugPrint("Qonday");
+                final Uri phoneUrl = Uri(
+                  scheme: 'tel',
+                  path: '+998913662637',
+                );
+                UrlLauncher.launchUrl(phoneUrl);
+              },
             ),
             SizedBox(height: 10.he),
             ContactButton(
@@ -52,15 +61,56 @@ class _ContactScreenState extends State<ContactScreen> {
               title: "muminovsharifboy@gmail.com",
               onTab: () {},
             ),
-            SizedBox(height: 30.he),
+            SizedBox(height: 50.he),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 TextButton(
                   style: TextButton.styleFrom(
-                    padding: EdgeInsets.zero
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.r)),
                   ),
                   onPressed: () {},
-                  child: SvgPicture.asset(AppImages.linkSvg,width: 50.we,),
+                  child: SvgPicture.asset(
+                    AppImages.linkSvg,
+                    width: 50.we,
+                  ),
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.r)),
+                  ),
+                  onPressed: () {
+                    Uri  instagramUrl = Uri.parse("https://www.instagram.com/sharifboy_muminov/");
+                    UrlLauncher.launchUrl(instagramUrl);
+                  },
+                  child: SvgPicture.asset(
+                    AppImages.instagramSvg,
+                    width: 50.we,
+                  ),
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.r)),
+                  ),
+                  onPressed: () {},
+                  child: SvgPicture.asset(
+                    AppImages.watsapSvg,
+                    width: 50.we,
+                  ),
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.r)),
+                  ),
+                  onPressed: () {},
+                  child: SvgPicture.asset(
+                    AppImages.beSvg,
+                    width: 50.we,
+                  ),
                 ),
               ],
             ),
