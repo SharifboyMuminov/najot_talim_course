@@ -12,6 +12,8 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:ui' as ui;
 
+import '../../server/share_image_server.dart';
+
 class ContactScreen extends StatefulWidget {
   const ContactScreen({super.key});
 
@@ -35,7 +37,7 @@ class _ContactScreenState extends State<ContactScreen> {
     // this will save image screenshot in gallery
     if (byteData != null) {
       Uint8List pngBytes = byteData.buffer.asUint8List();
-      final resultsave = await ImageGallerySaver.saveImage(
+      ImageGallerySaver resultsave = await ImageGallerySaver.saveImage(
           Uint8List.fromList(pngBytes),
           quality: 90,
           name: 'screenshot-${DateTime.now()}.png');
@@ -54,7 +56,12 @@ class _ContactScreenState extends State<ContactScreen> {
           actions: [
             IconButton(
               onPressed: () {
-                _CaptureScreenShot();
+                // _CaptureScreenShot();
+                WidgetSaverService.openWidgetAsImage(
+                  context: context,
+                  widgetKey: _globalKey,
+                  fileId: "Qonday",
+                );
               },
               icon: Icon(
                 Icons.save,
