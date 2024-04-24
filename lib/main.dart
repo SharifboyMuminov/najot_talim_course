@@ -1,3 +1,4 @@
+import 'package:default_project/screens/contact/contact_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -20,11 +21,11 @@ class MyApp extends StatelessWidget {
         ScreenUtil.init(context);
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: ThemeData(useMaterial3: false),
+          theme: ThemeData(useMaterial3: true),
           home: child,
         );
       },
-      child: const HomeScreen(),
+      child: const ContactScreen(),
     );
   }
 }
