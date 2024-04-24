@@ -4,7 +4,6 @@ import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 import 'package:url_launcher/url_launcher.dart';
 
 class ContactScreen extends StatefulWidget {
@@ -41,19 +40,19 @@ class _ContactScreenState extends State<ContactScreen> {
               iconsPath: AppImages.callSvg,
               title: "+998 91 366 26 37",
               onTab: () async {
-                // debugPrint("Qonday");
-                final Uri phoneUrl = Uri(
-                  scheme: 'tel',
-                  path: '+998913662637',
-                );
-                UrlLauncher.launchUrl(phoneUrl);
+                Uri phoneUrl = Uri.parse('tel:+998913662637');
+
+                launchUrl(phoneUrl);
               },
             ),
             SizedBox(height: 10.he),
             ContactButton(
               iconsPath: AppImages.messegSvg,
               title: "muminovsharifboy@gmail.com",
-              onTab: () {},
+              onTab: () {
+                Uri instagramUrl = Uri.parse("muminovsharifboy@gmail.com");
+                launchUrl(instagramUrl);
+              },
             ),
             SizedBox(height: 10.he),
             ContactButton(
@@ -70,7 +69,11 @@ class _ContactScreenState extends State<ContactScreen> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.r)),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Uri instagramUrl = Uri.parse(
+                        "https://www.linkedin.com/in/sharifboy-muminov-8772b12b4/");
+                    launchUrl(instagramUrl);
+                  },
                   child: SvgPicture.asset(
                     AppImages.linkSvg,
                     width: 50.we,
@@ -82,8 +85,9 @@ class _ContactScreenState extends State<ContactScreen> {
                         borderRadius: BorderRadius.circular(10.r)),
                   ),
                   onPressed: () {
-                    Uri  instagramUrl = Uri.parse("https://www.instagram.com/sharifboy_muminov/");
-                    UrlLauncher.launchUrl(instagramUrl);
+                    Uri instagramUrl = Uri.parse(
+                        "https://www.instagram.com/sharifboy_muminov/");
+                    launchUrl(instagramUrl);
                   },
                   child: SvgPicture.asset(
                     AppImages.instagramSvg,
@@ -95,7 +99,10 @@ class _ContactScreenState extends State<ContactScreen> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.r)),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Uri instagramUrl = Uri.parse("https://web.whatsapp.com/");
+                    launchUrl(instagramUrl);
+                  },
                   child: SvgPicture.asset(
                     AppImages.watsapSvg,
                     width: 50.we,
