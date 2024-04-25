@@ -69,7 +69,8 @@ class _HomeScreenForIosState extends State<HomeScreenForIos> {
                       Expanded(
                         child: Text(
                           _batteryLevel,
-                          style: TextStyle(color: Colors.black, fontSize: 23),
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 23),
                         ),
                       ),
                     ],

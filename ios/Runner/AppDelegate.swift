@@ -19,6 +19,10 @@ import Flutter
              result(FlutterMethodNotImplemented)
              return
            }
+           guard call.method == "getInfo" else {
+            result(FlutterMethodNotImplemented)
+            return
+           }
            self?.receiveBatteryLevel(result: result)
        })
 
