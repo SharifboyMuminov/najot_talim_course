@@ -19,6 +19,12 @@ class _HomeScreenForAndroidState extends State<HomeScreenForAndroid> {
   String phoneDevice = "";
   String phoneBrand = "";
 
+  Future<void> _getInfo() async {
+    final result = await platform.invokeMethod<String>('getInfo');
+
+    debugPrint(result.toString());
+  }
+
   Future<void> _getBatteryLevel() async {
     String batteryLevel;
     try {
@@ -120,7 +126,8 @@ class _HomeScreenForAndroidState extends State<HomeScreenForAndroid> {
                     child: TextButton(
                       style: TextButton.styleFrom(backgroundColor: Colors.blue),
                       onPressed: () {
-                        _getBatteryLevel();
+                        // _getBatteryLevel();
+                        _getInfo();
                       },
                       child: const Text(
                         "Get Info",

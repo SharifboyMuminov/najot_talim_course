@@ -1,3 +1,5 @@
+
+
 import 'dart:io';
 
 import 'package:default_project/screens/for_ios/home_screen_ios.dart';
@@ -18,7 +20,7 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(414, 896),
       builder: (context, child) {
-        ScreenUtil.init(context);
+        // ScrenUtil.init(context);
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(useMaterial3: false),

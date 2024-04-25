@@ -1,4 +1,5 @@
 package com.example.default_project
+
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
@@ -11,9 +12,9 @@ import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 
-
 class MainActivity : FlutterActivity() {
     private val CHANNEL = "samples.flutter.dev/battery"
+
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
         MethodChannel(
@@ -28,6 +29,10 @@ class MainActivity : FlutterActivity() {
                 } else {
                     result.error("UNAVAILABLE", "Battery level not available.", null)
                 }
+            } else if (call.method == "getInfo") {
+                var info: String = getDeviceType(applicationContext)
+                result.success(info)
+
             } else {
                 result.notImplemented()
             }
@@ -52,5 +57,16 @@ class MainActivity : FlutterActivity() {
         }
 
         return batteryLevel
+    }
+
+    private fun getDeviceType(context: Context): String {
+        val isTablet = isTablet(context)
+        return if (isTablet) "Tablet" else "Phone"
+    }
+
+    private fun isTablet(context: Context): Boolean {
+        return context.resources.configuration.screenLayout and
+                android.content.res.Configuration.SCREENLAYOUT_SIZE_MASK >=
+                android.content.res.Configuration.SCREENLAYOUT_SIZE_LARGE
     }
 }
