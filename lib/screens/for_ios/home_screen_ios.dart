@@ -2,24 +2,23 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeScreenForIos extends StatefulWidget {
+  const HomeScreenForIos({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomeScreenForIos> createState() => _HomeScreenForIosState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenForIosState extends State<HomeScreenForIos> {
   static const platform = MethodChannel('samples.flutter.dev/battery');
   String _batteryLevel = 'Unknown battery level.';
   bool loading = false;
 
-  String deviceInfo = "Device Info:";
-  String phoneID = "";
-  String phoneDevice = "";
-  String phoneBrand = "";
+  String model = "";
+  String name = "";
+  String phoneVersion = "";
+  String phoneSystemName = "";
 
   Future<void> _getBatteryLevel() async {
     String batteryLevel;
@@ -32,11 +31,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
     DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
 
-    AndroidDeviceInfo androidDeviceInfo = await deviceInfoPlugin.androidInfo;
+    IosDeviceInfo iosDeviceInfo = await deviceInfoPlugin.iosInfo;
+    name = iosDeviceInfo.name;
+    phoneVersion = iosDeviceInfo.systemVersion;
+    phoneSystemName = iosDeviceInfo.systemName;
+    model = iosDeviceInfo.model;
 
-    phoneID = androidDeviceInfo.id;
-    phoneDevice = androidDeviceInfo.device;
-    phoneBrand = androidDeviceInfo.brand;
     setState(() {
       loading = false;
       _batteryLevel = batteryLevel;
@@ -66,18 +66,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Colors.green,
                         size: 28,
                       ),
-                      Text(
-                        _batteryLevel,
-                        style: TextStyle(color: Colors.black, fontSize: 23),
+                      Expanded(
+                        child: Text(
+                          _batteryLevel,
+                          style: TextStyle(color: Colors.black, fontSize: 23),
+                        ),
                       ),
                     ],
                   ),
                   Row(
                     children: [
-                      const Text("Phone id: ",
+                      const Text("Phone name: ",
                           style: TextStyle(color: Colors.black, fontSize: 18)),
                       Text(
-                        phoneID,
+                        name,
                         style:
                             const TextStyle(color: Colors.black, fontSize: 23),
                       ),
@@ -85,10 +87,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Row(
                     children: [
-                      const Text("Phone device: ",
+                      const Text("Phone version: ",
                           style: TextStyle(color: Colors.black, fontSize: 18)),
                       Text(
-                        phoneDevice,
+                        phoneVersion,
                         style:
                             const TextStyle(color: Colors.black, fontSize: 23),
                       ),
@@ -96,10 +98,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Row(
                     children: [
-                      const Text("Device info : ",
+                      const Text("Model: ",
                           style: TextStyle(color: Colors.black, fontSize: 18)),
                       Text(
-                        deviceInfo,
+                        model,
                         style:
                             const TextStyle(color: Colors.black, fontSize: 23),
                       ),
@@ -107,10 +109,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Row(
                     children: [
-                      const Text("Phone brand : ",
+                      const Text("Phone systame name : ",
                           style: TextStyle(color: Colors.black, fontSize: 18)),
                       Text(
-                        phoneBrand,
+                        phoneSystemName,
                         style:
                             const TextStyle(color: Colors.black, fontSize: 23),
                       ),

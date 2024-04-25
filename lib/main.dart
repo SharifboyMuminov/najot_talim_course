@@ -1,7 +1,10 @@
+import 'dart:io';
+
+import 'package:default_project/screens/for_ios/home_screen_ios.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'screens/home/home_screen.dart';
+import 'screens/for_android/home_screen_android.dart';
 
 void main(List<String> args) {
   runApp(MyApp());
@@ -22,7 +25,9 @@ class MyApp extends StatelessWidget {
           home: child,
         );
       },
-      child: HomeScreen(),
+      child: Platform.isIOS
+          ? const HomeScreenForIos()
+          : const HomeScreenForAndroid(),
     );
   }
 }
