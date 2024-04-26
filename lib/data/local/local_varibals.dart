@@ -13,6 +13,14 @@ List<ContactModel> allContacts = [
     lastOnlineTime: DateTime.now(),
   ),
   ContactModel(
+    contactId: 3,
+    contactLasName: "Falonchiyev",
+    contactName: "Falonchi",
+    isOnline: false,
+    imageUrl:"https://static.vecteezy.com/system/resources/previews/009/383/461/non_2x/man-face-clipart-design-illustration-free-png.png",
+    lastOnlineTime: DateTime.now(),
+  ),
+  ContactModel(
     contactId: 2,
     contactLasName: "QodirALiiyev",
     contactName: "Chingiz",
