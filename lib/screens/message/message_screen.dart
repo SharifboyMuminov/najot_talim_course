@@ -1,5 +1,4 @@
 import 'package:default_project/cubits/message/message_cubit.dart';
-import 'package:default_project/data/local/local_varibals.dart';
 import 'package:default_project/data/models/contact/contact.dart';
 import 'package:default_project/data/models/messege/messege_model.dart';
 import 'package:default_project/screens/message/widget/delte_button.dart';
@@ -9,28 +8,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MessageScreen extends StatefulWidget {
-  const MessageScreen(
-      {super.key, required this.contactModel, required this.messages});
+  const MessageScreen({super.key, required this.contactModel});
 
   final ContactModel contactModel;
-  final List<MessageModel> messages;
 
   @override
   State<MessageScreen> createState() => _MessageScreenState();
 }
 
 class _MessageScreenState extends State<MessageScreen> {
-  List<MessageModel> messages = [];
   TextEditingController textEditingController = TextEditingController();
 
   @override
-  void initState() {
-    messages = widget.messages;
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    List<MessageModel> messages = context
+        .watch<MessageCubit>()
+        .sortMessage(contactId: widget.contactModel.contactId);
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -61,10 +55,9 @@ class _MessageScreenState extends State<MessageScreen> {
             child: Container(
               color: Colors.grey.withOpacity(0.1),
               child: ListView.builder(
-                itemCount: context.watch<MessageCubit>().state.messages.length,
+                itemCount: messages.length,
                 itemBuilder: (BuildContext context, int index) {
-                  MessageModel messageModel =
-                      context.watch<MessageCubit>().state.messages[index];
+                  MessageModel messageModel = messages[index];
                   if (messageModel.contactId != 111) {
                     return Row(
                       children: [
@@ -191,6 +184,8 @@ class _MessageScreenState extends State<MessageScreen> {
                       contactId: 111,
                       status: false,
                     );
+                    debugPrint(messageModel.messageId.toString());
+
                     context
                         .read<MessageCubit>()
                         .insertMessage(messageModel: messageModel);

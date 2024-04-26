@@ -60,9 +60,6 @@ class _ChatsScreenState extends State<ChatsScreen> {
                   builder: (context) {
                     return MessageScreen(
                       contactModel: contactModel,
-                      messages: context
-                          .read<MessageCubit>()
-                          .sortMessage(contactId: contactModel.contactId),
                     );
                   },
                 ),
