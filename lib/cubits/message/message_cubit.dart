@@ -22,8 +22,8 @@ class MessageCubit extends Cubit<MessageState> {
   sortMessage({required int contactId}) {
     List<MessageModel> a = state.messages.where((element) {
       if (contactId == element.messageId) {
-        debugPrint(contactId.toString());
-        debugPrint(element.messageId.toString());
+        // debugPrint(contactId.toString());
+        // debugPrint(element.messageId.toString());
 
         return true;
       }
