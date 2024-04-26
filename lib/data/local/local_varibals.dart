@@ -42,7 +42,8 @@ List<MessageModel> messageModels = [
   ),
   MessageModel(
     createdTime: DateTime.now().toString(),
-    messageText: 'Assalomu aleykum Sharifjon Sizga bir taklif bilan chiqiyapmzn vahtiz bo\'sa gaplashsak :)',
+    messageText:
+        'Assalomu aleykum Sharifjon Sizga bir taklif bilan chiqiyapmzn vahtiz bo\'sa gaplashsak :)',
     messageId: 1,
     isFile: false,
     contactId: 1,
