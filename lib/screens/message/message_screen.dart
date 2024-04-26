@@ -1,9 +1,11 @@
+import 'package:default_project/cubits/message/message_cubit.dart';
 import 'package:default_project/data/local/local_varibals.dart';
 import 'package:default_project/data/models/contact/contact.dart';
 import 'package:default_project/data/models/messege/messege_model.dart';
 import 'package:default_project/screens/message/widget/delte_button.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MessageScreen extends StatefulWidget {
@@ -59,9 +61,10 @@ class _MessageScreenState extends State<MessageScreen> {
             child: Container(
               color: Colors.grey.withOpacity(0.1),
               child: ListView.builder(
-                itemCount: widget.messages.length,
+                itemCount: context.watch<MessageCubit>().state.messages.length,
                 itemBuilder: (BuildContext context, int index) {
-                  MessageModel messageModel = widget.messages[index];
+                  MessageModel messageModel =
+                      context.watch<MessageCubit>().state.messages[index];
                   if (messageModel.contactId != 111) {
                     return Row(
                       children: [
@@ -84,6 +87,10 @@ class _MessageScreenState extends State<MessageScreen> {
                         ),
                         DeleteButton(
                           onTabDelete: () {
+                            context
+                                .read<MessageCubit>()
+                                .removeMessage(messageModel: messageModel);
+
                             Navigator.pop(context);
                           },
                           onTabCopy: () {
@@ -98,6 +105,9 @@ class _MessageScreenState extends State<MessageScreen> {
                     children: [
                       DeleteButton(
                         onTabDelete: () {
+                          context
+                              .read<MessageCubit>()
+                              .removeMessage(messageModel: messageModel);
                           Navigator.pop(context);
                         },
                         onTabCopy: () {
@@ -181,10 +191,10 @@ class _MessageScreenState extends State<MessageScreen> {
                       contactId: 111,
                       status: false,
                     );
-                    messageModels.add(messageModel);
-                    messages.add(messageModel);
+                    context
+                        .read<MessageCubit>()
+                        .insertMessage(messageModel: messageModel);
                     textEditingController.text = "";
-                    setState(() {});
                   }
                 },
                 icon: Icon(

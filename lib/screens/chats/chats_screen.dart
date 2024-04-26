@@ -1,9 +1,11 @@
+import 'package:default_project/cubits/message/message_cubit.dart';
 import 'package:default_project/data/local/local_varibals.dart';
 import 'package:default_project/data/models/contact/contact.dart';
 import 'package:default_project/data/models/messege/messege_model.dart';
 import 'package:default_project/screens/message/message_screen.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChatsScreen extends StatefulWidget {
@@ -52,20 +54,15 @@ class _ChatsScreenState extends State<ChatsScreen> {
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.zero)),
             onPressed: () {
-              List<MessageModel> messages = messageModels.where((element) {
-                if (contactModel.contactId == element.messageId) {
-                  return true;
-                }
-                return false;
-              }).toList();
-
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) {
                     return MessageScreen(
                       contactModel: contactModel,
-                      messages: messages,
+                      messages: context
+                          .read<MessageCubit>()
+                          .sortMessage(contactId: contactModel.contactId),
                     );
                   },
                 ),
