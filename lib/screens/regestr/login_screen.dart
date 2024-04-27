@@ -1,4 +1,5 @@
 import 'package:default_project/cubits/user/user_cubit.dart';
+import 'package:default_project/data/local/storage_repository.dart';
 import 'package:default_project/data/models/user/user_model.dart';
 import 'package:default_project/screens/chats/chats_screen.dart';
 import 'package:default_project/screens/regestr/sign_up_screen.dart';
@@ -21,9 +22,39 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController controllerPassword = TextEditingController();
 
   @override
+  void initState() {
+    Future.microtask(() async {
+      String docId = await StorageRepository.getString(key: "doc_id");
+      UserModel? userModel;
+      if (docId.isNotEmpty) {
+        userModel =
+        await context.read<UserCubit>().getUser(docId: docId);
+      }
+
+      if (userModel != null) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return ChatsScreen(userModel: userModel!);
+            },
+          ),
+        );
+      }
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    width = MediaQuery.of(context).size.width;
-    height = MediaQuery.of(context).size.width;
+    width = MediaQuery
+        .of(context)
+        .size
+        .width;
+    height = MediaQuery
+        .of(context)
+        .size
+        .width;
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -68,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     );
                   } else {
-                    _showSnackBar(title: "No User :(¬");
+                    _showSnackBar(title: "No User :(");
                   }
                 } else {
                   _showSnackBar();

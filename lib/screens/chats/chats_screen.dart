@@ -34,7 +34,17 @@ class _ChatsScreenState extends State<ChatsScreen> {
         automaticallyImplyLeading: false,
         centerTitle: false,
         leading: userModel.imageUrl.isNotEmpty
-            ? Image.network(userModel.imageUrl)
+            ? Container(
+                width: 30.we,
+                height: 30.we,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(userModel.imageUrl),
+                  ),
+                ),
+              )
             : null,
         title: Text(
           "Conversations",

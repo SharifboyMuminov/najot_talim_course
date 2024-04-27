@@ -47,8 +47,8 @@ class UserCubit extends Cubit<List<UserModel>> {
     return docId;
   }
 
-  Future<NetworkResponse> getUser({required String docId}) async {
-    NetworkResponse networkResponse = NetworkResponse();
+  Future<UserModel?> getUser({required String docId}) async {
+    UserModel? userModel;
 
     await FirebaseFirestore.instance
         .collection(AppCons.userTableName)
@@ -56,11 +56,11 @@ class UserCubit extends Cubit<List<UserModel>> {
         .get()
         .then((value) {
       if (value.data() != null) {
-        networkResponse.data = UserModel.fromJson(value.data()!);
+        userModel = UserModel.fromJson(value.data()!);
       }
     });
 
-    return networkResponse;
+    return userModel;
   }
 
   UserModel? containsUser(
@@ -68,7 +68,8 @@ class UserCubit extends Cubit<List<UserModel>> {
     List<UserModel> users = state;
 
     for (UserModel userModel in users) {
-      if (userModel.password == password && userModel.fullName == fullName) {
+      if (userModel.password == password &&
+          userModel.fullName.toLowerCase() == fullName.toLowerCase()) {
         return userModel;
       }
     }
@@ -81,10 +82,10 @@ class UserCubit extends Cubit<List<UserModel>> {
 
     for (UserModel userModel in users) {
       if (userModel.password == password) {
-        return true;
+        return false;
       }
     }
 
-    return false;
+    return true;
   }
 }
