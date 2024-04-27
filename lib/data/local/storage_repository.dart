@@ -6,6 +6,7 @@ class StorageRepository {
   static SharedPreferences? _preference;
 
   StorageRepository._() {
+    // debugPrint("StorageRepository------------------------");
     _init();
   }
 
@@ -32,7 +33,7 @@ class StorageRepository {
     return 0;
   }
 
-  static Future<void> setString({
+  static Future<String> setString({
     required String key,
     required String value,
   }) async {
@@ -40,6 +41,7 @@ class StorageRepository {
       debugPrint("SAVING STRING:$value");
       _preference!.setString(key, value);
     }
+    return "";
   }
 
   static String getString({required String key}) {

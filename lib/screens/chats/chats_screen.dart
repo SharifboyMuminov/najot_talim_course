@@ -1,19 +1,29 @@
 import 'package:default_project/data/local/local_varibals.dart';
 import 'package:default_project/data/models/contact/contact.dart';
+import 'package:default_project/data/models/user/user_model.dart';
 import 'package:default_project/screens/message/message_screen.dart';
 import 'package:default_project/utils/size.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChatsScreen extends StatefulWidget {
-  const ChatsScreen({super.key});
+  const ChatsScreen({super.key, required this.userModel});
+
+  final UserModel userModel;
 
   @override
   State<ChatsScreen> createState() => _ChatsScreenState();
 }
 
 class _ChatsScreenState extends State<ChatsScreen> {
+  late UserModel userModel;
+
+  @override
+  void initState() {
+    userModel = widget.userModel;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
@@ -21,7 +31,11 @@ class _ChatsScreenState extends State<ChatsScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         centerTitle: false,
+        leading: userModel.imageUrl.isNotEmpty
+            ? Image.network(userModel.imageUrl)
+            : null,
         title: Text(
           "Conversations",
           style: TextStyle(

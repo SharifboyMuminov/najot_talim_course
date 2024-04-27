@@ -1,14 +1,27 @@
+import 'package:default_project/cubits/image/image_cubit.dart';
 import 'package:default_project/cubits/message/message_cubit.dart';
-import 'package:default_project/screens/chats/chats_screen.dart';
+import 'package:default_project/cubits/user/user_cubit.dart';
+import 'package:default_project/screens/regestr/login_screen.dart';
+import 'package:default_project/server/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main(List<String> args) {
+import 'data/local/storage_repository.dart';
+
+Future<void> main(List<String> args) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  StorageRepository();
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_)=> MessageCubit()),
+        BlocProvider(create: (_) => MessageCubit()),
+        BlocProvider(create: (_) => UserCubit()),
+        BlocProvider(create: (_) => ImageCubit()),
       ],
       child: const MyApp(),
     ),
@@ -21,7 +34,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(414, 896),
+      designSize: const Size(375, 812),
       builder: (context, child) {
         ScreenUtil.init(context);
         return MaterialApp(
@@ -30,7 +43,7 @@ class MyApp extends StatelessWidget {
           home: child,
         );
       },
-      child: const ChatsScreen(),
+      child: const LoginScreen(),
     );
   }
 }
