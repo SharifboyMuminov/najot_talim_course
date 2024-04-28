@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:default_project/data/moduls/compyuter_modul/compyuter_modul.dart';
+import 'package:default_project/data/moduls/player/playerModel.dart';
 
 import '../moduls/network_response.dart';
 import 'package:http/http.dart' as http;
@@ -18,6 +19,29 @@ class ApiPreovider {
         networkResponse.data = (jsonDecode(response.body)["data"] as List?)
                 ?.map((e) => CompyuterModel.fromJson(e))
                 .toList() ??
+            [];
+      } else {
+        networkResponse.errorText = "Api";
+      }
+    } catch (error) {
+      networkResponse.errorText = "Error :(";
+    }
+
+    return networkResponse;
+  }
+
+  static Future<NetworkResponse> fitchPlayer() async {
+    http.Response response;
+    NetworkResponse networkResponse = NetworkResponse();
+    try {
+      response = await http
+          .get(Uri.parse("https://look-2jk0.onrender.com/players"));
+
+      if (response.statusCode == 200) {
+
+        networkResponse.data = (jsonDecode(response.body)["players"] as List?)
+            ?.map((e) => PlayerModel.fromJson(e))
+            .toList() ??
             [];
       } else {
         networkResponse.errorText = "Api";
