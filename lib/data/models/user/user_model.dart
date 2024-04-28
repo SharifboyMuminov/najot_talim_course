@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class UserModel {
   String imageUrl;
   String storegiPath;
@@ -30,6 +32,15 @@ class UserModel {
       "doc_id": docId,
       "full_name": fullName,
       "storegi_path": storegiPath
+    };
+  }
+
+  static Map<String, dynamic> getMapUser(QueryDocumentSnapshot user) {
+    return {
+      "full_name": user["full_name"],
+      "doc_id": user["doc_id"],
+      "image_url": user["image_url"],
+      "password": user["password"],
     };
   }
 

@@ -4,20 +4,12 @@ import '../models/messege/messege_model.dart';
 
 List<ContactModel> allContacts = [
   ContactModel(
-    contactId: 1,
-    contactLasName: "Jo'rayev",
-    contactName: "Shohjahon",
-    isOnline: false,
-    imageUrl:
-        "https://okmusic.online/uploads/posts/2022-05/1651938447_1638285926_shohjahon-jorayev.jpg",
-    lastOnlineTime: DateTime.now(),
-  ),
-  ContactModel(
     contactId: 3,
     contactLasName: "Falonchiyev",
     contactName: "Falonchi",
     isOnline: false,
-    imageUrl:"https://static.vecteezy.com/system/resources/previews/009/383/461/non_2x/man-face-clipart-design-illustration-free-png.png",
+    imageUrl:
+        "https://static.vecteezy.com/system/resources/previews/009/383/461/non_2x/man-face-clipart-design-illustration-free-png.png",
     lastOnlineTime: DateTime.now(),
   ),
   ContactModel(

@@ -1,7 +1,6 @@
 import 'package:default_project/cubits/image/image_cubit.dart';
 import 'package:default_project/cubits/message/message_cubit.dart';
 import 'package:default_project/cubits/user/user_cubit.dart';
-import 'package:default_project/data/models/user/user_model.dart';
 import 'package:default_project/screens/regestr/login_screen.dart';
 import 'package:default_project/server/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';

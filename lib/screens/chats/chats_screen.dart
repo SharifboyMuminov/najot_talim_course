@@ -1,7 +1,7 @@
-import 'package:default_project/data/local/local_varibals.dart';
-import 'package:default_project/data/models/contact/contact.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:default_project/data/local/storage_repository.dart';
 import 'package:default_project/data/models/user/user_model.dart';
-import 'package:default_project/screens/message/message_screen.dart';
+import 'package:default_project/streams/user_stream.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,11 +16,11 @@ class ChatsScreen extends StatefulWidget {
 }
 
 class _ChatsScreenState extends State<ChatsScreen> {
-  late UserModel userModel;
+  late UserModel myUserModel;
 
   @override
   void initState() {
-    userModel = widget.userModel;
+    myUserModel = widget.userModel;
     super.initState();
   }
 
@@ -33,15 +33,15 @@ class _ChatsScreenState extends State<ChatsScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: false,
-        leading: userModel.imageUrl.isNotEmpty
+        leading: myUserModel.imageUrl.isNotEmpty
             ? Container(
-                width: 30.we,
-                height: 30.we,
+                width: 10.we,
+                height: 10.we,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: NetworkImage(userModel.imageUrl),
+                    image: NetworkImage(myUserModel.imageUrl),
                   ),
                 ),
               )
@@ -56,136 +56,112 @@ class _ChatsScreenState extends State<ChatsScreen> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              StorageRepository.setString(key: "doc_id", value: "");
+              Navigator.pop(context);
+            },
             icon: Icon(
-              Icons.chat,
+              Icons.exit_to_app,
               color: Colors.black,
               size: 24.sp,
             ),
           ),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 16.we),
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: List.generate(allContacts.length, (index) {
-                ContactModel contactModel = allContacts[index];
+      body: StreamBuilder<QuerySnapshot>(
+        stream: UserStream.userStream(),
+        builder: (BuildContext context,
+            AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
+          if (snapshot.hasError) {
+            return Text(
+              "Error connect :(",
+              style: TextStyle(
+                color: Colors.redAccent,
+                fontWeight: FontWeight.w600,
+                fontSize: 22.sp,
+              ),
+            );
+          }
+          if (snapshot.hasData) {
+            List<UserModel> userModelsData = snapshot.data!.docs
+                .map((e) => UserModel.fromJson(UserModel.getMapUser(e)))
+                .toList();
+            // debugPrint(userModelsData.length.toString());
+            userModelsData
+                .removeWhere((element) => element.docId == myUserModel.docId);
 
-                if (index == 0) {
-                  return Container(
-                    margin: EdgeInsets.symmetric(horizontal: 8.we),
-                    padding: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.r),
-                        border: Border.all(color: Colors.grey, width: 2.we)),
-                    child: Container(
-                      width: 55.we,
-                      height: 55.we,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.r),
-                          color: Colors.grey.withOpacity(0.3)),
-                      child: Icon(
-                        Icons.add,
-                        color: Colors.grey,
-                        size: 24.sp,
-                      ),
-                    ),
-                  );
-                }
-
-                return SizedBox(
-                  width: 80.we,
-                  child: Column(
-                    children: [
-                      Container(
-                        width: 70.we,
-                        margin: EdgeInsets.symmetric(horizontal: 8.we),
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.r),
-                            border: Border.all(color: Colors.red, width: 2.we)),
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15.r),
-                            child: Image.network(
-                              contactModel.imageUrl,
-                              width: 55.we,
-                              height: 55.we,
-                              fit: BoxFit.cover,
-                            )),
-                      ),
-                      Text(
-                        "${contactModel.contactName} ${contactModel.contactLasName}",
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      )
-                    ],
-                  ),
-                );
-              }),
-            ),
-          ),
-          Container(
-            width: width,
-            height: 2,
-            color: Colors.grey.withOpacity(0.3),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: allContacts.length,
+            return ListView.builder(
+              padding: EdgeInsets.symmetric(vertical: 30.he),
+              itemCount: userModelsData.length,
               itemBuilder: (BuildContext context, int index) {
-                ContactModel contactModel = allContacts[index];
-
-                return TextButton(
-                  style: TextButton.styleFrom(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 24.we, vertical: 8.he),
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.zero)),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return MessageScreen(
-                            contactModel: contactModel,
-                          );
-                        },
+                UserModel userModel = userModelsData[index];
+                return Column(
+                  children: [
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.zero,
+                        ),
                       ),
-                    );
-                  },
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ClipRRect(
-                          borderRadius: BorderRadius.circular(20.r),
-                          child:
-                              Image.network(contactModel.imageUrl, width: 70)),
-                      SizedBox(width: 12.we),
-                      Column(
+                      onPressed: () {},
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "${contactModel.contactLasName} ${contactModel.contactName}",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w400,
+                          Container(
+                            alignment: Alignment.center,
+                            width: 65.we,
+                            height: 65.we,
+                            decoration: BoxDecoration(
+                              color: Colors.redAccent,
+                              shape: BoxShape.circle,
+                              image: userModel.imageUrl.isNotEmpty
+                                  ? DecorationImage(
+                                      image: NetworkImage(userModel.imageUrl),
+                                      fit: BoxFit.cover,
+                                    )
+                                  : null,
+                            ),
+                            child: userModel.imageUrl.isEmpty
+                                ? Text(
+                                    userModel.fullName[0],
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20.sp,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  )
+                                : null,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10.we, vertical: 15.he),
+                            child: Text(
+                              userModel.fullName,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
                           ),
                         ],
                       ),
-                    ],
-                  ),
+                    ),
+                    Container(
+                      width: width,
+                      height: 2.he,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.withOpacity(0.5),
+                      ),
+                    ),
+                  ],
                 );
               },
-            ),
-          ),
-        ],
+            );
+          }
+
+          return const Center(child: CircularProgressIndicator.adaptive());
+        },
       ),
     );
   }

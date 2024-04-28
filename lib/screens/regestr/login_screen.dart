@@ -27,8 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
       String docId = await StorageRepository.getString(key: "doc_id");
       UserModel? userModel;
       if (docId.isNotEmpty) {
-        userModel =
-        await context.read<UserCubit>().getUser(docId: docId);
+        userModel = await context.read<UserCubit>().getUser(docId: docId);
       }
 
       if (userModel != null) {
@@ -47,14 +46,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    width = MediaQuery
-        .of(context)
-        .size
-        .width;
-    height = MediaQuery
-        .of(context)
-        .size
-        .width;
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
