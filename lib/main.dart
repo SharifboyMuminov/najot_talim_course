@@ -1,13 +1,13 @@
+import 'package:default_project/data/network/api_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'screens/home_screen/home_screen.dart';
 
 void main(List<String> args) {
+  ApiProvider.getCurrency();
   runApp(MyApp());
 }
-
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
