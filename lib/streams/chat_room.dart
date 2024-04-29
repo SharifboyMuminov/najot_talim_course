@@ -7,9 +7,9 @@ class ChatRoomStream {
       {required String myDocId, required String docId}) {
     String doc = "";
     if (myDocId.codeUnits.first > docId.codeUnits.first) {
-      doc = "${myDocId}_${docId}";
+      doc = "${myDocId}_$docId";
     } else {
-      doc = "${docId}_${myDocId}";
+      doc = "${docId}_$myDocId";
     }
 
     return _firebaseFirestore
