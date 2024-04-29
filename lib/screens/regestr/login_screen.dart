@@ -22,29 +22,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController controllerPassword = TextEditingController();
 
   @override
-  void initState() {
-    Future.microtask(() async {
-      String docId = await StorageRepository.getString(key: "doc_id");
-      UserModel? userModel;
-      if (docId.isNotEmpty) {
-        userModel = await context.read<UserCubit>().getUser(docId: docId);
-      }
-
-      if (userModel != null) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return ChatsScreen(userModel: userModel!);
-            },
-          ),
-        );
-      }
-    });
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.width;
@@ -83,6 +60,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       password: controllerPassword.text);
 
                   if (userModel != null) {
+                    StorageRepository.setString(
+                        key: "doc_id", value: userModel.docId);
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(

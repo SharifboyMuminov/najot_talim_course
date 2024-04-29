@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:default_project/data/local/storage_repository.dart';
 import 'package:default_project/data/models/user/user_model.dart';
-import 'package:default_project/streams/user_stream.dart';
+import 'package:default_project/screens/chat_room/chat_screen.dart';
+import 'package:default_project/streams/user.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -103,7 +104,19 @@ class _ChatsScreenState extends State<ChatsScreen> {
                           borderRadius: BorderRadius.zero,
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ChatRoomScreen(
+                                myUserModel: myUserModel,
+                                userModel: userModel,
+                              );
+                            },
+                          ),
+                        );
+                      },
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

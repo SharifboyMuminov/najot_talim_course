@@ -151,13 +151,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
           password: controllerPassword.text,
         );
 
-        urlImage =
+        String myDocId =
             await context.read<UserCubit>().insertUser(userModel: userModel);
 
-        userModel = userModel.copyWith(docId: urlImage);
+        userModel = userModel.copyWith(docId: myDocId);
 
-        await StorageRepository.setString(
-            key: "doc_id", value: userModel.docId);
+        StorageRepository.setString(key: "doc_id", value: userModel.docId);
 
         Navigator.pushReplacement(
           context,

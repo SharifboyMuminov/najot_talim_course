@@ -1,7 +1,7 @@
+import 'package:default_project/cubits/chat/chat_cubit.dart';
 import 'package:default_project/cubits/image/image_cubit.dart';
-import 'package:default_project/cubits/message/message_cubit.dart';
 import 'package:default_project/cubits/user/user_cubit.dart';
-import 'package:default_project/screens/regestr/login_screen.dart';
+import 'package:default_project/screens/splash/splash_screen.dart';
 import 'package:default_project/server/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +19,9 @@ Future<void> main(List<String> args) async {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => MessageCubit()),
         BlocProvider(create: (_) => UserCubit()..callUser()),
         BlocProvider(create: (_) => ImageCubit()),
+        BlocProvider(create: (_) => ChatCubit()),
       ],
       child: const MyApp(),
     ),
@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
           home: child,
         );
       },
-      child: const LoginScreen(),
+      child: const SplashScreen(),
     );
   }
 }
