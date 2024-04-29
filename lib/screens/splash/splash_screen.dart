@@ -2,6 +2,7 @@ import 'package:default_project/cubits/user/user_cubit.dart';
 import 'package:default_project/data/models/user/user_model.dart';
 import 'package:default_project/screens/chats/chats_screen.dart';
 import 'package:default_project/screens/regestr/login_screen.dart';
+import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -28,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
       }
 
       if (userModel != null) {
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder: (context) {
@@ -37,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
         );
       } else {
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder: (context) {
@@ -52,6 +53,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Center(child: Lottie.asset("assets/lottie/splash_lottie.json")),
     );

@@ -11,8 +11,10 @@ class ChatCubit extends Cubit<bool> {
       {required MessageModel messageModel,
       required String myDocId,
       required String docId}) async {
-    if (doc.isEmpty) {
-      _getIdChatRoom(myDocId: myDocId, docId: docId);
+    if (myDocId.codeUnits.first > docId.codeUnits.first) {
+      doc = "${myDocId}_$docId";
+    } else {
+      doc = "${docId}_$myDocId";
     }
 
     var cf = await _firebaseFirestore
@@ -27,13 +29,5 @@ class ChatCubit extends Cubit<bool> {
         .collection("chat_room")
         .doc(cf.id)
         .update({"message_id": cf.id});
-  }
-
-  _getIdChatRoom({required String myDocId, required String docId}) {
-    if (myDocId.codeUnits.first > docId.codeUnits.first) {
-      doc = "${myDocId}_${docId}";
-    } else {
-      doc = "${docId}_${myDocId}";
-    }
   }
 }

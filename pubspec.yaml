@@ -43,6 +43,7 @@ dependencies:
   cloud_firestore: ^4.17.0
   image_picker: ^1.1.0
   lottie: ^3.1.0
+  cached_network_image: ^3.3.1
 
 
 dev_dependencies:
