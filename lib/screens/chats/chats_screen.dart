@@ -82,6 +82,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                       );
                     },
                   ),
+
                   SizedBox(width: 10.we),
                   Expanded(
                     child: Text(
