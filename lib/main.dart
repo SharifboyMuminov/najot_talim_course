@@ -1,6 +1,5 @@
 import 'package:default_project/blocs/connectivity/connectivity_bloc.dart';
 import 'package:default_project/blocs/connectivity/connectivity_event.dart';
-import 'package:default_project/cubits/connectivity/connectivity_cubit_singl.dart';
 import 'package:default_project/cubits/currensy_singl/currency_cubit_singl.dart';
 import 'package:default_project/data/network/api_provider.dart';
 import 'package:flutter/material.dart';
