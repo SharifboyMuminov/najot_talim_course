@@ -16,10 +16,11 @@ class ApiProvider {
 
       if (response.statusCode == 200) {
         // debugPrint(response.body.toString());
-        networkResponse.data = (jsonDecode(response.body) as List?)
+        List<CurrencyModel> c = (jsonDecode(response.body) as List?)
                 ?.map((e) => CurrencyModel.fromJson(e))
                 .toList() ??
             [];
+        networkResponse.data = c;
       } else {
         networkResponse.errorText = "Api";
       }

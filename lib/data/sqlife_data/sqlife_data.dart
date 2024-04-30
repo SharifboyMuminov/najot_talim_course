@@ -41,7 +41,7 @@ class LocalDatabase {
     await db.execute('''CREATE TABLE CurrencyTable (
       title $textType,
       code $textType,
-      cb_price $textType
+      cb_price $textType,
       nbu_buy_price $textType,
       nbu_cell_price $textType,
       date $textType
@@ -67,13 +67,20 @@ class LocalDatabase {
     NetworkResponse networkResponse = NetworkResponse();
     try {
       final db = await databaseInstance.database;
-      String orderBy = "code DESC";
-      List json = await db.query("CurrencyTable", orderBy: orderBy);
+      List json = await db.query("CurrencyTable");
       networkResponse.data =
           json.map((e) => CurrencyModel.fromJson(e)).toList();
     } catch (_) {
       networkResponse.errorText = "Error Call Metod :(";
     }
     return networkResponse;
+  }
+
+  static updateCurrency({required CurrencyModel currencyModel}) async {
+    final db = await databaseInstance.database;
+    // debugPrint(noteModel.id.toString());
+
+    await db.update("CurrencyTable", currencyModel.toJson(),
+        where: "code = ?", whereArgs: [currencyModel.code]);
   }
 }

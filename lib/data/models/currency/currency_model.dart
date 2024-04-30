@@ -54,4 +54,13 @@ class CurrencyModel {
       date: date ?? this.date,
     );
   }
+
+  spotTheDifference({required CurrencyModel currencyModel}) {
+    return code != currencyModel.code ||
+        title != currencyModel.title ||
+        cbPrice != currencyModel.cbPrice ||
+        nbuBuyPrice != currencyModel.nbuBuyPrice ||
+        nbuCellPrice != currencyModel.nbuCellPrice ||
+        date != currencyModel.date;
+  }
 }
