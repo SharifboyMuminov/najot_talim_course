@@ -1,6 +1,7 @@
 import 'package:default_project/bloc/region/region_bloc.dart';
 import 'package:default_project/bloc/region/region_state.dart';
 import 'package:default_project/data/enums/form_status.dart';
+import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,7 +11,21 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: false,
+        title: Text(
+          "Regions",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 24.sp,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ),
       body: BlocBuilder<RegionBloc, RegionState>(
         builder: (BuildContext context, RegionState state) {
           if (state.formsStatus == FormsStatus.error) {
@@ -26,19 +41,70 @@ class HomeScreen extends StatelessWidget {
           }
 
           if (state.formsStatus == FormsStatus.success) {
-            return ListView.builder(
-              itemCount: state.currentRegions.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ListTile(
-                  title: Text(
-                    state.currentRegions[index].regionName,
+            return Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.he,
+                    vertical: 10.he,
+                  ),
+                  child: TextFormField(
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 20.sp,
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    decoration: InputDecoration(
+                      hintText: "Search...",
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(
+                          color: Colors.grey,
+                          width: 2,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(
+                          color: Colors.grey,
+                          width: 2,
+                        ),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(
+                          color: Colors.red,
+                          width: 2,
+                        ),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(
+                          color: Colors.red,
+                          width: 2,
+                        ),
+                      ),
                     ),
                   ),
-                );
-              },
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: state.currentRegions.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListTile(
+                        title: Text(
+                          state.currentRegions[index].regionName,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20.sp,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
             );
           }
 
