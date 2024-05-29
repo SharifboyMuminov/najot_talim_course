@@ -23,14 +23,34 @@ class RegionBloc extends Bloc<RegionEvent, RegionState> {
 
   final PlacesDatabase _placesDatabase;
 
+  // void _searchRegionCallEvent(SearchRegionCallEvent event, emit) {
+  //   if (event.searchTitle.isNotEmpty) {
+  //     emit(
+  //       state.copyWith(
+  //           currentRegions: state.regions.where((element) {
+  //         return element.regionName
+  //             .toLowerCase()
+  //             .contains(event.searchTitle.toLowerCase());
+  //       }).toList()),
+  //     );
+  //   } else {
+  //     emit(state.copyWith(currentRegions: state.regions));
+  //   }
+  // }
+
   void _searchRegionCallEvent(SearchRegionCallEvent event, emit) {
     if (event.searchTitle.isNotEmpty) {
       emit(
         state.copyWith(
             currentRegions: state.regions.where((element) {
-          return element.regionName
-              .toLowerCase()
-              .contains(event.searchTitle.toLowerCase());
+          try {
+            return element.regionName
+                    .substring(0, event.searchTitle.length)
+                    .toLowerCase() ==
+                event.searchTitle.toLowerCase();
+          } catch (_) {
+            return false;
+          }
         }).toList()),
       );
     } else {
