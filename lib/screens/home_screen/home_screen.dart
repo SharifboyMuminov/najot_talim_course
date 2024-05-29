@@ -97,6 +97,16 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Text(
+                    "${state.currentRegions.length} data.  ",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18.sp,
+                    ),
+                  ),
+                ),
                 if (state.currentRegions.isEmpty)
                   Column(
                     children: [
