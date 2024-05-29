@@ -2,10 +2,9 @@ import 'package:default_project/bloc/region/region_bloc.dart';
 import 'package:default_project/bloc/region/region_event.dart';
 import 'package:default_project/bloc/region/region_state.dart';
 import 'package:default_project/data/enums/form_status.dart';
+import 'package:default_project/screens/info/info_screen.dart';
 import 'package:default_project/utils/size.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -61,6 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     vertical: 10.he,
                   ),
                   child: TextFormField(
+                    onTap: () {},
                     onChanged: (v) {
                       lengthSearchText = v.length;
                       context
@@ -75,6 +75,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 15.we,
+                        vertical: 15.he,
+                      ),
                       hintText: "Search...",
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -129,6 +133,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemCount: state.currentRegions.length,
                     itemBuilder: (BuildContext context, int index) {
                       return ListTile(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return const InfoScreen();
+                              },
+                            ),
+                          );
+                        },
                         title: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
