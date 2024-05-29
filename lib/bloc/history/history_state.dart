@@ -29,6 +29,22 @@ class HistoryState extends Equatable {
     );
   }
 
+  List<HistoryModel> removeHistory(HistoryModel value) {
+    List<HistoryModel> myHistoryModels = historyModels;
+
+    myHistoryModels.remove(value);
+
+    return myHistoryModels;
+  }
+
+  List<HistoryModel> addHistory(HistoryModel value) {
+    List<HistoryModel> myHistoryModels = historyModels;
+
+    myHistoryModels.add(value);
+
+    return myHistoryModels;
+  }
+
   @override
   List<Object?> get props => [
         formsStatus,

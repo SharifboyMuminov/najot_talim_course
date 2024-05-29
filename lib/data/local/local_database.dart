@@ -43,7 +43,7 @@ class LocalDatabase {
     )''');
   }
 
-  static Future<NetworkResponse> insertHistory(
+  Future<NetworkResponse> insertHistory(
       {required HistoryModel historyModel}) async {
     NetworkResponse networkResponse = NetworkResponse();
 
@@ -60,7 +60,7 @@ class LocalDatabase {
     return networkResponse;
   }
 
-  static Future<NetworkResponse> getAllHistory() async {
+  Future<NetworkResponse> getAllHistory() async {
     NetworkResponse networkResponse = NetworkResponse();
 
     try {
@@ -75,7 +75,7 @@ class LocalDatabase {
     return networkResponse;
   }
 
-  static Future<NetworkResponse> deleteHistory(int id) async {
+  Future<NetworkResponse> deleteHistory(int id) async {
     NetworkResponse networkResponse = NetworkResponse();
 
     try {
