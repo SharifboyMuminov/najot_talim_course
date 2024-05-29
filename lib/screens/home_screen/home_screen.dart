@@ -3,6 +3,7 @@ import 'package:default_project/bloc/region/region_event.dart';
 import 'package:default_project/bloc/region/region_state.dart';
 import 'package:default_project/data/enums/form_status.dart';
 import 'package:default_project/utils/size.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,7 +17,9 @@ class HomeScreen extends StatelessWidget {
     height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         centerTitle: false,
         title: Text(
           "Regions",
@@ -94,6 +97,13 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                if (state.currentRegions.isEmpty)
+                  Column(
+                    children: [
+                      SizedBox(height: 100.he),
+                      Image.asset("assets/images/empty_img.png"),
+                    ],
+                  ),
                 Expanded(
                   child: ListView.builder(
                     itemCount: state.currentRegions.length,
