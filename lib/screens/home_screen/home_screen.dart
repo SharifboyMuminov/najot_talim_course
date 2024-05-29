@@ -151,7 +151,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                         );
                                   },
-
                                   icon: Icon(
                                     Icons.remove,
                                     size: 15.sp,
@@ -219,10 +218,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               state.currentRegions[index].regionName
                                   .substring(0, inputTitle.length),
                               style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                color: Colors.black,
-                                fontSize: 20.sp,
-                              ),
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.black,
+                                  fontSize: 20.sp,
+                                  decoration: TextDecoration.underline,
+                                  decorationColor:
+                                      Colors.black.withOpacity(0.7)),
                             ),
                             Expanded(
                               child: Text(
