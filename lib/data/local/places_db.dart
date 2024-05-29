@@ -1,3 +1,4 @@
+import 'package:default_project/data/models/network_response.dart';
 import 'package:default_project/data/models/region/region_model.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
@@ -49,94 +50,132 @@ class PlacesDatabase {
     return await db.rawQuery(query);
   }
 
-  Future<List<RegionModel>> searchRegionsByName(String query) async {
-    final db = await instance.database;
-    final List<Map<String, dynamic>> maps = await db.query(
-      'regions',
-      where: 'name LIKE ?',
-      whereArgs: ['%$query%'],
-    );
-    return maps.map((e) => RegionModel.fromJson(e)).toList();
+  // Future<NetworkResponse> searchRegionsByName(String query) async {
+  //   NetworkResponse networkResponse = NetworkResponse();
+  //
+  //   try {
+  //     final db = await instance.database;
+  //     final List<Map<String, dynamic>> maps = await db.query(
+  //       'regions',
+  //       where: 'name LIKE ?',
+  //       whereArgs: ['%$query%'],
+  //     );
+  //     networkResponse.data = maps.map((e) => RegionModel.fromJson(e)).toList();
+  //   } catch (error) {
+  //     networkResponse.errorText = error.toString();
+  //   }
+  //
+  //   return networkResponse;
+  // }
+
+  // Future<NetworkResponse> searchDistrictsByName(String query) async {
+  //   NetworkResponse networkResponse = NetworkResponse();
+  //
+  //   try {
+  //     final db = await instance.database;
+  //     final List<Map<String, dynamic>> maps = await db.query(
+  //       'districts',
+  //       where: 'name LIKE ?',
+  //       whereArgs: ['%$query%'],
+  //     );
+  //     networkResponse.data = maps.map((e) => RegionModel.fromJson(e)).toList();
+  //   } catch (error) {
+  //     networkResponse.errorText = error.toString();
+  //   }
+  //
+  //   return networkResponse;
+  // }
+
+  // Future<NetworkResponse> searchQuartersByName(String query) async {
+  //   NetworkResponse networkResponse = NetworkResponse();
+  //
+  //   try {
+  //     final db = await instance.database;
+  //     final List<Map<String, dynamic>> maps = await db.query(
+  //       'quarters',
+  //       where: 'name LIKE ?',
+  //       whereArgs: ['%$query%'],
+  //     );
+  //     networkResponse.data = maps.map((e) => RegionModel.fromJson(e)).toList();
+  //   } catch (error) {
+  //     networkResponse.errorText = error.toString();
+  //   }
+  //
+  //   return networkResponse;
+  // }
+
+  // Future<List<RegionModel>> getDistrictById({required int id}) async {
+  //   List<RegionModel> districtsById = [];
+  //   final db = await instance.database;
+  //   districtsById = (await db
+  //           .query('districts', where: 'region_id LIKE ?', whereArgs: ['%$id']))
+  //       .map((e) => RegionModel.fromJson(e))
+  //       .toList();
+  //   return districtsById;
+  // }
+
+  // Future<List<RegionModel>> getQuarterById({required int id}) async {
+  //   List<RegionModel> quarterById = [];
+  //   final db = await instance.database;
+  //   quarterById = (await db.query('quarters',
+  //           where: 'district_id LIKE ?', whereArgs: ['%$id']))
+  //       .map((e) => RegionModel.fromJson(e))
+  //       .toList();
+  //
+  //   return quarterById;
+  // }
+
+  Future<NetworkResponse> getAllRegions() async {
+    NetworkResponse networkResponse = NetworkResponse();
+
+    try {
+      final db = await instance.database;
+      networkResponse.data = (await db.query('regions'))
+          .map((e) => RegionModel.fromJson(e))
+          .toList();
+    } catch (error) {
+      networkResponse.errorText = error.toString();
+    }
+
+    return networkResponse;
   }
 
-  Future<List<RegionModel>> searchDistrictsByName(String query) async {
-    final db = await instance.database;
-    final List<Map<String, dynamic>> maps = await db.query(
-      'districts',
-      where: 'name LIKE ?',
-      whereArgs: ['%$query%'],
-    );
-    return maps.map((e) => RegionModel.fromJson(e)).toList();
+  // Future<List<RegionModel>> getRegionById({required int id}) async {
+  //   List<RegionModel> regionsById = [];
+  //   final db = await instance.database;
+  //   regionsById =
+  //       (await db.query('regions', where: 'id LIKE ?', whereArgs: ['%$id']))
+  //           .map((e) => RegionModel.fromJson(e))
+  //           .toList();
+  //   return regionsById;
+  // }
+
+  Future<NetworkResponse> getAllDistricts() async {
+    NetworkResponse networkResponse = NetworkResponse();
+
+    try {
+      final db = await instance.database;
+      networkResponse.data = (await db.query('districts'))
+          .map((e) => RegionModel.fromJson(e))
+          .toList();
+    } catch (error) {
+      networkResponse.errorText = error.toString();
+    }
+    return networkResponse;
   }
 
-  Future<List<RegionModel>> searchQuartersByName(String query) async {
-    final db = await instance.database;
-    final List<Map<String, dynamic>> maps = await db.query(
-      'quarters',
-      where: 'name LIKE ?',
-      whereArgs: ['%$query%'],
-    );
-    return maps.map((e) => RegionModel.fromJson(e)).toList();
-  }
+  Future<NetworkResponse> getAllQuarters() async {
+    NetworkResponse networkResponse = NetworkResponse();
 
-  Future<List<RegionModel>> getDistrictById({required int id}) async {
-    List<RegionModel> districtsById = [];
-    final db = await instance.database;
-    districtsById = (await db
-            .query('districts', where: 'region_id LIKE ?', whereArgs: ['%$id']))
-        .map((e) => RegionModel.fromJson(e))
-        .toList();
-    return districtsById;
-  }
+    try {
+      final db = await instance.database;
+      networkResponse.data = (await db.query('quarters'))
+          .map((e) => RegionModel.fromJson(e))
+          .toList();
+    } catch (error) {
+      networkResponse.errorText = error.toString();
+    }
 
-  Future<List<RegionModel>> getQuarterById({required int id}) async {
-    List<RegionModel> quarterById = [];
-    final db = await instance.database;
-    quarterById = (await db.query('quarters',
-            where: 'district_id LIKE ?', whereArgs: ['%$id']))
-        .map((e) => RegionModel.fromJson(e))
-        .toList();
-
-    return quarterById;
-  }
-
-  Future<List<RegionModel>> getAllRegions() async {
-    List<RegionModel> allRegions = [];
-    final db = await instance.database;
-    allRegions = (await db.query('regions'))
-        .map((e) => RegionModel.fromJson(e))
-        .toList();
-
-    return allRegions;
-  }
-
-  Future<List<RegionModel>> getRegionById({required int id}) async {
-    List<RegionModel> regionsById = [];
-    final db = await instance.database;
-    regionsById =
-        (await db.query('regions', where: 'id LIKE ?', whereArgs: ['%$id']))
-            .map((e) => RegionModel.fromJson(e))
-            .toList();
-    return regionsById;
-  }
-
-  Future<List<RegionModel>> getAllDistricts() async {
-    List<RegionModel> allDistricts = [];
-    final db = await instance.database;
-    allDistricts = (await db.query('districts'))
-        .map((e) => RegionModel.fromJson(e))
-        .toList();
-
-    return allDistricts;
-  }
-
-  Future<List<RegionModel>> getAllQuarters() async {
-    List<RegionModel> allQuarters = [];
-    final db = await instance.database;
-    allQuarters = (await db.query('quarters'))
-        .map((e) => RegionModel.fromJson(e))
-        .toList();
-
-    return allQuarters;
+    return networkResponse;
   }
 }
