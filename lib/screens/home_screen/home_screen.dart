@@ -1,4 +1,5 @@
 import 'package:default_project/bloc/region/region_bloc.dart';
+import 'package:default_project/bloc/region/region_event.dart';
 import 'package:default_project/bloc/region/region_state.dart';
 import 'package:default_project/data/enums/form_status.dart';
 import 'package:default_project/utils/size.dart';
@@ -49,6 +50,11 @@ class HomeScreen extends StatelessWidget {
                     vertical: 10.he,
                   ),
                   child: TextFormField(
+                    onChanged: (v) {
+                      context
+                          .read<RegionBloc>()
+                          .add(SearchRegionCallEvent(searchTitle: v));
+                    },
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 18.sp,

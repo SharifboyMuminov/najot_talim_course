@@ -18,9 +18,25 @@ class RegionBloc extends Bloc<RegionEvent, RegionState> {
           ),
         ) {
     on<RegionCallEvent>(_regionCallEvent);
+    on<SearchRegionCallEvent>(_searchRegionCallEvent);
   }
 
   final PlacesDatabase _placesDatabase;
+
+  void _searchRegionCallEvent(SearchRegionCallEvent event, emit) {
+    if (event.searchTitle.isNotEmpty) {
+      emit(
+        state.copyWith(
+            currentRegions: state.regions.where((element) {
+          return element.regionName
+              .toLowerCase()
+              .contains(event.searchTitle.toLowerCase());
+        }).toList()),
+      );
+    } else {
+      emit(state.copyWith(currentRegions: state.regions));
+    }
+  }
 
   Future<void> _regionCallEvent(RegionCallEvent event, emit) async {
     emit(state.copyWith(formsStatus: FormsStatus.loading));
