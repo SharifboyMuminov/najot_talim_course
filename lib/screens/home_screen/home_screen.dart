@@ -1,7 +1,11 @@
+import 'package:default_project/bloc/history/history_bloc.dart';
+import 'package:default_project/bloc/history/history_event.dart';
+import 'package:default_project/bloc/history/history_state.dart';
 import 'package:default_project/bloc/region/region_bloc.dart';
 import 'package:default_project/bloc/region/region_event.dart';
 import 'package:default_project/bloc/region/region_state.dart';
 import 'package:default_project/data/enums/form_status.dart';
+import 'package:default_project/data/models/history/history_model.dart';
 import 'package:default_project/screens/info/info_screen.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +20,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int lengthSearchText = 0;
+  String inputTitle = "";
+
+  bool showHistory = false;
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +66,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     vertical: 10.he,
                   ),
                   child: TextFormField(
-                    onTap: () {},
+                    onTap: () {
+                      showHistory = true;
+                      setState(() {});
+                    },
+                    onEditingComplete: () {
+                      showHistory = false;
+                      setState(() {});
+                      FocusScope.of(context).unfocus();
+                    },
                     onChanged: (v) {
-                      lengthSearchText = v.length;
+                      inputTitle = v;
                       context
                           .read<RegionBloc>()
                           .add(SearchRegionCallEvent(searchTitle: v));
@@ -111,6 +125,48 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
+                if (showHistory)
+                  BlocBuilder<HistoryBloc, HistoryState>(
+                    builder: (BuildContext context, HistoryState historyState) {
+                      if (state.formsStatus == FormsStatus.success) {
+                        return Column(
+                          children: List.generate(
+                            historyState.historyModels.length,
+                            (index) {
+                              return ListTile(
+                                title: Text(
+                                  historyState.historyModels[index].title,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                trailing: IconButton(
+                                  onPressed: () {
+                                    context.read<HistoryBloc>().add(
+                                          HistoryDeleteEvent(
+                                            historyModel: historyState
+                                                .historyModels[index],
+                                          ),
+                                        );
+                                  },
+
+                                  icon: Icon(
+                                    Icons.remove,
+                                    size: 15.sp,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      }
+
+                      return const Center(
+                          child: CircularProgressIndicator.adaptive());
+                    },
+                  ),
                 Align(
                   alignment: Alignment.topRight,
                   child: Text(
@@ -134,11 +190,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemBuilder: (BuildContext context, int index) {
                       return ListTile(
                         onTap: () {
+                          if (inputTitle.isNotEmpty) {
+                            context.read<HistoryBloc>().add(
+                                  HistoryInsertEvent(
+                                    historyModel: HistoryModel(
+                                      id: 0,
+                                      title: inputTitle,
+                                    ),
+                                  ),
+                                );
+                          }
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) {
-                                return const InfoScreen();
+                                return InfoScreen(
+                                  regionModel: state.currentRegions[index],
+                                );
                               },
                             ),
                           );
@@ -149,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             Text(
                               state.currentRegions[index].regionName
-                                  .substring(0, lengthSearchText),
+                                  .substring(0, inputTitle.length),
                               style: TextStyle(
                                 fontWeight: FontWeight.w700,
                                 color: Colors.black,
@@ -160,7 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Text(
                                 state.currentRegions[index].regionName
                                     .substring(
-                                  lengthSearchText,
+                                  inputTitle.length,
                                   state.currentRegions[index].regionName.length,
                                 ),
                                 style: TextStyle(

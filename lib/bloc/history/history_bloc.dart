@@ -2,6 +2,7 @@ import 'package:default_project/bloc/history/history_event.dart';
 import 'package:default_project/bloc/history/history_state.dart';
 import 'package:default_project/data/enums/form_status.dart';
 import 'package:default_project/data/local/local_database.dart';
+import 'package:default_project/data/models/history/history_model.dart';
 import 'package:default_project/data/models/network_response.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -42,6 +43,8 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
   }
 
   Future<void> _historyDeleteEvent(HistoryDeleteEvent event, emit) async {
+    emit(state.copyWith(formsStatus: FormsStatus.loading));
+
     NetworkResponse networkResponse =
         await _localDatabase.deleteHistory(event.historyModel.id);
 
@@ -49,33 +52,42 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
       emit(
         state.copyWith(
           historyModels: state.removeHistory(event.historyModel),
+          formsStatus: FormsStatus.success,
         ),
       );
     } else {
       emit(
         state.copyWith(
           formsStatus: FormsStatus.error,
+          errorText: networkResponse.errorText,
         ),
       );
     }
   }
 
   Future<void> _historyInsertEvent(HistoryInsertEvent event, emit) async {
-    NetworkResponse networkResponse =
-        await _localDatabase.insertHistory(historyModel: event.historyModel);
+    List<HistoryModel> history = state.historyModels.where((element) {
+      return event.historyModel.title.toLowerCase() ==
+          element.title.toLowerCase();
+    }).toList();
 
-    if (networkResponse.errorText.isEmpty) {
-      emit(
-        state.copyWith(
-          historyModels: state.addHistory(event.historyModel),
-        ),
-      );
-    } else {
-      emit(
-        state.copyWith(
-          formsStatus: FormsStatus.error,
-        ),
-      );
+    if (history.isEmpty) {
+      NetworkResponse networkResponse =
+          await _localDatabase.insertHistory(historyModel: event.historyModel);
+
+      if (networkResponse.errorText.isEmpty) {
+        emit(
+          state.copyWith(
+            historyModels: state.addHistory(event.historyModel),
+          ),
+        );
+      } else {
+        emit(
+          state.copyWith(
+            formsStatus: FormsStatus.error,
+          ),
+        );
+      }
     }
   }
 }
