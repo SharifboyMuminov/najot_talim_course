@@ -1,9 +1,6 @@
-// ignore: depend_on_referenced_packages
-
 import 'package:default_project/data/models/region/region_model.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
-
 import 'package:sqflite/sqflite.dart';
 
 class PlacesDatabase {
