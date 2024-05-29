@@ -38,6 +38,7 @@ dependencies:
   flutter_screenutil: ^5.9.0
   shared_preferences: ^2.2.2
   sqflite: ^2.3.3+1
+  flutter_bloc: ^8.1.5
 
 dev_dependencies:
   flutter_test:
