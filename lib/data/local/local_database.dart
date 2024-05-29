@@ -1,5 +1,5 @@
+import 'package:default_project/data/models/history/history_model.dart';
 import 'package:default_project/data/models/network_response.dart';
-import 'package:default_project/data/models/search/search_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -44,15 +44,15 @@ class LocalDatabase {
   }
 
   static Future<NetworkResponse> insertHistory(
-      {required SearchModel searchModel}) async {
+      {required HistoryModel historyModel}) async {
     NetworkResponse networkResponse = NetworkResponse();
 
     try {
       final db = await databaseInstance.database;
 
-      int savedTaskID = await db.insert("SearchHistory", searchModel.toJson());
+      int savedTaskID = await db.insert("SearchHistory", historyModel.toJson());
 
-      networkResponse.data = searchModel.copyWith(id: savedTaskID);
+      networkResponse.data = historyModel.copyWith(id: savedTaskID);
     } catch (error) {
       networkResponse.errorText = error.toString();
     }
@@ -67,7 +67,7 @@ class LocalDatabase {
       final db = await databaseInstance.database;
       String orderBy = "id DESC";
       List json = await db.query("SearchHistory", orderBy: orderBy);
-      networkResponse.data = json.map((e) => SearchModel.fromJson(e)).toList();
+      networkResponse.data = json.map((e) => HistoryModel.fromJson(e)).toList();
     } catch (error) {
       networkResponse.errorText = error.toString();
     }

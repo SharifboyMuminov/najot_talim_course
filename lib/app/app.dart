@@ -1,5 +1,8 @@
+import 'package:default_project/bloc/history/history_bloc.dart';
+import 'package:default_project/bloc/history/history_event.dart';
 import 'package:default_project/bloc/region/region_bloc.dart';
 import 'package:default_project/bloc/region/region_event.dart';
+import 'package:default_project/data/local/local_database.dart';
 import 'package:default_project/data/local/places_db.dart';
 import 'package:default_project/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +17,7 @@ class App extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(create: (_) => PlacesDatabase()),
+        RepositoryProvider(create: (_) => LocalDatabase()),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -21,6 +25,11 @@ class App extends StatelessWidget {
             create: (context) => RegionBloc(
               context.read<PlacesDatabase>(),
             )..add(RegionCallEvent()),
+          ),
+          BlocProvider(
+            create: (context) => HistoryBloc(
+              context.read<LocalDatabase>(),
+            )..add(HistoryCallEvent()),
           ),
         ],
         child: const MyApp(),

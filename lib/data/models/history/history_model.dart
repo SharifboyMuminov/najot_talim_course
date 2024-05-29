@@ -1,21 +1,21 @@
-class SearchModel {
+class HistoryModel {
   final int id;
   final String title;
 
-  SearchModel({required this.id, required this.title});
+  HistoryModel({required this.id, required this.title});
 
-  factory SearchModel.fromJson(Map<String, dynamic> json) {
-    return SearchModel(
+  factory HistoryModel.fromJson(Map<String, dynamic> json) {
+    return HistoryModel(
       id: json["id"] as int? ?? 0,
       title: json["title"] as String? ?? "No Data :(",
     );
   }
 
-  SearchModel copyWith({
+  HistoryModel copyWith({
     int? id,
     String? title,
   }) {
-    return SearchModel(
+    return HistoryModel(
       id: id ?? this.id,
       title: title ?? this.title,
     );
