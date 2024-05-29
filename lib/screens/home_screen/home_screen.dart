@@ -5,11 +5,19 @@ import 'package:default_project/data/enums/form_status.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int lengthSearchText = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -54,9 +62,11 @@ class HomeScreen extends StatelessWidget {
                   ),
                   child: TextFormField(
                     onChanged: (v) {
+                      lengthSearchText = v.length;
                       context
                           .read<RegionBloc>()
                           .add(SearchRegionCallEvent(searchTitle: v));
+                      setState(() {});
                     },
                     style: TextStyle(
                       color: Colors.black,
@@ -97,7 +107,6 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 Align(
                   alignment: Alignment.topRight,
                   child: Text(
@@ -120,12 +129,34 @@ class HomeScreen extends StatelessWidget {
                     itemCount: state.currentRegions.length,
                     itemBuilder: (BuildContext context, int index) {
                       return ListTile(
-                        title: Text(
-                          state.currentRegions[index].regionName,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20.sp,
-                          ),
+                        title: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              state.currentRegions[index].regionName
+                                  .substring(0, lengthSearchText),
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black,
+                                fontSize: 20.sp,
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                state.currentRegions[index].regionName
+                                    .substring(
+                                  lengthSearchText,
+                                  state.currentRegions[index].regionName.length,
+                                ),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                  fontSize: 18.sp,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       );
                     },
