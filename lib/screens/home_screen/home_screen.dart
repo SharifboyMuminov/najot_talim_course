@@ -18,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final player = AudioPlayer();
   int currentIndex = 0;
   Duration maxDuration = const Duration(seconds: 0);
-  bool play = false;
+  bool isPlay = false;
   bool showMusic = false;
 
   @override
@@ -53,38 +53,45 @@ class _HomeScreenState extends State<HomeScreen> {
           borderRadius: BorderRadius.circular(15.r),
           color: Colors.white10,
         ),
-        child: ListView.builder(
-          padding: EdgeInsets.symmetric(vertical: 5.he),
-          itemCount: musics.length,
-          itemBuilder: (BuildContext context, int index) {
-            return MusicMyButton(
-              imageUrl: musics.first.imageUrl,
-              onTab: () {
-                showMusic = true;
-                setState(() {});
+        child: Stack(
+          children: [
+            ListView.builder(
+              padding: EdgeInsets.symmetric(vertical: 5.he),
+              itemCount: musics.length,
+              itemBuilder: (BuildContext context, int index) {
+                return MusicMyButton(
+                  imageUrl: musics.first.imageUrl,
+                  onTab: () {
+                    showMusic = true;
+                    setState(() {});
+                  },
+                );
               },
-            );
-          },
+            ),
+          ],
         ),
       ),
       bottomNavigationBar: InkWell(
         onTap: !showMusic
             ? () {
-                showMusic = !showMusic;
+                showMusic = true;
                 setState(() {});
               }
             : null,
         child: AnimatedContainer(
+          padding: !showMusic
+              ? EdgeInsets.symmetric(horizontal: 20.we, vertical: 15.he)
+              : null,
           curve: Curves.easeIn,
           duration: const Duration(milliseconds: 300),
           height: showMusic ? height : 100.he,
           width: width,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(5.r),
-              topRight: Radius.circular(5.r),
+              topLeft: Radius.circular(25.r),
+              topRight: Radius.circular(25.r),
             ),
-            color: Colors.black,
+            color: showMusic ? Colors.black : AppColors.c686D76,
           ),
           child: showMusic
               ? AudioPlayerScreen(
@@ -94,7 +101,69 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   player: player,
                 )
-              : const SizedBox(),
+              : Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 85.we,
+                      height: 85.we,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.r),
+                        image: DecorationImage(
+                          image: NetworkImage(
+                            musics[currentIndex].imageUrl,
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 10.we),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Remedy",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: AppColors.cE5E5E5,
+                              fontSize: 24.sp,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          Text(
+                            "Annie Schindel",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: AppColors.c_BCBCBC,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(13),
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                      child: InkWell(
+                        onTap: () {},
+                        child: Icon(
+                          player.state == PlayerState.paused
+                              ? Icons.play_arrow_rounded
+                              : Icons.pause,
+                          size: 28.sp,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
         ),
       ),
     );
