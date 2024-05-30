@@ -38,6 +38,8 @@ dependencies:
   flutter_screenutil: ^5.9.0
   shared_preferences: ^2.2.2
   flutter_bloc: ^8.1.5
+  audioplayers: ^6.0.0
+  audio_video_progress_bar: ^2.0.3
 
 dev_dependencies:
   flutter_test:
