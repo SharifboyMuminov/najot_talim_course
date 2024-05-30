@@ -3,7 +3,6 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:default_project/data/local/local_varibals.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -18,24 +17,18 @@ class _HomeScreenState extends State<HomeScreen> {
   final player = AudioPlayer();
   int currentIndex = 0;
   Duration maxDuration = const Duration(seconds: 0);
-  late ValueListenable<Duration> progress;
   bool play = false;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
-    // getMaxDuration() {
-    //   widget.player.getDuration().then((value) {
-    //     maxDuration = value ?? const Duration(seconds: 0);
-    //     setState(() {});
-    //   });
-    // }
+    getMaxDuration() {
+      player.getDuration().then((value) {
+        maxDuration = value ?? const Duration(seconds: 0);
+        setState(() {});
+      });
+    }
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -82,17 +75,27 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             SizedBox(height: 20.he),
-            ProgressBar(
-              timeLabelTextStyle: TextStyle(
-                color: Colors.white,
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w500,
-              ),
-              baseBarColor: AppColors.c5E5A5A,
-              progressBarColor: AppColors.c52D7BF,
-              thumbColor: AppColors.c52D7BF.withOpacity(0.7),
-              progress: Duration(seconds: 1),
-              total: Duration(seconds: 5),
+            StreamBuilder(
+              stream: player.onPositionChanged,
+              builder:
+                  (BuildContext context, AsyncSnapshot<Duration> snapshot) {
+                return ProgressBar(
+                  timeLabelTextStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  baseBarColor: AppColors.c5E5A5A,
+                  progressBarColor: AppColors.c52D7BF,
+                  thumbColor: AppColors.c52D7BF.withOpacity(0.7),
+                  progress: snapshot.data ?? const Duration(seconds: 1),
+                  total: maxDuration,
+                  onSeek: (duration) {
+                    player.seek(duration);
+                    setState(() {});
+                  },
+                );
+              },
             ),
             SizedBox(height: 20.he),
             Row(
@@ -110,6 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       player.play(AssetSource(
                           musics[--currentIndex % musics.length].pathMusic));
                       play = true;
+                      getMaxDuration();
                       setState(() {});
                     },
                     child: const Icon(
@@ -131,6 +135,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       } else {
                         player.pause();
                       }
+                      getMaxDuration();
+
                       play = !play;
                       setState(() {});
                     },
@@ -152,6 +158,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       player.play(AssetSource(
                           musics[++currentIndex % musics.length].pathMusic));
                       play = true;
+                      getMaxDuration();
+
                       setState(() {});
                     },
                     child: const Icon(
