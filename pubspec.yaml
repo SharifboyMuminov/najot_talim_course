@@ -40,10 +40,10 @@ dependencies:
   flutter_bloc: ^8.1.5
   audio_video_progress_bar: ^2.0.3
   on_audio_query: ^2.9.0
-  just_audio: ^0.9.38
   permission_handler: ^11.3.1
   lottie: ^3.1.2
   flutter_svg: ^2.0.10+1
+  audioplayers: ^6.0.0
 
 dev_dependencies:
   flutter_test:

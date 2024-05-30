@@ -4,5 +4,7 @@ class AppImages {
 
   static const String activeFavoriteSvg = "$_iconPath/active_favorite.svg";
   static const String noActiveFavoriteSvg = "$_iconPath/no_active_favorite.svg";
-  static const String threeHorizontalDot = "$_iconPath/three_dot.svg";
+  static const String threeHorizontalDotSvg = "$_iconPath/three_dot.svg";
+  static const String arrowBottomSvg = "$_iconPath/arrow_bottom.svg";
+  static const String musicSvg = "$_iconPath/music.svg";
 }
