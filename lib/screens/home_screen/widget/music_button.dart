@@ -30,6 +30,7 @@ class MusicMyButton extends StatelessWidget {
       onPressed: onTab,
       child: Row(
         children: [
+
           QueryArtworkWidget(
             nullArtworkWidget: Container(
               margin: EdgeInsets.symmetric(vertical: 5.he),

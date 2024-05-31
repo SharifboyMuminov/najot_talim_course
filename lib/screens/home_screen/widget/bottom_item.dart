@@ -24,8 +24,8 @@ class BottomMyItem extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15.r),
             image: const DecorationImage(
-              image: NetworkImage(
-                "https://c.saavncdn.com/979/Odamlar-Nima-deydi-feat-Timur-Alixonov-Unknown-2022-20221114085825-500x500.jpg",
+              image: AssetImage(
+                "assets/images/odamlar.jpg",
               ),
               fit: BoxFit.cover,
             ),
