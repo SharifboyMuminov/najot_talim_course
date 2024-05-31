@@ -53,7 +53,9 @@ class _HomeScreenState extends State<HomeScreen> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: TextFormField(
+                textInputAction: TextInputAction.done,
                 keyboardType: TextInputType.text,
+
                 controller: controllerSearche,
                 onEditingComplete: () {
                   setState(() {
