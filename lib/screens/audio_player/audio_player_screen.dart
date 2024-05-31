@@ -19,6 +19,7 @@ class AudioPlayerScreen extends StatefulWidget {
     required this.currentIndex,
     required this.setCurrentIndex,
     required this.isPlay,
+    this.duration,
   });
 
   final VoidCallback arrowBack;
@@ -28,6 +29,7 @@ class AudioPlayerScreen extends StatefulWidget {
   final int currentIndex;
   final ValueChanged<int> setCurrentIndex;
   final ValueChanged<bool> isPlay;
+  final Duration? duration;
 
   @override
   State<AudioPlayerScreen> createState() => _AudioPlayerScreenState();
@@ -36,10 +38,13 @@ class AudioPlayerScreen extends StatefulWidget {
 class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
   int currentIndex = 0;
   Duration maxDuration = const Duration(seconds: 0);
-  bool play = false;
+  bool play = true;
 
   @override
   void initState() {
+    if (widget.duration != null) {
+      widget.player.seek(widget.duration!);
+    }
     currentIndex = widget.currentIndex;
     _init();
     super.initState();
@@ -47,6 +52,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
 
   _init() async {
     play = true;
+    setState(() {});
     await widget.player.play(DeviceFileSource(widget.songModel.data));
   }
 
@@ -139,6 +145,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
                     progressBarColor: AppColors.c52D7BF,
                     thumbColor: AppColors.c52D7BF.withOpacity(0.7),
                     progress: snapshot.data ?? const Duration(seconds: 1),
+                    buffered: widget.duration ?? Duration(),
                     total: maxDuration,
                     onSeek: (duration) {
                       widget.player.seek(duration);
@@ -167,7 +174,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
                     child: InkWell(
                       onTap: _onTabStartAndStop,
                       child: Icon(
-                        play ? Icons.play_arrow_rounded : Icons.pause,
+                        play ? Icons.pause : Icons.play_arrow,
                         size: 28.sp,
                       ),
                     ),
@@ -188,7 +195,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
   }
 
   _onTabStartAndStop() {
-    if (play) {
+    if (!play) {
       widget.player.play(DeviceFileSource(
           widget.songModels[currentIndex % widget.songModels.length].data));
     } else {
@@ -197,7 +204,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
     getMaxDuration();
 
     play = !play;
-    widget.isPlay.call(play);
+    widget.isPlay.call(!play);
     setState(() {});
   }
 
@@ -210,7 +217,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
     widget.setCurrentIndex.call(currentIndex);
 
     widget.player.pause();
-    widget.player.play(DeviceFileSource(
+    widget.player.setSource(DeviceFileSource(
         widget.songModels[currentIndex % widget.songModels.length].data));
     play = true;
     getMaxDuration();

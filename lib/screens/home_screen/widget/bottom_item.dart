@@ -67,9 +67,9 @@ class BottomMyItem extends StatelessWidget {
             shape: BoxShape.circle,
           ),
           child: InkWell(
-            onTap: () {},
+            onTap: onTabStartAdnPaused,
             child: Icon(
-              isPlay ? Icons.play_arrow : Icons.pause,
+              isPlay ? Icons.pause : Icons.play_arrow,
               size: 28.sp,
             ),
           ),

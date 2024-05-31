@@ -18,12 +18,25 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final player = AudioPlayer();
   final _audioQuery = OnAudioQuery();
+  Duration currentDuration = const Duration(seconds: 0);
 
   int currentIndex = 0;
   Duration maxDuration = const Duration(seconds: 0);
   bool isPlay = false;
   bool showMusic = false;
   List<SongModel> songModels = [];
+
+  _listenAudioPlayer() {
+    player.onPositionChanged.listen((Duration d) {
+      currentDuration = d;
+    });
+  }
+
+  @override
+  void initState() {
+    _listenAudioPlayer();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,6 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: !showMusic
             ? () {
                 showMusic = true;
+                isPlay = true;
                 setState(() {});
               }
             : null,
@@ -123,6 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           child: showMusic
               ? AudioPlayerScreen(
+                  duration: currentDuration,
                   arrowBack: () {
                     showMusic = false;
                     setState(() {});
@@ -149,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   _onTabStartAndStop() {
-    if (isPlay) {
+    if (!isPlay) {
       player.play(
           DeviceFileSource(songModels[currentIndex % songModels.length].data));
     } else {
