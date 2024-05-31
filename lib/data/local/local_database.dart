@@ -1,5 +1,6 @@
 import 'package:default_project/data/models/favorite/favorite_model.dart';
 import 'package:default_project/data/models/network_response.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -15,6 +16,7 @@ class LocalDatabase {
   Database? _database;
 
   Future<Database> get database async {
+    debugPrint("Hello :)");
     if (_database != null) {
       return _database!;
     } else {
@@ -35,7 +37,7 @@ class LocalDatabase {
 
   Future<void> _onCreate(Database db, int version) async {
     await db.execute('''CREATE TABLE FavoriteMusics (
-      _id INTEGER DEFAULT 0,
+      _id INTEGER DEFAULT 0
     )''');
   }
 

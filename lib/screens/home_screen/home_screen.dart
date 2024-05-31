@@ -1,10 +1,16 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:default_project/blocs/favorite/favorite_bloc.dart';
+import 'package:default_project/blocs/favorite/favorite_event.dart';
+import 'package:default_project/blocs/favorite/favorite_state.dart';
+import 'package:default_project/data/enums/form_status/formS_status.dart';
+import 'package:default_project/data/models/favorite/favorite_model.dart';
 import 'package:default_project/screens/audio_player/audio_player_screen.dart';
 import 'package:default_project/screens/home_screen/widget/bottom_item.dart';
 import 'package:default_project/screens/home_screen/widget/music_button.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
@@ -99,6 +105,29 @@ class _HomeScreenState extends State<HomeScreen> {
                             setState(() {});
                           },
                           songModel: snapshot.data![index],
+                          onTabFavorite: () {
+                            if (_containsFavorite(
+                                songModel: snapshot.data![index])) {
+                              context.read<FavoriteBloc>().add(
+                                    FavoriteInsertEvent(
+                                      favoriteModel: FavoriteModel(
+                                        id: snapshot.data![index].id,
+                                      ),
+                                    ),
+                                  );
+                            } else {
+                              context.read<FavoriteBloc>().add(
+                                    FavoriteDeleteEvent(
+                                      favoriteModel: FavoriteModel(
+                                        id: snapshot.data![index].id,
+                                      ),
+                                    ),
+                                  );
+                            }
+                          },
+                          isFavorite: _containsFavorite(
+                            songModel: snapshot.data![index],
+                          ),
                         );
                       },
                     );
@@ -108,6 +137,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 return const Center(
                     child: CircularProgressIndicator.adaptive());
               },
+            ),
+            BlocListener<FavoriteBloc, FavoriteState>(
+              listener: (BuildContext context, FavoriteState state) {
+                if (state.formsStatus == FormsStatus.success) {
+                  setState(() {});
+                } else if (state.formsStatus == FormsStatus.error) {
+                  debugPrint("My Error: ${state.errorText}");
+                }
+              },
+              child: SizedBox(),
             ),
           ],
         ),
@@ -161,6 +200,14 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  _containsFavorite({required SongModel songModel}) {
+    List<FavoriteModel> favorite =
+        context.read<FavoriteBloc>().state.favoriteModels;
+
+    return (favorite.where((element) => element.id == songModel.id).toList())
+        .isNotEmpty;
   }
 
   _onTabStartAndStop() {

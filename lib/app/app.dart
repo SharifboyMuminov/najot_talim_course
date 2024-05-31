@@ -1,4 +1,5 @@
-import 'package:default_project/screens/home_screen/home_screen.dart';
+import 'package:default_project/blocs/favorite/favorite_bloc.dart';
+import 'package:default_project/blocs/favorite/favorite_event.dart';
 import 'package:default_project/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +10,17 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MyApp();
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => FavoriteBloc()
+            ..add(
+              FavoriteCallEvent(),
+            ),
+        ),
+      ],
+      child: const MyApp(),
+    );
   }
 }
 

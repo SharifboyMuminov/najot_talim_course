@@ -11,12 +11,14 @@ class MusicMyButton extends StatelessWidget {
     super.key,
     required this.imageUrl,
     required this.onTab,
-    required this.songModel,
+    required this.songModel, required this.onTabFavorite, required this.isFavorite,
   });
 
   final String imageUrl;
   final VoidCallback onTab;
+  final VoidCallback onTabFavorite;
   final SongModel songModel;
+  final bool isFavorite;
 
   @override
   Widget build(BuildContext context) {
@@ -78,9 +80,9 @@ class MusicMyButton extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: onTabFavorite,
             icon: SvgPicture.asset(
-              AppImages.noActiveFavoriteSvg,
+              isFavorite ? AppImages.activeFavoriteSvg : AppImages.noActiveFavoriteSvg,
               width: 20.we,
               height: 20.we,
             ),
