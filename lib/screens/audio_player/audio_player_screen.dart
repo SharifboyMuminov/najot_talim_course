@@ -17,6 +17,8 @@ class AudioPlayerScreen extends StatefulWidget {
     required this.songModel,
     required this.songModels,
     required this.currentIndex,
+    required this.setCurrentIndex,
+    required this.isPlay,
   });
 
   final VoidCallback arrowBack;
@@ -24,6 +26,8 @@ class AudioPlayerScreen extends StatefulWidget {
   final SongModel songModel;
   final List<SongModel> songModels;
   final int currentIndex;
+  final ValueChanged<int> setCurrentIndex;
+  final ValueChanged<bool> isPlay;
 
   @override
   State<AudioPlayerScreen> createState() => _AudioPlayerScreenState();
@@ -85,7 +89,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
                     offset: const Offset(0, 2),
                   ),
                 ],
-                image: DecorationImage(
+                image: const DecorationImage(
                   image: NetworkImage(
                     "https://c.saavncdn.com/979/Odamlar-Nima-deydi-feat-Timur-Alixonov-Unknown-2022-20221114085825-500x500.jpg",
                   ),
@@ -193,6 +197,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
     getMaxDuration();
 
     play = !play;
+    widget.isPlay.call(play);
     setState(() {});
   }
 
@@ -202,6 +207,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
     } else {
       currentIndex--;
     }
+    widget.setCurrentIndex.call(currentIndex);
 
     widget.player.pause();
     widget.player.play(DeviceFileSource(

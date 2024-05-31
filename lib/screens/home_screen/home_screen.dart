@@ -1,6 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
-import 'package:default_project/data/local/local_varibals.dart';
 import 'package:default_project/screens/audio_player/audio_player_screen.dart';
+import 'package:default_project/screens/home_screen/widget/bottom_item.dart';
 import 'package:default_project/screens/home_screen/widget/music_button.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
@@ -77,9 +77,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemCount: snapshot.data!.length,
                       itemBuilder: (BuildContext context, int index) {
                         return MusicMyButton(
-                          imageUrl: "https://c.saavncdn.com/979/Odamlar-Nima-deydi-feat-Timur-Alixonov-Unknown-2022-20221114085825-500x500.jpg",
+                          imageUrl:
+                              "https://c.saavncdn.com/979/Odamlar-Nima-deydi-feat-Timur-Alixonov-Unknown-2022-20221114085825-500x500.jpg",
                           onTab: () {
                             currentIndex = index;
+                            isPlay = true;
                             showMusic = true;
                             setState(() {});
                           },
@@ -127,73 +129,34 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   player: player,
                   songModel: songModels[currentIndex],
-                  songModels: songModels, currentIndex: currentIndex,
+                  songModels: songModels,
+                  currentIndex: currentIndex,
+                  setCurrentIndex: (v) {
+                    currentIndex = v;
+                  },
+                  isPlay: (v) {
+                    isPlay = v;
+                    setState(() {});
+                  },
                 )
-              : Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 85.we,
-                      height: 85.we,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.r),
-                        image: const DecorationImage(
-                          image: NetworkImage(
-                            "https://c.saavncdn.com/979/Odamlar-Nima-deydi-feat-Timur-Alixonov-Unknown-2022-20221114085825-500x500.jpg",
-                          ),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10.we),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Remedy",
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: AppColors.cE5E5E5,
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          Text(
-                            "Annie Schindel",
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: AppColors.c_BCBCBC,
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(13),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                      ),
-                      child: InkWell(
-                        onTap: () {},
-                        child: Icon(
-                          player.state == PlayerState.paused
-                              ? Icons.play_arrow_rounded
-                              : Icons.pause,
-                          size: 28.sp,
-                        ),
-                      ),
-                    ),
-                  ],
+              : BottomMyItem(
+                  isPlay: isPlay,
+                  onTabStartAdnPaused: _onTabStartAndStop,
                 ),
         ),
       ),
     );
+  }
+
+  _onTabStartAndStop() {
+    if (isPlay) {
+      player.play(
+          DeviceFileSource(songModels[currentIndex % songModels.length].data));
+    } else {
+      player.pause();
+    }
+
+    isPlay = !isPlay;
+    setState(() {});
   }
 }
