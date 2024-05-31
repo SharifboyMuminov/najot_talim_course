@@ -30,19 +30,23 @@ class MusicMyButton extends StatelessWidget {
       onPressed: onTab,
       child: Row(
         children: [
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 5.he),
-            width: 85.we,
-            height: 85.we,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15.r),
-              image: DecorationImage(
-                image: NetworkImage(
-                  imageUrl,
+          QueryArtworkWidget(
+            nullArtworkWidget: Container(
+              margin: EdgeInsets.symmetric(vertical: 5.he),
+              width: 85.we,
+              height: 85.we,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.r),
+                image: const DecorationImage(
+                  image: AssetImage(
+                    "assets/images/odamlar.jpg",
+                  ),
+                  fit: BoxFit.cover,
                 ),
-                fit: BoxFit.cover,
               ),
             ),
+            id: songModel.id,
+            type: ArtworkType.ARTIST,
           ),
           SizedBox(width: 10.we),
           Expanded(
