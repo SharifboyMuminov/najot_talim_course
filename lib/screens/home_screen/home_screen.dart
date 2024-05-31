@@ -1,7 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:default_project/data/local/local_varibals.dart';
+import 'package:default_project/screens/audio_player/audio_player_screen.dart';
 import 'package:default_project/screens/home_screen/widget/music_button.dart';
-import 'package:default_project/screens/info/info_screen.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';

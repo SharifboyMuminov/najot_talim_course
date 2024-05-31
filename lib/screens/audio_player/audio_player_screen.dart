@@ -1,7 +1,7 @@
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:default_project/data/local/local_varibals.dart';
-import 'package:default_project/screens/info/widget/next_button.dart';
+import 'package:default_project/screens/audio_player/widget/next_button.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/app_images.dart';
 import 'package:default_project/utils/size.dart';
