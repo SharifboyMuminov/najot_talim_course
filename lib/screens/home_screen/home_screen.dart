@@ -141,6 +141,8 @@ class _HomeScreenState extends State<HomeScreen> {
             BlocListener<FavoriteBloc, FavoriteState>(
               listener: (BuildContext context, FavoriteState state) {
                 if (state.formsStatus == FormsStatus.success) {
+                  debugPrint("My Length: ${state.favoriteModels.length}");
+
                   setState(() {});
                 } else if (state.formsStatus == FormsStatus.error) {
                   debugPrint("My Error: ${state.errorText}");
