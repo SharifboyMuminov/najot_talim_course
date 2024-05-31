@@ -23,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Duration maxDuration = const Duration(seconds: 0);
   bool isPlay = false;
   bool showMusic = false;
+  List<SongModel> songModels = [];
 
   @override
   Widget build(BuildContext context) {
@@ -70,13 +71,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   if (snapshot.data!.isEmpty) {
                     return const Center(child: Text("Empty Music."));
                   } else {
+                    songModels = snapshot.data!;
                     return ListView.builder(
                       padding: EdgeInsets.symmetric(vertical: 5.he),
                       itemCount: snapshot.data!.length,
                       itemBuilder: (BuildContext context, int index) {
                         return MusicMyButton(
-                          imageUrl: musics.first.imageUrl,
+                          imageUrl: "https://c.saavncdn.com/979/Odamlar-Nima-deydi-feat-Timur-Alixonov-Unknown-2022-20221114085825-500x500.jpg",
                           onTab: () {
+                            currentIndex = index;
                             showMusic = true;
                             setState(() {});
                           },
@@ -123,6 +126,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     setState(() {});
                   },
                   player: player,
+                  songModel: songModels[currentIndex],
+                  songModels: songModels, currentIndex: currentIndex,
                 )
               : Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -132,9 +137,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 85.we,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15.r),
-                        image: DecorationImage(
+                        image: const DecorationImage(
                           image: NetworkImage(
-                            musics[currentIndex].imageUrl,
+                            "https://c.saavncdn.com/979/Odamlar-Nima-deydi-feat-Timur-Alixonov-Unknown-2022-20221114085825-500x500.jpg",
                           ),
                           fit: BoxFit.cover,
                         ),

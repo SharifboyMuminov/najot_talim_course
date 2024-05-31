@@ -1,6 +1,5 @@
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:default_project/data/local/local_varibals.dart';
 import 'package:default_project/screens/audio_player/widget/next_button.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/app_images.dart';
@@ -8,13 +7,23 @@ import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:on_audio_query/on_audio_query.dart';
 
 class AudioPlayerScreen extends StatefulWidget {
-  const AudioPlayerScreen(
-      {super.key, required this.arrowBack, required this.player});
+  const AudioPlayerScreen({
+    super.key,
+    required this.arrowBack,
+    required this.player,
+    required this.songModel,
+    required this.songModels,
+    required this.currentIndex,
+  });
 
   final VoidCallback arrowBack;
   final AudioPlayer player;
+  final SongModel songModel;
+  final List<SongModel> songModels;
+  final int currentIndex;
 
   @override
   State<AudioPlayerScreen> createState() => _AudioPlayerScreenState();
@@ -27,13 +36,14 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
 
   @override
   void initState() {
-    // play = true;
-    // widget.player.play(
-    //   AssetSource(
-    //     musics[--currentIndex % musics.length].pathMusic,
-    //   ),
-    // );
+    currentIndex = widget.currentIndex;
+    _init();
     super.initState();
+  }
+
+  _init() async {
+    play = true;
+    await widget.player.play(DeviceFileSource(widget.songModel.data));
   }
 
   getMaxDuration() {
@@ -77,7 +87,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
                 ],
                 image: DecorationImage(
                   image: NetworkImage(
-                    musics[currentIndex % musics.length].imageUrl,
+                    "https://c.saavncdn.com/979/Odamlar-Nima-deydi-feat-Timur-Alixonov-Unknown-2022-20221114085825-500x500.jpg",
                   ),
                   fit: BoxFit.cover,
                 ),
@@ -87,7 +97,8 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.we),
               child: Text(
-                musics[currentIndex % musics.length].musicName,
+                widget.songModels[currentIndex % widget.songModels.length]
+                    .displayName,
                 style: TextStyle(
                   color: AppColors.cE5E5E5,
                   fontWeight: FontWeight.w700,
@@ -98,7 +109,8 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.we),
               child: Text(
-                musics[currentIndex % musics.length].subTitle,
+                widget
+                    .songModels[currentIndex % widget.songModels.length].title,
                 style: TextStyle(
                   color: AppColors.cE5E5E5,
                   fontWeight: FontWeight.w600,
@@ -173,8 +185,8 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
 
   _onTabStartAndStop() {
     if (play) {
-      widget.player
-          .play(AssetSource(musics[currentIndex % musics.length].pathMusic));
+      widget.player.play(DeviceFileSource(
+          widget.songModels[currentIndex % widget.songModels.length].data));
     } else {
       widget.player.pause();
     }
@@ -192,8 +204,8 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
     }
 
     widget.player.pause();
-    widget.player
-        .play(AssetSource(musics[currentIndex % musics.length].pathMusic));
+    widget.player.play(DeviceFileSource(
+        widget.songModels[currentIndex % widget.songModels.length].data));
     play = true;
     getMaxDuration();
 
