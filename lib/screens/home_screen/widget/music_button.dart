@@ -4,16 +4,19 @@ import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:on_audio_query/on_audio_query.dart';
 
 class MusicMyButton extends StatelessWidget {
   const MusicMyButton({
     super.key,
     required this.imageUrl,
     required this.onTab,
+    required this.songModel,
   });
 
   final String imageUrl;
   final VoidCallback onTab;
+  final SongModel songModel;
 
   @override
   Widget build(BuildContext context) {
@@ -47,22 +50,22 @@ class MusicMyButton extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Remedy",
+                  songModel.displayName,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: AppColors.cE5E5E5,
-                    fontSize: 24.sp,
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
                 Text(
-                  "Annie Schindel",
+                  songModel.artist ?? "",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: AppColors.c_BCBCBC,
-                    fontSize: 16.sp,
+                    fontSize: 12.sp,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
