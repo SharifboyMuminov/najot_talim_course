@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          SliverAppBar(
+          const SliverAppBar(
             pinned: true,
           ),
           SliverToBoxAdapter(
@@ -36,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
           SliverPersistentHeader(
             pinned: true,
             delegate: CategoryView(
+
                 onChangeIndex: (int value) {
                   activIndex = value;
                   setState(() {});
@@ -46,77 +47,102 @@ class _HomeScreenState extends State<HomeScreen> {
             delegate: SliverChildBuilderDelegate(
               childCount: globalCategoryModels.length,
               (context, indexOne) {
-                return Column(
-                  children: [
-                    ...List.generate(
-                      globalCategoryModels[indexOne].products.length,
-                      (indexTwo) {
-                        return Container(
-                          margin: EdgeInsets.all(10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      globalCategoryModels[indexOne]
-                                          .products[indexTwo]
-                                          .title,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 18.sp,
-                                        height: 3,
-                                        fontWeight: FontWeight.w600,
+                return Container(
+                  margin:
+                      EdgeInsets.symmetric(vertical: 15.he, horizontal: 5.we),
+                  padding: EdgeInsets.only(
+                    top: 45.he,
+                    left: 15.we,
+                    right: 15.we,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.r),
+                    color: Colors.grey.withOpacity(0.3),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        globalCategoryModels[indexOne].title,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 23.sp,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      ...List.generate(
+                        globalCategoryModels[indexOne].products.length,
+                        (indexTwo) {
+                          return Container(
+                            margin: EdgeInsets.symmetric(vertical: 5.he),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        globalCategoryModels[indexOne]
+                                            .products[indexTwo]
+                                            .title,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 18.sp,
+                                          height: 3,
+                                          fontWeight: FontWeight.w600,
+                                        ),
                                       ),
-                                    ),
-                                    Text(
-                                      "${globalCategoryModels[indexOne].products[indexTwo].price} \$",
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.w600,
+                                      Text(
+                                        "${globalCategoryModels[indexOne].products[indexTwo].price} \$",
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 16.sp,
+                                          fontWeight: FontWeight.w600,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              SizedBox(width: 10.we),
-                              CachedNetworkImage(
-                                imageUrl: globalCategoryModels[indexOne]
-                                    .products[indexTwo]
-                                    .imageUrl,
-                                imageBuilder: (context, imageProvider) {
-                                  return Container(
-                                    width: 100,
-                                    height: 100,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15.r),
-                                      image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.cover,
+                                SizedBox(width: 10.we),
+                                CachedNetworkImage(
+                                  imageUrl: globalCategoryModels[indexOne]
+                                      .products[indexTwo]
+                                      .imageUrl,
+                                  imageBuilder: (context, imageProvider) {
+                                    return Container(
+                                      width: 100,
+                                      height: 100,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(15.r),
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                },
-                                placeholder: (context, url) => const Center(
-                                    child:
-                                        CircularProgressIndicator.adaptive()),
-                                errorWidget: (context, url, error) =>
-                                    const Icon(Icons.error),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  ],
+                                    );
+                                  },
+                                  placeholder: (context, url) => const Center(
+                                      child:
+                                          CircularProgressIndicator.adaptive()),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(Icons.error),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 );
                 //
               },

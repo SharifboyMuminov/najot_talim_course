@@ -1,3 +1,4 @@
+import 'package:default_project/data/local/local_varibals.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
@@ -19,11 +20,10 @@ class CategoryView extends SliverPersistentHeaderDelegate {
         scrollDirection: Axis.horizontal,
         children: [
           ...List.generate(
-            10,
+            globalCategoryModels.length,
             (index) {
-              return AnimatedContainer(
+              return Container(
                 margin: EdgeInsets.symmetric(horizontal: 5.we, vertical: 10.he),
-                duration: Duration(seconds: 1),
                 child: TextButton(
                   style: TextButton.styleFrom(
                     backgroundColor:
@@ -39,9 +39,9 @@ class CategoryView extends SliverPersistentHeaderDelegate {
                   },
                   child: Row(
                     children: [
-                      Container(
-                        width: 10.we,
-                        height: 10.we,
+                      AnimatedContainer(
+                        width: activIndex == index ? 15.we : 10.we,
+                        height: activIndex == index ? 15.we : 10.we,
                         margin: EdgeInsets.only(right: 8.we),
                         decoration: BoxDecoration(
                           color: activIndex == index
@@ -49,9 +49,9 @@ class CategoryView extends SliverPersistentHeaderDelegate {
                               : AppColors.c_7F8192,
                           shape: BoxShape.circle,
                         ),
+                        duration: const Duration(milliseconds: 500),
                       ),
-                      Text(
-                        "Payments${activIndex == index ? " | \$398" : ""}",
+                      AnimatedDefaultTextStyle(
                         style: TextStyle(
                           color: activIndex == index
                               ? Colors.white
@@ -59,19 +59,9 @@ class CategoryView extends SliverPersistentHeaderDelegate {
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w500,
                         ),
+                        duration: const Duration(milliseconds: 500),
+                        child: Text(globalCategoryModels[index].title),
                       ),
-                      // AnimatedDefaultTextStyle(
-                      //   child: Text(
-                      //       "Payments${activIndex == index ? " | \$398" : ""}"),
-                      //   style: TextStyle(
-                      //     color: activIndex == index
-                      //         ? Colors.white
-                      //         : AppColors.c_7F8192,
-                      //     fontSize: 12.sp,
-                      //     fontWeight: FontWeight.w500,
-                      //   ),
-                      //   duration: Duration(milliseconds: 500),
-                      // ),
                     ],
                   ),
                 ),
