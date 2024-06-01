@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CategoryView extends SliverPersistentHeaderDelegate {
-  const CategoryView(
-     {required this.scrollController,
+  const CategoryView({
+    required this.scrollController,
     required this.activeIndex,
     required this.onChangeIndex,
   });
