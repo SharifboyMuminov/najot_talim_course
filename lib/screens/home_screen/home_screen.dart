@@ -21,24 +21,36 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    for (CategoryModel categoryModel in globalCategoryModels) {
+      debugPrint("Length product: ${categoryModel.products.length * 93}");
+
+      asd.add(((categoryModel.products.length * 93.he) + 63));
+    }
     _listenScrollController();
     super.initState();
   }
 
   _listenScrollController() {
-    for (CategoryModel categoryModel in globalCategoryModels) {
-      asd.add(((categoryModel.products.length * 93.he) + 63));
-    }
+    debugPrint(asd.toString());
+    double pixels = 0.0;
 
     _scrollController.addListener(() {
+      pixels = _scrollController.position.pixels;
+      for (int i = 0; i < asd.length; i++) {
+        if (asd[i] < pixels && i > asd.length - 1 && asd[i + 1] > pixels) {
+          activeIndex = i;
+        } else {
+          activeIndex = i;
+        }
+        setState(() {});
+      }
       debugPrint(_scrollController.position.pixels.toString());
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    width = MediaQuery.of(context).size.width;
-    height = MediaQuery.of(context).size.height;
+
 
     return Scaffold(
       body: CustomScrollView(
