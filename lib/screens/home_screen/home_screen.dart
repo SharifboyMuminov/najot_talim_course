@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:default_project/data/local/local_varibals.dart';
-import 'package:default_project/data/models/category/category_model.dart';
 import 'package:default_project/screens/home_screen/widget/category_view.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
@@ -21,10 +20,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    for (CategoryModel categoryModel in globalCategoryModels) {
-      debugPrint("Length product: ${categoryModel.products.length * 93}");
+    double myDouble = 1;
+    for (int i = 0; i < globalCategoryModels.length; i++) {
+      myDouble = 0.0;
 
-      asd.add(((categoryModel.products.length * 93.he) + 63));
+      for (int j = 0; j < i + 1; j++) {
+        if (i == 0) {
+          myDouble = 70.he;
+        }
+        myDouble += ((globalCategoryModels[j].products.length * 93.he));
+      }
+      asd.add(myDouble);
+
+      // asd.add(((categoryModel.products.length * 93.he) + 63));
     }
     _listenScrollController();
     super.initState();
@@ -34,24 +42,25 @@ class _HomeScreenState extends State<HomeScreen> {
     debugPrint(asd.toString());
     double pixels = 0.0;
 
-    _scrollController.addListener(() {
-      pixels = _scrollController.position.pixels;
-      for (int i = 0; i < asd.length; i++) {
-        if (asd[i] < pixels && i > asd.length - 1 && asd[i + 1] > pixels) {
-          activeIndex = i;
-        } else {
-          activeIndex = i;
+    _scrollController.addListener(
+      () {
+        pixels = _scrollController.position.pixels;
+        for (int i = 0; i < asd.length; i++) {
+          if (asd[i] < pixels) {
+            activeIndex = i;
+            // _scrollController.animateTo(1400,
+            //     duration: Duration(milliseconds: 400), curve: Curves.linear);
+
+            setState(() {});
+          }
         }
-        setState(() {});
-      }
-      debugPrint(_scrollController.position.pixels.toString());
-    });
+        // debugPrint(_scrollController.position.pixels.toString());
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       body: CustomScrollView(
         controller: _scrollController,
