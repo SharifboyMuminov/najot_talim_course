@@ -2,7 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:default_project/data/local/local_varibals.dart';
 import 'package:default_project/screens/home_screen/widget/category_view.dart';
 import 'package:default_project/utils/size.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -51,26 +54,62 @@ class _HomeScreenState extends State<HomeScreen> {
                         return Container(
                           margin: EdgeInsets.all(10),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      globalCategoryModels[indexOne]
+                                          .products[indexTwo]
+                                          .title,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 18.sp,
+                                        height: 3,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Text(
+                                      "${globalCategoryModels[indexOne].products[indexTwo].price} \$",
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(width: 10.we),
                               CachedNetworkImage(
                                 imageUrl: globalCategoryModels[indexOne]
                                     .products[indexTwo]
                                     .imageUrl,
-                                imageBuilder: (context, imageProvider) =>
-                                    Container(
-                                  width: 100,
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: imageProvider,
-                                      fit: BoxFit.cover,
+                                imageBuilder: (context, imageProvider) {
+                                  return Container(
+                                    width: 100,
+                                    height: 100,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15.r),
+                                      image: DecorationImage(
+                                        image: imageProvider,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
-                                  ),
-                                ),
-                                placeholder: (context, url) =>
-                                    const Center(child: CircularProgressIndicator.adaptive()),
+                                  );
+                                },
+                                placeholder: (context, url) => const Center(
+                                    child:
+                                        CircularProgressIndicator.adaptive()),
                                 errorWidget: (context, url, error) =>
-                                    Icon(Icons.error),
+                                    const Icon(Icons.error),
                               ),
                             ],
                           ),
