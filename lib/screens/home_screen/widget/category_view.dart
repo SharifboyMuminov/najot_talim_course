@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CategoryView extends SliverPersistentHeaderDelegate {
-  const CategoryView({required this.activIndex, required this.onChangeIndex});
+  const CategoryView({required this.activeIndex, required this.onChangeIndex});
 
   final ValueChanged<int> onChangeIndex;
-  final int activIndex;
+  final int activeIndex;
 
   @override
   Widget build(
@@ -27,7 +27,7 @@ class CategoryView extends SliverPersistentHeaderDelegate {
                 child: TextButton(
                   style: TextButton.styleFrom(
                     backgroundColor:
-                        activIndex == index ? AppColors.c_7F8192 : null,
+                        activeIndex == index ? AppColors.c_7F8192 : null,
                     padding: EdgeInsets.symmetric(
                         horizontal: 15.we, vertical: 10.he),
                     shape: RoundedRectangleBorder(
@@ -40,11 +40,11 @@ class CategoryView extends SliverPersistentHeaderDelegate {
                   child: Row(
                     children: [
                       AnimatedContainer(
-                        width: activIndex == index ? 15.we : 10.we,
-                        height: activIndex == index ? 15.we : 10.we,
+                        width: activeIndex == index ? 15.we : 10.we,
+                        height: activeIndex == index ? 15.we : 10.we,
                         margin: EdgeInsets.only(right: 8.we),
                         decoration: BoxDecoration(
-                          color: activIndex == index
+                          color: activeIndex == index
                               ? Colors.white
                               : AppColors.c_7F8192,
                           shape: BoxShape.circle,
@@ -53,7 +53,7 @@ class CategoryView extends SliverPersistentHeaderDelegate {
                       ),
                       AnimatedDefaultTextStyle(
                         style: TextStyle(
-                          color: activIndex == index
+                          color: activeIndex == index
                               ? Colors.white
                               : AppColors.c_7F8192,
                           fontSize: 12.sp,

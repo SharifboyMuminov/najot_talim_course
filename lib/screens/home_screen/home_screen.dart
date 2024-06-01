@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   activIndex = value;
                   setState(() {});
                 },
-                activIndex: activIndex),
+                activeIndex: activIndex),
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
