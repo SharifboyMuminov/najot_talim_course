@@ -43,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
   _listenScrollController() {
     debugPrint(asd.toString());
     double pixels = 0.0;
+    double maxPixels = 0.0;
 
     _scrollController.addListener(
       () {
@@ -52,12 +53,12 @@ class _HomeScreenState extends State<HomeScreen> {
             activeIndex = i;
             // _scrollController.animateTo(1400,
             //     duration: Duration(milliseconds: 400), curve: Curves.linear);
+            debugPrint("sadfas $maxPixels");
             _scrollControllerListWi.animateTo(
               (activeIndex * (140.we)),
               duration: const Duration(milliseconds: 300),
               curve: Curves.linear,
             );
-
             setState(() {});
           }
         }
