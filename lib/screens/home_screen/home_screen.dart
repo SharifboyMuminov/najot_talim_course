@@ -1,10 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:default_project/data/local/local_varibals.dart';
+import 'package:default_project/data/models/category/category_model.dart';
 import 'package:default_project/screens/home_screen/widget/category_view.dart';
 import 'package:default_project/utils/size.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -15,7 +14,26 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var activIndex = 0;
+  var activeIndex = 0;
+  final ScrollController _scrollController = ScrollController();
+
+  List<double> asd = [];
+
+  @override
+  void initState() {
+    _listenScrollController();
+    super.initState();
+  }
+
+  _listenScrollController() {
+    for (CategoryModel categoryModel in globalCategoryModels) {
+      asd.add(((categoryModel.products.length * 93.he) + 63));
+    }
+
+    _scrollController.addListener(() {
+      debugPrint(_scrollController.position.pixels.toString());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       body: CustomScrollView(
+        controller: _scrollController,
         slivers: [
           const SliverAppBar(
             pinned: true,
@@ -36,12 +55,11 @@ class _HomeScreenState extends State<HomeScreen> {
           SliverPersistentHeader(
             pinned: true,
             delegate: CategoryView(
-
                 onChangeIndex: (int value) {
-                  activIndex = value;
+                  activeIndex = value;
                   setState(() {});
                 },
-                activeIndex: activIndex),
+                activeIndex: activeIndex),
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
