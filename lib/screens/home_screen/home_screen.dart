@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:default_project/data/local/local_varibals.dart';
 import 'package:default_project/screens/home_screen/widget/category_view.dart';
 import 'package:default_project/utils/size.dart';
 import 'package:flutter/material.dart';
@@ -39,13 +41,43 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
-              childCount: 20,
-              (context, index) {
-                return Container(
-                  margin: EdgeInsets.all(10),
-                  width: width,
-                  height: 50,
-                  color: Colors.red,
+              childCount: globalCategoryModels.length,
+              (context, indexOne) {
+                return Column(
+                  children: [
+                    ...List.generate(
+                      globalCategoryModels[indexOne].products.length,
+                      (indexTwo) {
+                        return Container(
+                          margin: EdgeInsets.all(10),
+                          child: Row(
+                            children: [
+                              CachedNetworkImage(
+                                imageUrl: globalCategoryModels[indexOne]
+                                    .products[indexTwo]
+                                    .imageUrl,
+                                imageBuilder: (context, imageProvider) =>
+                                    Container(
+                                  width: 100,
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                placeholder: (context, url) =>
+                                    const Center(child: CircularProgressIndicator.adaptive()),
+                                errorWidget: (context, url, error) =>
+                                    Icon(Icons.error),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ],
                 );
                 //
               },
