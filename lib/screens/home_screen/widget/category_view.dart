@@ -5,10 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CategoryView extends SliverPersistentHeaderDelegate {
-  const CategoryView({required this.activeIndex, required this.onChangeIndex});
+  const CategoryView(
+     {required this.scrollController,
+    required this.activeIndex,
+    required this.onChangeIndex,
+  });
 
   final ValueChanged<int> onChangeIndex;
   final int activeIndex;
+  final ScrollController scrollController;
 
   @override
   Widget build(
@@ -16,6 +21,7 @@ class CategoryView extends SliverPersistentHeaderDelegate {
     return Container(
       color: Colors.white,
       child: ListView(
+        controller: scrollController,
         padding: EdgeInsets.symmetric(horizontal: 15.we),
         scrollDirection: Axis.horizontal,
         children: [
@@ -24,6 +30,7 @@ class CategoryView extends SliverPersistentHeaderDelegate {
             (index) {
               return Container(
                 margin: EdgeInsets.symmetric(horizontal: 5.we, vertical: 10.he),
+                width: 120.we,
                 child: TextButton(
                   style: TextButton.styleFrom(
                     backgroundColor:
@@ -51,16 +58,22 @@ class CategoryView extends SliverPersistentHeaderDelegate {
                         ),
                         duration: const Duration(milliseconds: 500),
                       ),
-                      AnimatedDefaultTextStyle(
-                        style: TextStyle(
-                          color: activeIndex == index
-                              ? Colors.white
-                              : AppColors.c_7F8192,
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w500,
+                      Expanded(
+                        child: AnimatedDefaultTextStyle(
+                          style: TextStyle(
+                            color: activeIndex == index
+                                ? Colors.white
+                                : AppColors.c_7F8192,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          duration: const Duration(milliseconds: 500),
+                          child: Text(
+                            globalCategoryModels[index].title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
-                        duration: const Duration(milliseconds: 500),
-                        child: Text(globalCategoryModels[index].title),
                       ),
                     ],
                   ),

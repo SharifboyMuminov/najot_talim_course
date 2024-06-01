@@ -15,6 +15,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   var activeIndex = 0;
   final ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollControllerListWi = ScrollController();
 
   List<double> asd = [];
 
@@ -34,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       // asd.add(((categoryModel.products.length * 93.he) + 63));
     }
+
     _listenScrollController();
     super.initState();
   }
@@ -50,11 +52,15 @@ class _HomeScreenState extends State<HomeScreen> {
             activeIndex = i;
             // _scrollController.animateTo(1400,
             //     duration: Duration(milliseconds: 400), curve: Curves.linear);
+            _scrollControllerListWi.animateTo(
+              (activeIndex * (140.we)),
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.linear,
+            );
 
             setState(() {});
           }
         }
-        // debugPrint(_scrollController.position.pixels.toString());
       },
     );
   }
@@ -76,11 +82,13 @@ class _HomeScreenState extends State<HomeScreen> {
           SliverPersistentHeader(
             pinned: true,
             delegate: CategoryView(
-                onChangeIndex: (int value) {
-                  activeIndex = value;
-                  setState(() {});
-                },
-                activeIndex: activeIndex),
+              onChangeIndex: (int value) {
+                activeIndex = value;
+                setState(() {});
+              },
+              activeIndex: activeIndex,
+              scrollController: _scrollControllerListWi,
+            ),
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
