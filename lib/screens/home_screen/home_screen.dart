@@ -53,12 +53,14 @@ class _HomeScreenState extends State<HomeScreen> {
             activeIndex = i;
             // _scrollController.animateTo(1400,
             //     duration: Duration(milliseconds: 400), curve: Curves.linear);
-            debugPrint("sadfas $maxPixels");
-            _scrollControllerListWi.animateTo(
-              (activeIndex * (140.we)),
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.linear,
-            );
+            // debugPrint("sadfas $maxPixels");
+            if (activeIndex < globalCategoryModels.length - 1) {
+              _scrollControllerListWi.animateTo(
+                (activeIndex * (120.we)),
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.linear,
+              );
+            }
             setState(() {});
           }
         }
