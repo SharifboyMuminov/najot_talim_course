@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
   _listenScrollController() {
     debugPrint(asd.toString());
     double pixels = 0.0;
-    double maxPixels = 0.0;
+    // double maxPixels = 0.0;
 
     _scrollController.addListener(
       () {
