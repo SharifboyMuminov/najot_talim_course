@@ -87,6 +87,11 @@ class _HomeScreenState extends State<HomeScreen> {
             delegate: CategoryView(
               onChangeIndex: (int value) {
                 activeIndex = value;
+                // _scrollController.animateTo(
+                //   asd[value],
+                //   duration: const Duration(milliseconds: 300),
+                //   curve: Curves.linear,
+                // );
                 setState(() {});
               },
               activeIndex: activeIndex,
