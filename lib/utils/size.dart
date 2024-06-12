@@ -8,5 +8,5 @@ extension Size on int {
   double get we => (this / 375) * width;
 
   SizedBox getH() => SizedBox(height: (this / 812) * height);
-  SizedBox getW() => SizedBox(height: (this / 375) * width);
+  SizedBox getW() => SizedBox(width: (this / 375) * width);
 }
