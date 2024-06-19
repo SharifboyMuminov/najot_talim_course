@@ -1,4 +1,5 @@
 import 'package:default_project/blocs/notes/notes_bloc.dart';
+import 'package:default_project/blocs/notes/notes_event.dart';
 import 'package:default_project/data/local/local_database/local_databas.dart';
 import 'package:default_project/screens/splesh/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class App extends StatelessWidget {
           BlocProvider(
             create: (context) => NotesBloc(
               context.read<LocalDatabase>(),
-            ),
+            )..add(NotesCallEvent()),
           ),
         ],
         child: const MyApp(),
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         ScreenUtil.init(context);
         return MaterialApp(
           theme: ThemeData(
+            useMaterial3: false,
             appBarTheme: const AppBarTheme(
               backgroundColor: Colors.white,
               systemOverlayStyle: SystemUiOverlayStyle(
@@ -50,6 +52,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
           debugShowCheckedModeBanner: false,
+          home: child,
         );
       },
       child: const SplashScreen(),

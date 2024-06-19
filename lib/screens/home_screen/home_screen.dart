@@ -85,9 +85,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             15.getH(),
             BlocBuilder<NotesBloc, NotesState>(
-              buildWhen: (previous, current) {
-                return previous != current;
-              },
               builder: (BuildContext context, NotesState state) {
                 if (state.fromStatus == FromStatus.loading) {
                   return Center(
@@ -158,7 +155,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                 }
                 return const Center(
-                    child: CircularProgressIndicator.adaptive());
+                  child: CircularProgressIndicator.adaptive(
+                    backgroundColor: Colors.white,
+                  ),
+                );
               },
             ),
           ],
@@ -174,7 +174,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return AddScreen();
+                    return const AddScreen();
                   },
                 ),
               );
