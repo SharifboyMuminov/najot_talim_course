@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class NoteModel {
   int? id;
-  String fullname;
+  String fullName;
   String text;
   String date;
   String createDate;
@@ -13,7 +13,7 @@ class NoteModel {
   NoteModel(
       {required this.date,
       required this.color,
-      required this.fullname,
+      required this.fullName,
       required this.text,
       required this.createDate,
       this.isRemove = false,
@@ -24,7 +24,7 @@ class NoteModel {
     // debugPrint(json.toString());
     return NoteModel(
       id: json[NotesConstanse.id] as int? ?? 0,
-      fullname: json[NotesConstanse.name] as String? ?? "Null",
+      fullName: json[NotesConstanse.name] as String? ?? "Null",
       text: json[NotesConstanse.descreption] as String? ?? "Null",
       date: json[NotesConstanse.date] as String? ?? "",
       createDate: json[NotesConstanse.creatDate] as String? ?? "",
@@ -38,7 +38,7 @@ class NoteModel {
       NotesConstanse.creatDate: createDate,
       NotesConstanse.date: date,
       NotesConstanse.descreption: text,
-      NotesConstanse.name: fullname,
+      NotesConstanse.name: fullName,
       NotesConstanse.color: color.value.toString(),
     };
   }
@@ -49,7 +49,7 @@ class NoteModel {
       NotesConstanse.creatDate: createDate,
       NotesConstanse.date: date,
       NotesConstanse.descreption: text,
-      NotesConstanse.name: fullname,
+      NotesConstanse.name: fullName,
       NotesConstanse.color: color.value.toString(),
     };
   }
@@ -57,7 +57,7 @@ class NoteModel {
   static NoteModel defoultModul() {
     return NoteModel(
       date: "asd",
-      fullname: "das",
+      fullName: "das",
       text: "asd",
       createDate: "dsd",
       color: Colors.white10,
@@ -76,7 +76,7 @@ class NoteModel {
       color: color ?? this.color,
       id: id ?? this.id,
       date: date ?? this.date,
-      fullname: fullname ?? this.fullname,
+      fullName: fullname ?? this.fullName,
       text: text ?? this.text,
       createDate: createDate ?? this.createDate,
     );

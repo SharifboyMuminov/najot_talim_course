@@ -1,6 +1,7 @@
 import 'package:default_project/blocs/notes/notes_bloc.dart';
 import 'package:default_project/blocs/notes/notes_event.dart';
 import 'package:default_project/blocs/notes/notes_state.dart';
+import 'package:default_project/data/models/from_status/from_status.dart';
 import 'package:default_project/screens/add_screen.dart/add_screen.dart';
 import 'package:default_project/screens/widget/top_button.dart';
 import 'package:default_project/screens/home_screen/widgets/empty_show.dart';
@@ -88,13 +89,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 return previous != current;
               },
               builder: (BuildContext context, NotesState state) {
-                if (state is LoadingState) {
-                  return const Center(
-                      child: CircularProgressIndicator.adaptive());
+                if (state.fromStatus == FromStatus.loading) {
+                  return Center(
+                    child: Text(
+                      state.errorText,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15.sp,
+                      ),
+                    ),
+                  );
                 }
 
-                if (state is SuccessState) {
-                  if (state.notesData.isEmpty) {
+                if (state.fromStatus == FromStatus.success) {
+                  if (state.allNotes.isEmpty) {
                     return Column(
                       children: [
                         182.getH(),
@@ -107,15 +115,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     return Expanded(
                       child: ListView.builder(
                         padding: EdgeInsets.symmetric(horizontal: 24.we),
-                        itemCount: state.notesData.length,
+                        itemCount: state.allNotes.length,
                         itemBuilder: (BuildContext context, int index) {
                           return ItemNoteButton(
-                            isActiveRemove: state.notesData[index].isRemove,
+                            isActiveRemove: state.allNotes[index].isRemove,
                             onTab: () async {
-                              if (state.notesData[index].isRemove &&
-                                  state.notesData[index].id != null) {
+                              if (state.allNotes[index].isRemove &&
+                                  state.allNotes[index].id != null) {
                                 context.read<NotesBloc>().add(NotesDeleteEvent(
-                                    noteModel: state.notesData[index]));
+                                    noteModel: state.allNotes[index]));
 
                                 showSearche = false;
                                 setState(() {});
@@ -126,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     builder: (context) {
                                       return AddScreen(
                                         isInfo: true,
-                                        personModul: state.notesData[index],
+                                        personModul: state.allNotes[index],
                                       );
                                     },
                                   ),
@@ -136,20 +144,21 @@ class _HomeScreenState extends State<HomeScreen> {
                             onLongPress: () {
                               setState(
                                 () {
-                                  state.notesData[index].isRemove =
-                                      !state.notesData[index].isRemove;
+                                  state.allNotes[index].isRemove =
+                                      !state.allNotes[index].isRemove;
                                 },
                               );
                             },
-                            item: state.notesData[index],
-                            backgroundColor: state.notesData[index].color,
+                            item: state.allNotes[index],
+                            backgroundColor: state.allNotes[index].color,
                           );
                         },
                       ),
                     );
                   }
                 }
-                return const SizedBox();
+                return const Center(
+                    child: CircularProgressIndicator.adaptive());
               },
             ),
           ],

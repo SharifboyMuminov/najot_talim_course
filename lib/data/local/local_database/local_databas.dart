@@ -1,5 +1,5 @@
-import 'package:default_project/data/moduls/notes/note.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:default_project/data/models/my_resposn/my_respons.dart';
+import 'package:default_project/data/models/notes/note.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -47,49 +47,86 @@ class LocalDatabase {
     )''');
   }
 
-  static Future<NoteModel> insertNotes(NoteModel personModel) async {
-    final db = await databaseInstance.database;
+  Future<MyResponse> insertNotes(NoteModel personModel) async {
+    MyResponse myResponse = MyResponse();
 
-    int savedTaskID =
-        await db.insert(NotesConstanse.tableName, personModel.toJson());
+    try {
+      final db = await databaseInstance.database;
 
-    return personModel.copyWith(id: savedTaskID);
+      int savedTaskID =
+          await db.insert(NotesConstanse.tableName, personModel.toJson());
+
+      myResponse.data = personModel.copyWith(id: savedTaskID);
+    } catch (error) {
+      myResponse.errorText = error.toString();
+    }
+
+    return myResponse;
   }
 
-  static Future<List<NoteModel>> getAllNotes() async {
-    final db = await databaseInstance.database;
-    String orderBy = "${NotesConstanse.id} DESC";
-    List json = await db.query(NotesConstanse.tableName, orderBy: orderBy);
-    return json.map((e) => NoteModel.fromJson(e)).toList();
+  Future<MyResponse> getAllNotes() async {
+    MyResponse myResponse = MyResponse();
+
+    try {
+      final db = await databaseInstance.database;
+      String orderBy = "${NotesConstanse.id} DESC";
+      List json = await db.query(NotesConstanse.tableName, orderBy: orderBy);
+      myResponse.data = json.map((e) => NoteModel.fromJson(e)).toList();
+    } catch (error) {
+      myResponse.errorText = error.toString();
+    }
+
+    return myResponse;
   }
 
-  static Future<int> deleteNotes(NoteModel noteModel) async {
-    final db = await databaseInstance.database;
-    int deletedId = await db.delete(
-      NotesConstanse.tableName,
-      where: "${NotesConstanse.id} = ?",
-      whereArgs: [noteModel.id],
-    );
-    return deletedId;
+  Future<MyResponse> deleteNotes(NoteModel noteModel) async {
+    MyResponse myResponse = MyResponse();
+
+    try {
+      final db = await databaseInstance.database;
+      myResponse.data = await db.delete(
+        NotesConstanse.tableName,
+        where: "${NotesConstanse.id} = ?",
+        whereArgs: [noteModel.id],
+      );
+    } catch (error) {
+      myResponse.errorText = error.toString();
+    }
+
+    return myResponse;
   }
 
-  static Future<int> updateNotes({required NoteModel noteModel}) async {
-    final db = await databaseInstance.database;
-    // debugPrint(noteModel.id.toString());
+  Future<MyResponse> updateNotes({required NoteModel noteModel}) async {
+    MyResponse myResponse = MyResponse();
 
-    int a = await db.update(
-        NotesConstanse.tableName, noteModel.toJsonForUpdate(),
-        where: "${NotesConstanse.id} = ?", whereArgs: [noteModel.id]);
+    try {
+      final db = await databaseInstance.database;
+      // debugPrint(noteModel.id.toString());
 
-    return a;
+      myResponse.data = await db.update(
+          NotesConstanse.tableName, noteModel.toJsonForUpdate(),
+          where: "${NotesConstanse.id} = ?", whereArgs: [noteModel.id]);
+    } catch (error) {
+      myResponse.errorText = error.toString();
+    }
+
+    return myResponse;
   }
 
-  static Future<List<NoteModel>> searchNotes(String query) async {
-    final db = await databaseInstance.database;
+  Future<MyResponse> searchNotes(String query) async {
+    MyResponse myResponse = MyResponse();
 
-    var json = await db.query(NotesConstanse.tableName,
-        where: "${NotesConstanse.name} LIKE ?", whereArgs: ["$query%"]);
+    try {
+      final db = await databaseInstance.database;
 
-    return json.map((e) => NoteModel.fromJson(e)).toList();
+      var json = await db.query(NotesConstanse.tableName,
+          where: "${NotesConstanse.name} LIKE ?", whereArgs: ["$query%"]);
+
+      myResponse.data = json.map((e) => NoteModel.fromJson(e)).toList();
+    } catch (error) {
+      myResponse.errorText = error.toString();
+    }
+
+    return myResponse;
   }
 }

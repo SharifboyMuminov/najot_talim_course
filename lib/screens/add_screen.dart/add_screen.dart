@@ -1,7 +1,7 @@
 import 'package:default_project/blocs/notes/notes_bloc.dart';
 import 'package:default_project/blocs/notes/notes_event.dart';
 import 'package:default_project/data/local/local_list/local.dart';
-import 'package:default_project/data/moduls/notes/note.dart';
+import 'package:default_project/data/models/notes/note.dart';
 import 'package:default_project/screens/widget/top_button.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/app_images.dart';
@@ -42,7 +42,7 @@ class _AddScreenState extends State<AddScreen> {
   void initState() {
     if (widget.personModul != null) {
       noteModul = widget.personModul!;
-      controllerTitle.text = noteModul.fullname;
+      controllerTitle.text = noteModul.fullName;
         
       controllerSubTitle.text = noteModul.text;
     }
@@ -179,7 +179,7 @@ class _AddScreenState extends State<AddScreen> {
       );
 
       if (widget.personModul != null) {
-        if (title == widget.personModul!.fullname &&
+        if (title == widget.personModul!.fullName &&
             subTitle == widget.personModul!.text) {
           Navigator.pop(context);
         } else {
