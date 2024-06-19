@@ -2,7 +2,7 @@ import 'package:default_project/blocs/notes/notes_bloc.dart';
 import 'package:default_project/blocs/notes/notes_event.dart';
 import 'package:default_project/blocs/notes/notes_state.dart';
 import 'package:default_project/data/models/from_status/from_status.dart';
-import 'package:default_project/screens/add_screen.dart/add_screen.dart';
+import 'package:default_project/screens/add_screen/add_screen.dart';
 import 'package:default_project/screens/widget/top_button.dart';
 import 'package:default_project/screens/home_screen/widgets/empty_show.dart';
 import 'package:default_project/screens/home_screen/widgets/item_note.dart';
@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shimmer/shimmer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -154,9 +155,34 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   }
                 }
-                return const Center(
-                  child: CircularProgressIndicator.adaptive(
-                    backgroundColor: Colors.white,
+
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: 10,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Shimmer(
+                        gradient: const LinearGradient(
+                          colors: [
+                            Colors.white,
+                            Colors.white10,
+                            Colors.white,
+                            Colors.white10,
+                          ],
+                        ),
+                        child: Container(
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 20.we, vertical: 5.he),
+                          width: width,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(
+                              10.r,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 );
               },

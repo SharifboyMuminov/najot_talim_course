@@ -1,4 +1,4 @@
-import 'package:default_project/screens/add_screen.dart/widget/alert_item.dart';
+import 'package:default_project/screens/add_screen/widget/alert_item.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/app_images.dart';
 import 'package:default_project/utils/app_size.dart';
