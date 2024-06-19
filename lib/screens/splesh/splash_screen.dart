@@ -1,4 +1,5 @@
 import 'package:default_project/data/local/local_database/local_databas.dart';
+import 'package:default_project/screens/color/color_screen.dart';
 import 'package:default_project/screens/home_screen/home_screen.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/app_size.dart';
@@ -24,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
           context,
           MaterialPageRoute(
             builder: (context) {
-              return const HomeScreen();
+              return const ColorScreen();
             },
           ),
         );

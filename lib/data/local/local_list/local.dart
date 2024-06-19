@@ -12,4 +12,8 @@ List<Color> myColors = [
   Colors.deepPurpleAccent,
   Colors.purpleAccent,
   Colors.orange,
+  Colors.red,
+  Colors.green,
+  Colors.indigo,
+  Colors.lightGreenAccent,
 ];
