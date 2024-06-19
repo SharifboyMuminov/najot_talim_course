@@ -5,7 +5,7 @@ import 'package:default_project/data/moduls/notes/note.dart';
 import 'package:default_project/screens/widget/top_button.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/app_images.dart';
-import 'package:default_project/utils/size.dart';
+import 'package:default_project/utils/app_size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

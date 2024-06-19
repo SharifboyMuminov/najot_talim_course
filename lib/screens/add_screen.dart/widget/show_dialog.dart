@@ -1,7 +1,7 @@
 import 'package:default_project/screens/add_screen.dart/widget/alert_item.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/app_images.dart';
-import 'package:default_project/utils/size.dart';
+import 'package:default_project/utils/app_size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -26,6 +26,7 @@ class AlertView extends StatelessWidget {
         title,
         style: TextStyle(
           color: AppColors.c_CFCFCF,
+          fontSize: 15.sp,
         ),
       ),
       icon: SvgPicture.asset(

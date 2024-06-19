@@ -1,25 +1,24 @@
 import 'package:default_project/data/local/local_database/local_databas.dart';
 import 'package:default_project/screens/home_screen/home_screen.dart';
 import 'package:default_project/utils/app_colors.dart';
-import 'package:default_project/utils/size.dart';
+import 'package:default_project/utils/app_size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
 
-
-class SplashCreen extends StatefulWidget {
-  const SplashCreen({super.key});
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
 
   @override
-  State<SplashCreen> createState() => _SplashCreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashCreenState extends State<SplashCreen> {
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     LocalDatabase.databaseInstance;
     Future.delayed(
-      const Duration(seconds: 2),
+      const Duration(milliseconds: 1500),
       () {
         Navigator.pushReplacement(
           context,
@@ -47,9 +46,8 @@ class _SplashCreenState extends State<SplashCreen> {
       ),
       child: Scaffold(
         backgroundColor: AppColors.c_252525,
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [Lottie.asset("assets/lottie/splash_animetion.json")],
+        body: Center(
+          child: Lottie.asset("assets/lottie/splash_animetion.json"),
         ),
       ),
     );
