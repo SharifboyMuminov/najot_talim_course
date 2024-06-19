@@ -1,5 +1,6 @@
 import 'package:default_project/data/models/my_resposn/my_respons.dart';
 import 'package:default_project/data/models/notes/note.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -57,7 +58,9 @@ class LocalDatabase {
           await db.insert(NotesConstanse.tableName, personModel.toJson());
 
       myResponse.data = personModel.copyWith(id: savedTaskID);
+
     } catch (error) {
+
       myResponse.errorText = error.toString();
     }
 

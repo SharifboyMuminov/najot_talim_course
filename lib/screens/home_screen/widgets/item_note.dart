@@ -51,7 +51,17 @@ class ItemNoteButton extends StatelessWidget {
                       fontSize: 25.sp,
                     ),
                   ),
-
+                  10.getH(),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Text(
+                      noteModel.date,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14.sp,
+                      ),
+                    ),
+                  ),
                 ],
               ),
       ),
