@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-class SearcheTextFild extends StatelessWidget {
-  const SearcheTextFild(
+class SearchTextField extends StatelessWidget {
+  const SearchTextField(
       {super.key, required this.onChge, required this.onTabXmark});
 
   final ValueChanged<String> onChge;
@@ -27,7 +27,7 @@ class SearcheTextFild extends StatelessWidget {
             EdgeInsets.symmetric(horizontal: 30.we, vertical: 12.he),
         filled: true,
         fillColor: AppColors.c_3B3B3B,
-        hintText: "Searche",
+        hintText: "Search",
         hintStyle: TextStyle(
           color: Colors.grey.shade500,
           fontSize: 18.sp,

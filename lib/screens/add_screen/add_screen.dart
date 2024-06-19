@@ -2,6 +2,7 @@ import 'package:default_project/blocs/notes/notes_bloc.dart';
 import 'package:default_project/blocs/notes/notes_event.dart';
 import 'package:default_project/data/local/local_list/local.dart';
 import 'package:default_project/data/models/notes/note.dart';
+import 'package:default_project/screens/color/color_screen.dart';
 import 'package:default_project/screens/widget/top_button.dart';
 import 'package:default_project/utils/app_colors.dart';
 import 'package:default_project/utils/app_images.dart';
@@ -29,7 +30,7 @@ class AddScreen extends StatefulWidget {
 }
 
 class _AddScreenState extends State<AddScreen> {
-  NoteModel noteModul = NoteModel.defoultModul();
+  NoteModel noteModul = NoteModel.defaultModel();
 
   bool isSvae = true;
   bool isPop = false;
@@ -173,7 +174,7 @@ class _AddScreenState extends State<AddScreen> {
     String subTitle = controllerSubTitle.text;
     if (title.isNotEmpty && subTitle.isNotEmpty) {
       noteModul = noteModul.copyWith(
-        fullname: controllerTitle.text,
+        fullName: controllerTitle.text,
         text: controllerSubTitle.text,
         date: DateTime.now().toString(),
       );
@@ -186,7 +187,7 @@ class _AddScreenState extends State<AddScreen> {
           _myShowDialog(onTabSave: () {
             noteModul.copyWith(
               id: widget.personModul!.id,
-              fullname: title,
+              fullName: title,
               text: subTitle,
             );
             context
@@ -199,13 +200,16 @@ class _AddScreenState extends State<AddScreen> {
         }
       } else {
         _myShowDialog(onTabSave: () {
-          myColors.shuffle();
-          context.read<NotesBloc>().add(NotesInsertEvent(
-              noteModel: noteModul.copyWith(color: myColors.first)));
-
-          muySnackBar(context);
-          Navigator.pop(context);
-          Navigator.pop(context);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return ColorScreen(
+                  noteModel: noteModul,
+                );
+              },
+            ),
+          );
         });
       }
     } else {

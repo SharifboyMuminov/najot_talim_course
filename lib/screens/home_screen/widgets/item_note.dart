@@ -11,10 +11,11 @@ class ItemNoteButton extends StatelessWidget {
     required this.isActiveRemove,
     required this.onTab,
     required this.onLongPress,
-    required this.item, required this.backgroundColor,
+    required this.noteModel,
+    required this.backgroundColor,
   });
 
-  final NoteModel item;
+  final NoteModel noteModel;
   final bool isActiveRemove;
   final VoidCallback onTab;
   final VoidCallback onLongPress;
@@ -30,7 +31,6 @@ class ItemNoteButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(10.r),
       ),
       child: TextButton(
-
         style: TextButton.styleFrom(
           padding: EdgeInsets.symmetric(horizontal: 30.we, vertical: 27.he),
           shape: RoundedRectangleBorder(
@@ -41,12 +41,18 @@ class ItemNoteButton extends StatelessWidget {
         onPressed: onTab,
         child: isActiveRemove
             ? SvgPicture.asset(AppImages.remove)
-            : Text(
-                item.fullName,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 25.sp,
-                ),
+            : Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    noteModel.fullName,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25.sp,
+                    ),
+                  ),
+
+                ],
               ),
       ),
     );

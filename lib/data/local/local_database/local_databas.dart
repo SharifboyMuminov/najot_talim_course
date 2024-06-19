@@ -40,8 +40,8 @@ class LocalDatabase {
     await db.execute('''CREATE TABLE ${NotesConstanse.tableName} (
       ${NotesConstanse.id} $idType,
       ${NotesConstanse.date} $textType,
-      ${NotesConstanse.creatDate} $textType,
-      ${NotesConstanse.descreption} $textType,
+      ${NotesConstanse.createDate} $textType,
+      ${NotesConstanse.description} $textType,
       ${NotesConstanse.name} $textType,
       ${NotesConstanse.color} $textType
     )''');

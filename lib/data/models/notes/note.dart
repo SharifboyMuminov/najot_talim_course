@@ -1,4 +1,3 @@
-import 'package:default_project/data/local/local_list/local.dart';
 import 'package:flutter/material.dart';
 
 class NoteModel {
@@ -20,14 +19,13 @@ class NoteModel {
       this.id});
 
   factory NoteModel.fromJson(Map<String, dynamic> json) {
-    myColors.shuffle();
-    // debugPrint(json.toString());
+    debugPrint(json[NotesConstanse.color].toString());
     return NoteModel(
       id: json[NotesConstanse.id] as int? ?? 0,
       fullName: json[NotesConstanse.name] as String? ?? "Null",
-      text: json[NotesConstanse.descreption] as String? ?? "Null",
+      text: json[NotesConstanse.description] as String? ?? "Null",
       date: json[NotesConstanse.date] as String? ?? "",
-      createDate: json[NotesConstanse.creatDate] as String? ?? "",
+      createDate: json[NotesConstanse.createDate] as String? ?? "",
       color: Color(
           int.parse(json[NotesConstanse.color] as String? ?? "0xFFFFFFFF")),
     );
@@ -35,9 +33,9 @@ class NoteModel {
 
   Map<String, dynamic> toJson() {
     return {
-      NotesConstanse.creatDate: createDate,
+      NotesConstanse.createDate: createDate,
       NotesConstanse.date: date,
-      NotesConstanse.descreption: text,
+      NotesConstanse.description: text,
       NotesConstanse.name: fullName,
       NotesConstanse.color: color.value.toString(),
     };
@@ -46,27 +44,27 @@ class NoteModel {
   Map<String, dynamic> toJsonForUpdate() {
     return {
       NotesConstanse.id: id,
-      NotesConstanse.creatDate: createDate,
+      NotesConstanse.createDate: createDate,
       NotesConstanse.date: date,
-      NotesConstanse.descreption: text,
+      NotesConstanse.description: text,
       NotesConstanse.name: fullName,
       NotesConstanse.color: color.value.toString(),
     };
   }
 
-  static NoteModel defoultModul() {
+  static NoteModel defaultModel() {
     return NoteModel(
-      date: "asd",
-      fullName: "das",
-      text: "asd",
-      createDate: "dsd",
+      date: "",
+      fullName: "",
+      text: "",
+      createDate: "",
       color: Colors.white10,
     );
   }
 
   NoteModel copyWith({
     String? date,
-    String? fullname,
+    String? fullName,
     int? id,
     String? createDate,
     String? text,
@@ -76,7 +74,7 @@ class NoteModel {
       color: color ?? this.color,
       id: id ?? this.id,
       date: date ?? this.date,
-      fullName: fullname ?? this.fullName,
+      fullName: fullName ?? this.fullName,
       text: text ?? this.text,
       createDate: createDate ?? this.createDate,
     );
@@ -86,8 +84,8 @@ class NoteModel {
 class NotesConstanse {
   static const tableName = "note_table";
   static const name = "name";
-  static const creatDate = "creat_date";
-  static const descreption = "descreption";
+  static const createDate = "create_date";
+  static const description = "description";
   static const date = "date";
   static const id = "id";
   static const color = "color";

@@ -24,7 +24,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool showSearche = false;
+  bool showSearch = false;
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: AppColors.c_252525,
         body: Column(
           children: [
-            !showSearche ? 50.getH() : const SizedBox(),
-            if (!showSearche)
+            !showSearch ? 50.getH() : const SizedBox(),
+            if (!showSearch)
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 24.we),
                 child: Row(
@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       onTab: () {
                         setState(
                           () {
-                            showSearche = true;
+                            showSearch = true;
                           },
                         );
                       },
@@ -70,16 +70,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-            showSearche ? 65.getH() : const SizedBox(),
-            if (showSearche)
+            showSearch ? 65.getH() : const SizedBox(),
+            if (showSearch)
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.we),
-                child: SearcheTextFild(
+                child: SearchTextField(
                   onChge: (v) {
                     context.read<NotesBloc>().add(NotesSearchEvent(title: v));
                   },
                   onTabXmark: () {
-                    showSearche = false;
+                    showSearch = false;
                     setState(() {});
                   },
                 ),
@@ -105,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         182.getH(),
                         ShowEmptyImage(
-                          isSearhe: showSearche,
+                          isSearhe: showSearch,
                         ),
                       ],
                     );
@@ -123,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 context.read<NotesBloc>().add(NotesDeleteEvent(
                                     noteModel: state.allNotes[index]));
 
-                                showSearche = false;
+                                showSearch = false;
                                 setState(() {});
                               } else {
                                 Navigator.push(
@@ -147,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 },
                               );
                             },
-                            item: state.allNotes[index],
+                            noteModel: state.allNotes[index],
                             backgroundColor: state.allNotes[index].color,
                           );
                         },
