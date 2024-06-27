@@ -26,7 +26,6 @@ class _InfoScreenState extends State<InfoScreen> {
   void initState() {
     dailys = widget.dailys;
     isActiv = StorageRepository.getBool(key: "them");
-    setState(() {});
     super.initState();
   }
 
